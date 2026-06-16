@@ -1,5 +1,4 @@
 import streamlit as st
-import random
 
 # =========================
 # CONFIG
@@ -11,13 +10,95 @@ st.set_page_config(
 )
 
 # =========================
-# SESSION STATE
+# STATE
 # =========================
+if "started" not in st.session_state:
+    st.session_state.started = False
+
+if "selected" not in st.session_state:
+    st.session_state.selected = ""
+
 if "paid" not in st.session_state:
     st.session_state.paid = False
 
-if "problem" not in st.session_state:
-    st.session_state.problem = ""
+# =========================
+# SIDEBAR (NAV + LANGUAGE)
+# =========================
+st.sidebar.title("🚀 ClientBoost AI")
+
+page = st.sidebar.radio(
+    "Navigation",
+    ["🏠 Home", "📄 Details", "🚀 Generator"]
+)
+
+lang = st.sidebar.selectbox(
+    "🌍 Language",
+    ["English", "Français", "Español"]
+)
+
+# =========================
+# TEXT SYSTEM (MULTI LANGUAGE)
+# =========================
+texts = {
+    "English": {
+        "title": "Grow your business with AI",
+        "subtitle": "Create sales, marketing & follow-ups in seconds",
+        "start": "🚀 Start now",
+        "problems_title": "Choose your problem",
+        "problems": [
+            "Sales messages",
+            "Marketing content",
+            "Client follow-up",
+            "Increase sales",
+            "Save time",
+            "Beginner help"
+        ],
+        "desc": "This tool helps you create business content instantly.",
+        "locked": "🔒 Unlock required",
+        "unlock": "💳 Unlock (demo)",
+        "output": "Generated result"
+    },
+
+    "Français": {
+        "title": "Développe ton business avec l'IA",
+        "subtitle": "Crée des ventes et contenus en quelques secondes",
+        "start": "🚀 Commencer",
+        "problems_title": "Choisis ton problème",
+        "problems": [
+            "Messages de vente",
+            "Contenu marketing",
+            "Relance client",
+            "Augmenter les ventes",
+            "Gagner du temps",
+            "Aide débutant"
+        ],
+        "desc": "Cet outil crée du contenu business automatiquement.",
+        "locked": "🔒 Déverrouillage requis",
+        "unlock": "💳 Débloquer (demo)",
+        "output": "Résultat généré"
+    },
+
+    "Español": {
+        "title": "Haz crecer tu negocio con IA",
+        "subtitle": "Crea ventas y contenido en segundos",
+        "start": "🚀 Empezar",
+        "problems_title": "Elige tu problema",
+        "problems": [
+            "Mensajes de venta",
+            "Contenido marketing",
+            "Seguimiento clientes",
+            "Aumentar ventas",
+            "Ahorrar tiempo",
+            "Ayuda principiantes"
+        ],
+        "desc": "Esta herramienta crea contenido automáticamente.",
+        "locked": "🔒 Desbloqueo requerido",
+        "unlock": "💳 Desbloquear (demo)",
+        "output": "Resultado generado"
+    }
+}
+
+t = texts[lang]
 
 # =========================
 # DESIGN
@@ -25,109 +106,125 @@ if "problem" not in st.session_state:
 st.markdown("""
 <style>
 .stApp {
-    background-color: #0f172a;
+    background-color: #0b1220;
     color: white;
 }
 .title {
     text-align: center;
-    font-size: 45px;
-    font-weight: bold;
+    font-size: 50px;
+    font-weight: 800;
 }
-.box {
-    background-color: #1e293b;
+.subtitle {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+.card {
+    background-color: #111827;
     padding: 20px;
-    border-radius: 12px;
+    border-radius: 15px;
+    margin-top: 15px;
+    border: 1px solid #1f2937;
+}
+.stButton > button {
+    background-color: #2563eb;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
 }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<div class='title'>🚀 ClientBoost AI</div>", unsafe_allow_html=True)
+# =========================
+# HEADER
+# =========================
+st.markdown(f"<div class='title'>🚀 ClientBoost AI</div>", unsafe_allow_html=True)
+st.markdown(f"<div class='subtitle'>{t['subtitle']}</div>", unsafe_allow_html=True)
 
 # =========================
-# SIDEBAR = PROBLEMES
+# HOME
 # =========================
-problem = st.sidebar.radio(
-    "Choose a problem",
-    [
-        "📩 Sales messages",
-        "📢 Marketing content",
-        "🔄 Client follow-up",
-        "💰 Increase sales",
-        "⚡ Save time",
-        "🧠 Beginner help"
-    ]
-)
+if page == "🏠 Home":
 
-st.session_state.problem = problem
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
 
-# =========================
-# 1. DESCRIPTION PAGE
-# =========================
-st.subheader("📄 Problem description")
+    st.markdown(f"## {t['title']}")
 
-if problem == "📩 Sales messages":
-    st.write("Create powerful messages to sell your product or service easily.")
+    st.write("""
+❌ You struggle to write content  
+❌ You waste time creating messages  
+❌ You don’t know how to sell  
 
-elif problem == "📢 Marketing content":
-    st.write("Generate posts for social media like Instagram, Facebook, TikTok.")
+---
 
-elif problem == "🔄 Client follow-up":
-    st.write("Send professional follow-up messages to clients.")
+💡 AI solves everything in seconds
+""")
 
-elif problem == "💰 Increase sales":
-    st.write("Improve your conversion rate and sell more.")
+    if st.button(t["start"]):
+        st.session_state.started = True
 
-elif problem == "⚡ Save time":
-    st.write("Automate writing tasks and save hours every day.")
+    st.markdown("</div>", unsafe_allow_html=True)
 
-elif problem == "🧠 Beginner help":
-    st.write("Perfect for beginners who don’t know how to write marketing content.")
+    # PROBLEMS AFTER START
+    if st.session_state.started:
+
+        st.markdown("---")
+        st.subheader(t["problems_title"])
+
+        st.session_state.selected = st.radio("Select:", t["problems"])
 
 # =========================
-# 2. PAYMENT STEP
+# DETAILS
 # =========================
-st.markdown("---")
-st.subheader("💳 Unlock solution")
+elif page == "📄 Details":
 
-if not st.session_state.paid:
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
 
-    st.warning("This solution is locked. Pay to unlock.")
+    st.subheader("📄 Description")
 
-    if st.button("💳 Pay now (demo)"):
+    st.write(st.session_state.selected)
+    st.write(t["desc"])
 
-        st.session_state.paid = True
-        st.success("Payment successful ✔ You can now see the solution")
-
-else:
-    st.success("Access granted ✔")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================
-# 3. SOLUTION GENERATION
+# GENERATOR
 # =========================
-if st.session_state.paid:
+elif page == "🚀 Generator":
 
-    st.markdown("---")
-    st.subheader("🚀 Generated Solution")
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
 
-    if problem == "📩 Sales messages":
-        result = "🔥 We help you sell faster with high-converting messages."
+    st.subheader("🚀 Generator")
 
-    elif problem == "📢 Marketing content":
-        result = "🚀 Create viral social media posts in seconds."
+    business = st.text_input("Business")
+    product = st.text_input("Product")
+    audience = st.text_input("Audience")
 
-    elif problem == "🔄 Client follow-up":
-        result = "📩 Send perfect follow-ups that bring clients back."
+    if st.button("Generate"):
 
-    elif problem == "💰 Increase sales":
-        result = "📈 Improve conversions and grow your revenue."
+        if not st.session_state.paid:
+            st.error(t["locked"])
 
-    elif problem == "⚡ Save time":
-        result = "⏱ Automate content creation and save hours daily."
+            if st.button(t["unlock"]):
+                st.session_state.paid = True
+                st.success("Unlocked ✔")
 
-    elif problem == "🧠 Beginner help":
-        result = "🧠 Easy AI guidance for beginners in business."
+        else:
+            result = f"""
+🔥 {st.session_state.selected}
 
-    st.text_area("Output", result, height=200)
+We are {business}.  
+We help {audience} with {product}.  
+
+👉 Fast AI-generated content.
+
+— ClientBoost AI
+"""
+
+            st.success(t["output"])
+            st.text_area("Output", result, height=250)
+
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # =========================
 # FOOTER
