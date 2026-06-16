@@ -16,194 +16,118 @@ st.set_page_config(
 if "paid" not in st.session_state:
     st.session_state.paid = False
 
-if "selected" not in st.session_state:
-    st.session_state.selected = ""
+if "problem" not in st.session_state:
+    st.session_state.problem = ""
 
 # =========================
 # DESIGN
 # =========================
 st.markdown("""
 <style>
-
 .stApp {
     background-color: #0f172a;
     color: white;
 }
-
 .title {
     text-align: center;
-    font-size: 48px;
+    font-size: 45px;
     font-weight: bold;
 }
-
-.subtitle {
-    text-align: center;
-    color: #cbd5e1;
-    margin-bottom: 30px;
-}
-
-.card {
+.box {
     background-color: #1e293b;
     padding: 20px;
-    border-radius: 15px;
-    margin: 10px 0;
+    border-radius: 12px;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
-# =========================
-# HEADER
-# =========================
 st.markdown("<div class='title'>🚀 ClientBoost AI</div>", unsafe_allow_html=True)
-st.markdown("<div class='subtitle'>AI tool for sales, marketing & business growth</div>", unsafe_allow_html=True)
 
 # =========================
-# SIDEBAR
+# SIDEBAR = PROBLEMES
 # =========================
-st.sidebar.title("🚀 Navigation")
-
-page = st.sidebar.radio(
-    "Menu",
-    ["🏠 Home", "📄 Details", "🔐 Generator"]
+problem = st.sidebar.radio(
+    "Choose a problem",
+    [
+        "📩 Sales messages",
+        "📢 Marketing content",
+        "🔄 Client follow-up",
+        "💰 Increase sales",
+        "⚡ Save time",
+        "🧠 Beginner help"
+    ]
 )
 
-# =========================
-# PSEUDO IA FUNCTIONS
-# =========================
-def generate_sales_message(business, product, audience):
-
-    hooks = ["🔥 Attention !", "🚀 Opportunity", "💡 Imagine this"]
-    openings = [
-        f"We are {business}, helping businesses grow fast.",
-        f"At {business}, we provide powerful solutions.",
-        f"Many {audience} already trust our system."
-    ]
-    benefits = [
-        f"increase sales with {product}",
-        "attract more customers",
-        "boost visibility quickly",
-        "save time and automate growth"
-    ]
-    closings = [
-        "Contact us today.",
-        "Start now.",
-        "Don’t miss this opportunity."
-    ]
-
-    return f"""
-{random.choice(hooks)}
-
-{random.choice(openings)}
-
-We help you {random.choice(benefits)}.
-
-👉 Result: fast and consistent growth.
-
-{random.choice(closings)}
-
-— {business}
-"""
-
-def generate_marketing(product, platform):
-
-    return f"""
-🔥 {product}
-
-Learn how to grow your business on {platform}.
-
-👉 Simple strategy. Fast results.
-
-Start today and scale your business.
-"""
-
-def generate_followup(name, service):
-
-    return f"""
-Hello {name},
-
-Just following up about {service}.
-
-Let me know if you're interested.
-
-Best regards.
-"""
+st.session_state.problem = problem
 
 # =========================
-# 🏠 HOME
+# 1. DESCRIPTION PAGE
 # =========================
-if page == "🏠 Home":
+st.subheader("📄 Problem description")
 
-    st.subheader("💡 Choose a problem to solve")
+if problem == "📩 Sales messages":
+    st.write("Create powerful messages to sell your product or service easily.")
 
-    choices = [
-        "📩 Vendre plus facilement",
-        "📢 Créer du contenu marketing",
-        "🔄 Relancer des clients",
-        "💰 Augmenter les ventes",
-        "⚡ Gagner du temps",
-        "🧠 Aide débutants"
-    ]
+elif problem == "📢 Marketing content":
+    st.write("Generate posts for social media like Instagram, Facebook, TikTok.")
 
-    st.session_state.selected = st.radio("What do you want to improve?", choices)
+elif problem == "🔄 Client follow-up":
+    st.write("Send professional follow-up messages to clients.")
 
-    st.info("👉 Select a problem then go to DETAILS")
+elif problem == "💰 Increase sales":
+    st.write("Improve your conversion rate and sell more.")
 
-# =========================
-# 📄 DETAILS
-# =========================
-elif page == "📄 Details":
+elif problem == "⚡ Save time":
+    st.write("Automate writing tasks and save hours every day.")
 
-    st.subheader("📄 Solution overview")
-
-    st.markdown(f"""
-    ## {st.session_state.selected}
-
-    ✔ Understand your problem  
-    ✔ Provide structured solution  
-    ✔ Prepare AI generation  
-    ✔ Business-focused output  
-    """)
-
-    st.info("👉 Go to GENERATOR to create results")
+elif problem == "🧠 Beginner help":
+    st.write("Perfect for beginners who don’t know how to write marketing content.")
 
 # =========================
-# 🔐 GENERATOR + PAYWALL
+# 2. PAYMENT STEP
 # =========================
-elif page == "🔐 Generator":
+st.markdown("---")
+st.subheader("💳 Unlock solution")
 
-    st.subheader("🔐 AI Generator")
+if not st.session_state.paid:
 
-    business = st.text_input("Business name")
-    product = st.text_input("Product / Service")
-    audience = st.text_input("Target audience")
+    st.warning("This solution is locked. Pay to unlock.")
 
-    if st.button("Generate"):
+    if st.button("💳 Pay now (demo)"):
 
-        if not st.session_state.paid:
+        st.session_state.paid = True
+        st.success("Payment successful ✔ You can now see the solution")
 
-            st.error("🔒 Payment required to unlock results")
+else:
+    st.success("Access granted ✔")
 
-            if st.button("💳 Pay (demo)"):
-                st.session_state.paid = True
-                st.success("Payment successful ✔")
+# =========================
+# 3. SOLUTION GENERATION
+# =========================
+if st.session_state.paid:
 
-        else:
+    st.markdown("---")
+    st.subheader("🚀 Generated Solution")
 
-            if st.session_state.selected == "📩 Vendre plus facilement":
-                result = generate_sales_message(business, product, audience)
+    if problem == "📩 Sales messages":
+        result = "🔥 We help you sell faster with high-converting messages."
 
-            elif st.session_state.selected == "📢 Créer du contenu marketing":
-                result = generate_marketing(product, "social media")
+    elif problem == "📢 Marketing content":
+        result = "🚀 Create viral social media posts in seconds."
 
-            elif st.session_state.selected == "🔄 Relancer des clients":
-                result = generate_followup(business, product)
+    elif problem == "🔄 Client follow-up":
+        result = "📩 Send perfect follow-ups that bring clients back."
 
-            else:
-                result = "Feature coming soon..."
+    elif problem == "💰 Increase sales":
+        result = "📈 Improve conversions and grow your revenue."
 
-            st.success("✅ Generated result")
-            st.text_area("Output", result, height=300)
+    elif problem == "⚡ Save time":
+        result = "⏱ Automate content creation and save hours daily."
+
+    elif problem == "🧠 Beginner help":
+        result = "🧠 Easy AI guidance for beginners in business."
+
+    st.text_area("Output", result, height=200)
 
 # =========================
 # FOOTER
