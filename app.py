@@ -1,4 +1,5 @@
 import streamlit as st
+import random
 
 # =========================
 # CONFIG
@@ -12,19 +13,17 @@ st.set_page_config(
 # =========================
 # SESSION STATE
 # =========================
-if "result" not in st.session_state:
-    st.session_state.result = ""
+if "page" not in st.session_state:
+    st.session_state.page = "home"
 
-if "generated" not in st.session_state:
-    st.session_state.generated = False
+if "paid" not in st.session_state:
+    st.session_state.paid = False
 
-# reset generation on menu change
-def reset():
-    st.session_state.generated = False
-    st.session_state.result = ""
+if "selected" not in st.session_state:
+    st.session_state.selected = ""
 
 # =========================
-# DESIGN (CSS)
+# DESIGN
 # =========================
 st.markdown("""
 <style>
@@ -36,28 +35,21 @@ st.markdown("""
 
 .title {
     text-align: center;
-    font-size: 50px;
+    font-size: 48px;
     font-weight: bold;
 }
 
 .subtitle {
     text-align: center;
     color: #cbd5e1;
-    margin-bottom: 10px;
-    font-size: 18px;
-}
-
-.description {
-    text-align: center;
-    color: #94a3b8;
     margin-bottom: 30px;
 }
 
-.box {
+.card {
     background-color: #1e293b;
     padding: 20px;
     border-radius: 15px;
-    margin-top: 20px;
+    margin: 10px 0;
 }
 
 </style>
@@ -67,144 +59,151 @@ st.markdown("""
 # HEADER
 # =========================
 st.markdown("<div class='title'>🚀 ClientBoost AI</div>", unsafe_allow_html=True)
-
-st.markdown(
-    "<div class='subtitle'>Get more customers. Grow your business faster.</div>",
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    "<div class='description'>AI-powered tool that generates sales messages, marketing content and follow-ups in seconds.</div>",
-    unsafe_allow_html=True
-)
-
-st.markdown("---")
+st.markdown("<div class='subtitle'>Your AI business assistant for sales, marketing & growth</div>", unsafe_allow_html=True)
 
 # =========================
-# MENU
+# 🧠 GENERATORS (PSEUDO IA)
 # =========================
-menu = st.sidebar.selectbox(
-    "Menu",
-    ["Home", "Sales Message", "Marketing Content", "Follow-Up", "Pricing"],
-    on_change=reset
-)
+def generate_sales_message(business, product, audience):
 
-# =========================
-# HOME
-# =========================
-if menu == "Home":
-    st.markdown("""
-    <div class="box">
-    <h3>Welcome 👋</h3>
-    <p>Use this app to generate high-converting messages for your business instantly.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    hooks = ["🔥 Attention !", "🚀 Nouvelle opportunité", "💡 Imagine ceci"]
+    openings = [
+        f"Nous sommes {business} et nous aidons déjà des entreprises comme la vôtre.",
+        f"Chez {business}, nous avons une solution simple et efficace.",
+        f"Beaucoup de {audience} utilisent déjà notre solution."
+    ]
+    benefits = [
+        f"augmenter vos ventes avec {product}",
+        "attirer plus de clients",
+        "booster votre visibilité",
+        "gagner du temps automatiquement"
+    ]
+    closings = [
+        "Contactez-nous dès maintenant.",
+        "Ne ratez pas cette opportunité.",
+        "Passez à l’action aujourd’hui."
+    ]
 
-# =========================
-# SALES MESSAGE
-# =========================
-elif menu == "Sales Message":
+    return f"""
+{random.choice(hooks)}
 
-    st.subheader("💬 Sales Message Generator")
+{random.choice(openings)}
 
-    business = st.text_input("Business Name")
-    product = st.text_input("Product / Service")
-    audience = st.text_input("Target Audience")
+Nous vous aidons à {random.choice(benefits)}.
 
-    if st.button("Generate"):
+👉 Résultat : croissance rapide et durable.
 
-        st.session_state.result = f"""
-Hello,
+{random.choice(closings)}
 
-We are {business}.
-
-We help {audience} with our {product}.
-
-We can help you grow your business and increase your sales.
-
-Best regards,
-{business} team
+— {business}
 """
-        st.session_state.generated = True
 
-    if st.session_state.generated:
-        st.success("Result generated")
-        st.text_area("Output", st.session_state.result, height=200)
+def generate_marketing(platform, topic):
 
-# =========================
-# MARKETING CONTENT
-# =========================
-elif menu == "Marketing Content":
-
-    st.subheader("📢 Marketing Content Generator")
-
-    platform = st.selectbox("Platform", ["Facebook", "Instagram", "LinkedIn", "TikTok"])
-    topic = st.text_input("Topic")
-
-    if st.button("Generate"):
-
-        st.session_state.result = f"""
+    return f"""
 🔥 {topic}
 
-Discover how our solution helps your business grow faster on {platform}.
+Découvrez comment améliorer vos résultats sur {platform}.
 
-Start today and see results instantly.
+👉 Stratégie simple + efficace + rapide
 
-#Business #Growth #Marketing
+Commencez maintenant et faites grandir votre business.
 """
-        st.session_state.generated = True
 
-    if st.session_state.generated:
-        st.success("Result generated")
-        st.text_area("Output", st.session_state.result, height=200)
+def generate_followup(name, service):
+
+    return f"""
+Bonjour {name},
+
+Je fais juste un suivi concernant {service}.
+
+Avez-vous eu le temps de réfléchir ?
+
+Je reste disponible si besoin.
+"""
 
 # =========================
-# FOLLOW-UP
+# 🏠 HOME
 # =========================
-elif menu == "Follow-Up":
+if st.session_state.page == "home":
 
-    st.subheader("🔄 Follow-Up Generator")
+    st.subheader("💡 Choose a problem to solve")
 
-    name = st.text_input("Client Name")
-    service = st.text_input("Service")
+    choices = [
+        "📩 Vendre plus facilement",
+        "📢 Créer du contenu marketing",
+        "🔄 Relancer des clients",
+        "💰 Augmenter les ventes",
+        "⚡ Gagner du temps",
+        "🧠 Aide débutants"
+    ]
+
+    selected = st.radio("What do you want to improve?", choices)
+
+    if st.button("Continue"):
+        st.session_state.selected = selected
+        st.session_state.page = "details"
+
+# =========================
+# 📄 DETAILS PAGE
+# =========================
+elif st.session_state.page == "details":
+
+    st.subheader("📄 Solution")
+
+    st.markdown(f"""
+    ## {st.session_state.selected}
+
+    ✔ Analyse du besoin  
+    ✔ Génération automatique de contenu  
+    ✔ Résultat optimisé pour business  
+
+    👉 Cette solution est conçue pour t’aider rapidement.
+    """)
+
+    if st.button("Start generator"):
+        st.session_state.page = "generator"
+
+    if st.button("⬅ Back"):
+        st.session_state.page = "home"
+
+# =========================
+# 🔐 GENERATOR + PAYWALL
+# =========================
+elif st.session_state.page == "generator":
+
+    st.subheader("🔐 AI Generator")
+
+    business = st.text_input("Business name")
+    product = st.text_input("Product / Service")
+    audience = st.text_input("Target audience")
 
     if st.button("Generate"):
 
-        st.session_state.result = f"""
-Hello {name},
+        if not st.session_state.paid:
 
-Just following up regarding our {service} discussion.
+            st.error("🔒 Payment required to unlock results")
 
-Let me know if you have any questions.
+            if st.button("💳 Pay (demo)"):
+                st.session_state.paid = True
+                st.success("Payment successful ✔")
 
-Looking forward to your reply.
-"""
-        st.session_state.generated = True
+        else:
 
-    if st.session_state.generated:
-        st.success("Result generated")
-        st.text_area("Output", st.session_state.result, height=200)
+            if st.session_state.selected == "📩 Vendre plus facilement":
+                result = generate_sales_message(business, product, audience)
 
-# =========================
-# PRICING
-# =========================
-elif menu == "Pricing":
+            elif st.session_state.selected == "📢 Créer du contenu marketing":
+                result = generate_marketing("social media", product)
 
-    st.subheader("💰 Pricing Plans")
+            elif st.session_state.selected == "🔄 Relancer des clients":
+                result = generate_followup(business, product)
 
-    col1, col2, col3 = st.columns(3)
+            else:
+                result = "Feature coming soon..."
 
-    with col1:
-        st.markdown("### Starter\n€5\n1 result")
+            st.success("✅ Generated result")
+            st.text_area("Output", result, height=300)
 
-    with col2:
-        st.markdown("### ⭐ Pro\n€15\n5 results")
-
-    with col3:
-        st.markdown("### Business\n€29/month\nUnlimited")
-
-# =========================
-# FOOTER
-# =========================
-st.markdown("---")
-st.caption("Created by kēllønę 🔗💨")
+    if st.button("⬅ Back"):
+        st.session_state.page = "details"
