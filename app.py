@@ -12,9 +12,6 @@ st.set_page_config(
 # =========================
 # STATE
 # =========================
-if "started" not in st.session_state:
-    st.session_state.started = False
-
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
@@ -33,6 +30,7 @@ if "paid" not in st.session_state:
 # =========================
 st.markdown("""
 <style>
+
 .stApp {
     background-color: #0b1220;
     color: white;
@@ -61,13 +59,15 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+
 # =========================
 # HEADER
 # =========================
 st.markdown("<div class='title'>🚀 ClientBoost AI</div>", unsafe_allow_html=True)
 
+
 # =========================
-# AI ENGINE (LEVEL BASED)
+# AI ENGINE (LEVELS)
 # =========================
 def generate_solution(problem, business, product, audience, level):
 
@@ -91,7 +91,7 @@ Buy {product} and improve your business.
 {base}
 
 💡 Persuasive message:
-{product} is designed to help {audience} achieve better results faster.
+{product} helps {audience} achieve better results faster.
 
 ✔ Clear value
 ✔ Better engagement
@@ -116,7 +116,7 @@ Stop struggling, start growing today.
 - Emotional trigger
 - Clear CTA
 
-👉 Optimized for maximum conversion.
+👉 Maximum conversion optimized message.
 
 """
 
@@ -139,7 +139,7 @@ if st.session_state.page == "home":
 
 ---
 
-💡 Everything becomes instant with AI
+💡 AI generates your business content instantly
 """)
 
     if st.button("🚀 Commencer maintenant"):
@@ -149,7 +149,7 @@ if st.session_state.page == "home":
 
 
 # =========================
-# PROBLEMS
+# PROBLEMS (7)
 # =========================
 elif st.session_state.page == "problems":
 
@@ -165,14 +165,14 @@ elif st.session_state.page == "problems":
         "📈 Business growth"
     ]
 
-    st.session_state.selected = st.radio("Select one:", problems)
+    st.session_state.selected = st.radio("Select:", problems)
 
     if st.button("Continue"):
         st.session_state.page = "levels"
 
 
 # =========================
-# LEVELS (BASIC / PREMIUM / ULTRA)
+# LEVELS
 # =========================
 elif st.session_state.page == "levels":
 
@@ -186,7 +186,7 @@ elif st.session_state.page == "levels":
         st.markdown("""
         ### 🥉 BASIC
         💰 5€
-        Simple content generation
+        Simple & fast content
         """)
         if st.button("Choose Basic"):
             st.session_state.level = "basic"
@@ -218,10 +218,11 @@ elif st.session_state.page == "levels":
 # =========================
 elif st.session_state.page == "payment":
 
-    st.subheader("💳 Payment")
+    st.subheader("💳 Unlock system")
 
     if not st.session_state.paid:
-        st.warning("🔒 Unlock required")
+
+        st.warning("🔒 Payment required")
 
         if st.button("💳 Pay (demo)"):
             st.session_state.paid = True
@@ -229,7 +230,7 @@ elif st.session_state.page == "payment":
 
     else:
 
-        st.success("Access unlocked ✔")
+        st.success("✔ Access granted")
 
         business = st.text_input("Business name")
         product = st.text_input("Product / Service")
@@ -246,8 +247,22 @@ elif st.session_state.page == "payment":
             )
 
             st.markdown("<div class='card'>", unsafe_allow_html=True)
-            st.subheader("🚀 Result")
+
+            st.subheader("🚀 Your Result")
+
             st.text_area("Output", result, height=300)
+
+            st.markdown("---")
+
+            st.download_button(
+                label="⬇ Download message",
+                data=result,
+                file_name="clientboost_message.txt"
+            )
+
+            if st.button("📋 Copy (manual)"):
+                st.info("Select the text above and copy it (Ctrl + C)")
+
             st.markdown("</div>", unsafe_allow_html=True)
 
 
