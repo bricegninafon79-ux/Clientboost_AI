@@ -1,163 +1,159 @@
 import streamlit as st
-import streamlit.components.v1 as components
-import base64
-
-# ========================= CONFIG =========================
-st.set_page_config(page_title="ClientBoost AI", page_icon="🚀", layout="wide")
-
-# ========================= STATE =========================
-if "page" not in st.session_state: 
-    st.session_state.page = "home"
-if "selected" not in st.session_state: 
-    st.session_state.selected = ""
-if "level" not in st.session_state: 
-    st.session_state.level = ""
-if "paid" not in st.session_state: 
-    st.session_state.paid = False
-
-# ========================= DESIGN PRO =========================
-st.markdown("""
-<style>
-.stApp {background-color: #0b1220; color: white;}
-.title {text-align: center; font-size: 52px; font-weight: 800; background: linear-gradient(90deg, #7C3AED 0%, #3B82F6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-.card {background-color: #111827; padding: 25px; border-radius: 15px; margin-top: 15px; border: 1px solid #1f2937; margin-bottom: 20px;}
-.stButton > button {background: linear-gradient(90deg, #2563eb 0%, #3B82F6 100%); color: white; font-weight: bold; border-radius: 10px; width: 100%; padding: 16px; font-size: 16px; border: none;}
-.stButton > button:hover {transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);}
-.trust {text-align: center; color: #9CA3AF; font-size: 14px; margin-top: 10px;}
-.testimonial {background: #1f2937; padding: 15px; border-radius: 10px; border-left: 3px solid #2563eb; margin: 10px 0;}
-</style>
-""", unsafe_allow_html=True)
-
-# ========================= MOTEUR COPY QUI VEND =========================
-def generate_solution(problem, business, product, audience, level):
-    hooks = {
-        "basic": f"Still struggling with {problem.lower()}?",
-        "premium": f"Stop losing sales because your {problem.lower()} is weak.",
-        "ultra": f"Your competitors steal your {audience} daily. Fix your {problem.lower()} NOW."
-    }
-    
-    pains = {
-        "📩 Sales messages": "No replies. No meetings. No cash.",
-        "📢 Marketing content": "3 likes. 0 sales. Algorithm hates you.",
-        "🔄 Client follow-up": "They forget you. Buy from competitors instead.",
-        "💰 Increase sales": "Traffic comes. Money doesn't. Conversion = 0.8%",
-        "⚡ Save time": "8h/day writing = 0h scaling your business",
-        "🧠 Beginner help": "You don't know where to start. Paralysis.",
-        "📈 Business growth": "Stuck at $2k/month for 8 months straight"
-    }
-    
-    pain = pains.get(problem, "losing money every day")
-    base = f"{business} helps {audience} with {product}."
-    
-    if level == "basic":
-        return f"🔥 {hooks[level]}\n\n{pain}\n\n{base}\n\n✅ SOLUTION: Use {product} to fix {problem.lower()} in 15min vs 3h.\n\n🎯 RESULT: Clear message → More replies → More sales\n\n[CTA] Start Basic →"
-    
-    if level == "premium":
-        return f"🚀 {hooks[level]}\n\n{base}\n\n💎 WHAT YOU GET:\n1. Psychology-based template for {problem.lower()}\n2. Copy/paste ready for {audience}\n3. 2.3x higher engagement tested\n\n📊 PROOF: 500+ businesses use this exact framework\n\n⚡ TIME: 5min to implement. Results in 24h.\n\n[CTA] Unlock Premium →"
-    
-    if level == "ultra":
-        return f"👑 {hooks[level]}\n\n{base}\n\n🧠 PSYCHOLOGY STACK APPLIED:\n- Hook: Pattern interrupt + FOMO\n- Pain: {pain}\n- Value: {product} = automated authority + trust\n- Proof: \"Went from $3k to $11k/month in 21 days\"\n\n🎯 STRATEGY INCLUDED:\n1. Positioning vs competitors\n2. Emotional triggers: Status + Scarcity\n3. CTA: \"Start before your competitor does\"\n\n💰 ROI MATH: 1 extra client = {product} pays for itself x10\n\n[CTA] Get Ultra Access → Scale Now"
-    
-    return base
-
-# ========================= COPY BUTTON JS (SECURISÉ) =========================
-def copy_button(text):
-    # Encodage en base64 pour éviter les bugs de sauts de ligne en JS
-    b64_text = base64.b64encode(text.encode("utf-8")).decode("utf-8")
-    components.html(f"""
-    <button onclick="navigator.clipboard.writeText(atob('{b64_text}'))" 
-    style="background:#2563eb;color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:bold;width:100%;">
-    📋 Copy to Clipboard - 1 Click
-    </button>
-    """, height=50)
-
-# ========================= HEADER =========================
-st.markdown("<div class='title'>🚀 ClientBoost AI</div>", unsafe_allow_html=True)
-st.markdown("<div class='trust'>2,847+ messages generated • No signup • Instant results</div>", unsafe_allow_html=True)
-
-# ========================= HOME =========================
-if st.session_state.page == "home":
-    st.markdown("""
-    <div class='card'>
-        <h2>🔥 Write content that sells</h2>
-        <p>❌ You waste hours writing content</p>
-        <p>❌ Your posts get 0 engagement</p> 
-        <p>❌ You don't know what to say to sell</p>
-        <hr>
-        <p>💡 AI generates persuasive messages in 6 seconds</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    if st.button("🚀 Start Now - Free"):
-        st.session_state.page = "problems"
-        st.rerun()
-
-# ========================= PROBLEMS =========================
-elif st.session_state.page == "problems":
-    st.subheader("💡 Choose your pain")
-    problems = ["📩 Sales messages", "📢 Marketing content", "🔄 Client follow-up", "💰 Increase sales", "⚡ Save time", "🧠 Beginner help", "📈 Business growth"]
-    st.session_state.selected = st.radio("Select:", problems)
-    if st.button("Continue →"):
-        st.session_state.page = "levels"
-        st.rerun()
-
-# ========================= LEVELS =========================
-elif st.session_state.page == "levels":
-    st.subheader("💎 Choose your plan")
-    st.write(f"### Pain: {st.session_state.selected}")
-    
-    st.markdown("""
-    <div class='testimonial'>"Went from 0 sales to 3/day" - Sarah, Miami</div>
-    <div class='testimonial'>"Saved me 10h/week" - Mike, Texas</div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("### 🥉 BASIC\n💰 $5\nSimple & fast")
-        if st.button("Choose Basic"): 
-            st.session_state.level = "basic"
-            st.session_state.page = "payment"
-            st.rerun()
-    with col2:
-        st.markdown("### 🥈 PREMIUM ⭐\n💰 $15\nBetter conversion")
-        if st.button("Choose Premium"): 
-            st.session_state.level = "premium"
-            st.session_state.page = "payment"
-            st.rerun()
-    with col3:
-        st.markdown("### 🥇 ULTRA 👑\n💰 $29\nFull strategy")
-        if st.button("Choose Ultra"): 
-            st.session_state.level = "ultra"
-            st.session_state.page = "payment"
-            st.rerun()
-
-# ========================= PAYMENT + RESULT =========================
-elif st.session_state.page == "payment":
-    st.subheader("💳 Unlock system")
-    
-    if not st.session_state.paid:
-        st.warning("🔒 Payment required to unlock AI")
-        st.info("💳 Lemon Squeezy Checkout Link Here")
-        if st.button("💳 Pay Demo $0"):
-            st.session_state.paid = True
-            st.success("Payment successful ✔")
-            st.rerun()
-    else:
-        st.success("✔ Access granted")
-        
-        with st.form("inputs_form"):
-            business = st.text_input("Business name")
-            product = st.text_input("Product / Service")
-            audience = st.text_input("Target audience")
-            submit = st.form_submit_button("Generate My Message")
-        
-        if submit:
-            if business and product and audience:
-                result = generate_solution(st.session_state.selected, business, product, audience, st.session_state.level)
-                
-                st.markdown("<div class='card'>", unsafe_allow_html=True)
-                st.subheader("🚀 Your Result")
-                st.text_area("Output", result, height=300, key="output_box")
-                copy_button(result)
-                st.download_button("⬇ Download .txt", result,
-    
+‎import streamlit.components.v1 as components
+‎
+‎st.set_page_config(page_title="ClientBoost Shopify", page_icon="🛍️", layout="wide")
+‎
+‎# STATE
+‎if "page" not in st.session_state: st.session_state.page = "home"
+‎if "content_type" not in st.session_state: st.session_state.content_type = ""
+‎if "level" not in st.session_state: st.session_state.level = ""
+‎if "paid" not in st.session_state: st.session_state.paid = False
+‎
+‎# DESIGN
+‎st.markdown("""
+‎<style>
+‎.stApp {background-color: #0a0e1a; color: white;}
+‎.title {text-align: center; font-size: 48px; font-weight: 800; background: linear-gradient(90deg, #F97316 0%, #FACC15 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+‎.card {background-color: #111827; padding: 25px; border-radius: 16px; margin-top: 15px; border: 1px solid #1f2937;}
+‎.stButton > button {background: linear-gradient(90deg, #F97316 0%, #FB923C 100%); color: white; font-weight: bold; border-radius: 12px; width: 100%; padding: 16px; font-size: 16px; border: none;}
+‎.trust {text-align: center; color: #9CA3AF; font-size: 14px;}
+‎</style>
+‎""", unsafe_allow_html=True)
+‎
+‎# MOTEUR COPY NICHE SHOPIFY
+‎def generate_shopify_content(content_type, product, audience, level):
+‎    hooks = {
+‎        "basic": f"Struggling to sell {product}?",
+‎        "premium": f"Stop posting content that gets 0 sales for {product}.",
+‎        "ultra": f"Your competitors sell {product} daily. Your posts don't. Fix it now."
+‎    }
+‎
+‎    templates = {
+‎        "📢 1er post TikTok": {
+‎            "basic": f"""🔥 HOOK: "POV: You found {product} and your life changed"
+‎🎯 SCRIPT 6s: Show problem → Show {product} → Show result
+‎📝 CTA: "Link in bio before stock runs out" """,
+‎            "premium": f"""🚀 HOOK: "3 reasons {audience} are obsessed with {product}"
+‎🎯 SCRIPT: Pain 2s + Product 2s + Result 2s + CTA 1s
+‎💎 ANGLES: Before/After + Testimonial + Unboxing
+‎[CTA] Post this + check sales in 24h""",
+‎            "ultra": f"""👑 VIRAL FORMULA FOR {product}:
+‎HOOK 0-2s: Pattern interrupt "Stop scrolling if you have "
+‎BODY 2-4s: {product} solves it + quick demo
+‎PROOF 4-5s: "500+ {audience} already switched"
+‎CTA 5-6s: "Tap link - 50% off ends today"
+‎PSYCHOLOGY: FOMO + Social proof + Scarcity"""
+‎        },
+‎        "📢 Description produit Shopify": {
+‎            "basic": f"Transform your  with {product}. Loved by {audience}. Shop now.",
+‎            "premium": f"Meet {product} - The #1 choice for {audience}. \n\n✅ Benefit 1: Saves you time\n✅ Benefit 2: Premium quality\n✅ Benefit 3: 30-day guarantee\nJoin 1000+ happy customers.",
+‎            "ultra": f"WARNING: {product} is addictive.\n\n{audience} who try it NEVER go back.\n\n🧠 WHY IT WORKS:\n1. Solves  in 24h\n2. Designed for {audience}\n3. Risk-free: Money back guarantee\n\n⚡ LIMITED: Only 47 units left. Your competitor is buying now."
+‎        },
+‎        "📢 Bio Instagram": {
+‎            "basic": f"Helping {audience} with {product} | DM for orders",
+‎            "premium": f"🛍️ {product} for {audience}\n🚚 Fast shipping US\n⭐ 4.9/5 from 200+ reviews\n👇 Shop below",
+‎            "ultra": f"Stop scrolling. Start earning.\n{product} = Your unfair advantage\nUsed by {audience} to make $$$\n⚡ 1st order -20% code: START\n👇 Link below or lose money"
+‎        },
+‎        "📢 Message DM client froid": {
+‎            "basic": f"Hey! Saw you might like {product}. Want details?",
+‎            "premium": f"Hey {audience}, quick question: Struggling with ? \n{product} fixed it for 200+ people. Want me to show how?",
+‎            "ultra": f"3sec read: {product} = more sales for {audience}.\n\nI help stores like yours get 2.3x more DM sales.\n\nReply 'INFO' and I send the exact script I used."
+‎        },
+‎        "📢 Email abandon panier": {
+‎            "basic": f"Forgot something? Your {product} is waiting. Complete order now.",
+‎            "premium": f"Hey, your {product} is almost gone... \nCart reserved 2h only. {audience} love this item.\n[Complete order] + Free shipping if you act now.",
+‎            "ultra": f"LAST WARNING: {product} selling fast.\n\n{audience} bought 12 units in last hour.\nYour cart expires in 47min.\n\n[CLAIM YOURS NOW] or competitor gets it."
+‎        },
+‎        "📢 Script vidéo 6s": {
+‎            "basic": f"0-2s: Show pain\n2-4s: Show {product}\n4-6s: Show result + CTA",
+‎            "premium": f"HOOK: 'Tired of ?'\nDEMO: {product} in action 2s\nPROOF: Before/After\nCTA: 'Link in bio'",
+‎            "ultra": f"0-1s: TEXT 'POV: You found this'\n1-3s: {product} solving pain FAST\n3-5s: Happy customer + result\n5-6s: '50% OFF - Link below'"
+‎        },
+‎        "📢 Hook Facebook Ads": {
+‎            "basic": f"Stop wasting money on ads that don't sell {product}.",
+‎            "premium": f"{audience} are buying {product} like crazy. Here's why...",
+‎            "ultra": f"Your competitor just made $10k with {product}. \nYou didn't. \nFix your ads with this 6s script →"
+‎        }
+‎    }
+‎
+‎    return f"🎯 {hooks[level]}\n\n{templates[content_type][level]}"
+‎
+‎def copy_button(text):
+‎    components.html(f"""
+‎    <button onclick="navigator.clipboard.writeText(`{text.replace('`','\\`')}`)"
+‎    style="background:#F97316;color:white;border:none;padding:12px;border-radius:8px;cursor:pointer;font-weight:bold;width:100%;font-size:15px;">
+‎    📋 Copier en 1 clic
+‎    </button>
+‎    """, height=55)
+‎
+‎# HEADER
+‎st.markdown("<div class='title'>🛍️ ClientBoost Shopify</div>", unsafe_allow_html=True)
+‎st.markdown("<div class='trust'>2,941 débutants Shopify • Contenu qui vend en 6s • No signup</div>", unsafe_allow_html=True)
+‎
+‎# HOME
+‎if st.session_state.page == "home":
+‎    st.markdown("<div class='card'>", unsafe_allow_html=True)
+‎    st.write("## ❌ T'es débutant Shopify?")
+‎    st.write("❌ Tes posts TikTok font 12 vues")
+‎    st.write("❌ Ta description produit = 0 vente")
+‎    st.write("❌ Tu sais pas quoi écrire pour vendre")
+‎    st.write("---")
+‎    st.write("💡 IA génère contenu qui vend pour {product} en 6 secondes")
+‎    if st.button("🚀 Générer mon 1er contenu qui vend"):
+‎        st.session_state.page = "content"
+‎    st.markdown("</div>", unsafe_allow_html=True)
+‎
+‎# CONTENT TYPE - 7 SOLUTIONS POUR 1 PERSONA
+‎elif st.session_state.page == "content":
+‎    st.subheader("💡 Quel contenu tu veux créer AUJOURD'HUI?")
+‎    content_types = [
+‎        "📢 1er post TikTok",
+‎        "📢 Description produit Shopify",
+‎        "📢 Bio Instagram",
+‎        "📢 Message DM client froid",
+‎        "📢 Email abandon panier",
+‎        "📢 Script vidéo 6s",
+‎        "📢 Hook Facebook Ads"
+‎    ]
+‎    st.session_state.content_type = st.radio("Choisis 1:", content_types)
+‎    if st.button("Continue →"):
+‎        st.session_state.page = "levels"
+‎
+‎# LEVELS
+‎elif st.session_state.page == "levels":
+‎    st.subheader("💎 Choisis ton niveau")
+‎    st.write(f"### Contenu: {st.session_state.content_type}")
+‎
+‎    col1, col2, col3 = st.columns(3)
+‎    with col1:
+‎        st.markdown("### 🥉 BASIC\n💰 $5\nSimple & rapide")
+‎        if st.button("Basic"): st.session_state.level = "basic"; st.session_state.page = "payment"
+‎    with col2:
+‎        st.markdown("### 🥈 PRO ⭐\n💰 $15\n2.3x conversion")
+‎        if st.button("Pro"): st.session_state.level = "premium"; st.session_state.page = "payment"
+‎    with col3:
+‎        st.markdown("### 🥇 ULTRA 👑\n💰 $29\nFormule virale complète")
+‎        if st.button("Ultra"): st.session_state.level = "ultra"; st.session_state.page = "payment"
+‎
+‎# PAYMENT + RESULT
+‎elif st.session_state.page == "payment":
+‎    if not st.session_state.paid:
+‎        st.warning("🔒 Débloque l'IA")
+‎        st.info("💳 Lemon Squeezy - Test avec 4242 4242 4242 4242")
+‎        if st.button("💳 Payer Demo $0"):
+‎            st.session_state.paid = True; st.rerun()
+‎    else:
+‎        st.success("✔ Accès débloqué")
+‎        product = st.text_input("Nom de ton produit Shopify")
+‎        audience = st.text_input("Qui tu vends? Ex: femmes 18-25 ans")
+‎
+‎        if st.button("🚀 Générer mon contenu"):
+‎            result = generate_shopify_content(st.session_state.content_type, product, audience, st.session_state.level)
+‎            st.markdown("<div class='card'>", unsafe_allow_html=True)
+‎            st.subheader("🚀 Ton contenu qui vend")
+‎            st.text_area("Output", result, height=350, key="out")
+‎            copy_button(result)
+‎            st.download_button("⬇ Télécharger.txt", result, file_name="clientboost_shopify.txt")
+‎            st.markdown("</div>", unsafe_allow_html=True)
+‎
+‎st.caption("Built by kēllønę 🔗💨 | ClientBoost Shopify v3")
