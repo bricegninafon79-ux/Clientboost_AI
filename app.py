@@ -22,80 +22,55 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# MOTEUR COPY NICHE SHOPIFY
+# MOTEUR DE COPYWRITING AVEC ARCHITECTURES ADAPTÉES ET UNIQUES
 def generate_shopify_content(content_type, product, audience, level, tone):
-    # Dictionnaires de modificateurs selon la tonalité choisie
-    tone_intro = {
-        "💥 Cash & Agressif": "🔥 ALERTE OFFRE : ",
-        "🧠 Scientifique & Expert": "📊 ANALYSE TECHNIQUE : ",
-        "🎯 Humoristique & Décalé": "🤪 ALERTE PÉPITE : "
-    }
     
-    hooks = {
-        "basic": f"Tu galères à vendre ton produit ({product}) auprès des {audience} ?",
-        "premium": f"Arrête de publier du contenu qui fait 0 vente pour ton {product}.",
-        "ultra": f"Tes concurrents s'enrichissent avec le {product}. Pas toi. On change ça maintenant."
-    }
+    # --- BLOCK 1 : BIO INSTAGRAM (Format court, percutant, listes d'emojis, puces, max 150 car.) ---
+    if content_type == "📢 Bio Instagram":
+        if tone == "💥 Cash & Agressif":
+            return f"❌ Marre des alternatives bas de gamme ?\n🛍️ Voici le {product} original pour les {audience}.\n⚡ -20% sur TOUT le site avec le code : REBELLE20\n👇 Ne rate pas l'offre unique"
+        elif tone == "🧠 Scientifique & Expert":
+            return f"🔬 Expertise & Qualité certifiée\n💡 Solution n°1 pour les {audience} exigeants.\n🌱 Conception ergonomique du {product} breveté\n👇 Découvrez notre étude clinique"
+        else:
+            return f"🤪 On est désolés pour votre banquier...\n🔥 Le {product} qui fait vriller tous les {audience}.\n📦 Livraison gratuite (parce qu'on est sympas)\n👇 Craquez ici"
 
-    # Variations de contenu selon le ton
-    if tone == "🧠 Scientifique & Expert":
-        desc_ultra = f"🔬 ÉTUDE DE CAS : Pourquoi le {product} surpasse toutes les alternatives du marché.\n\nDéveloppé spécifiquement pour répondre aux exigences des {audience}.\n\n🧠 LES FAITS SCIENTIFIQUES :\n1. Efficacité ciblée prouvée en moins de 24h.\n2. Ergonomie brevetée adaptée pour {audience}.\n3. Garantie clinique de 30 jours."
-        tiktok_ultra = f"👑 FORMULE PARFAITE POUR {product} :\nHOOK 0-2s : 'Voici la science derrière le problème des {audience}...'\nCORPS 2-4s : Démo macro du produit. Explication claire du bénéfice mécanique.\nPREUVE 4-5s : 'Recommandé par 98% des spécialistes.'\nCTA 5-6s : 'Commandez votre fiche technique (Lien en bio).'"
-    elif tone == "🎯 Humoristique & Décalé":
-        desc_ultra = f"⚠️ ALERTE : Le {product} risque de rendre tes proches jaloux.\n\nLes {audience} qui l'ont testé ont complètement vrillé.\n\n🧠 LES AVANTAGES (SANS BLABLA) :\n1. Règle ton problème avant que tu aies le temps de râler.\n2. Validé à 100% par la commu des {audience}.\n3. Si tu n'aimes pas, on te rembourse (et on pleure un coup)."
-        tiktok_ultra = f"👑 FORMULE VIRALE POUR {product} :\nHOOK 0-2s : Rire ou situation absurde + 'Dis-moi que tu es un {audience} sans me dire que tu es un {audience}...'\nCORPS 2-4s : Montrer la galère quotidienne VS la facilité avec le {product}.\nPREUVE 4-5s : 'Même ton chat va vouloir te le piquer.'\nCTA 5-6s : 'Lien en bio avant que le boss supprime la page.'"
-    else: # Cash & Agressif (Par défaut)
-        desc_ultra = f"⚠️ ATTENTION : Le {product} crée une dépendance au confort.\n\nLes {audience} qui l'essaient ne reviennent jamais en arrière.\n\n🧠 POURQUOI ÇA MARCHE :\n1. Supprime ton problème majeur en moins de 24h.\n2. Conçu sur-mesure pour briser la frustration des {audience}.\n3. Zéro risque : Garantie totale satisfait ou remboursé.\n\n⚡ STOCK EXTRÊME : Plus que 47 unités. Ton concurrent est déjà en train d'acheter."
-        tiktok_ultra = f"👑 FORMULE CHOC POUR {product} :\nHOOK 0-2s : Rupture visuelle + 'Arrête de scroller si tu fais partie des {audience}...'\nCORPS 2-4s : Focus problème -> Le {product} détruit ce problème instantanément.\nPREUVE 4-5s : 'Déjà +1000 {audience} l'utilisent au quotidien.'\nCTA 5-6s : 'Profite de -50% aujourd'hui uniquement (Lien en bio).'"
+    # --- BLOCK 2 : DESCRIPTION PRODUIT SHOPIFY (Format long, marketing de structure, bénéfices) ---
+    elif content_type == "📢 Description produit Shopify":
+        intro = f"Découvrez le {product}, conçu spécifiquement pour transformer le quotidien des {audience}."
+        if tone == "🧠 Scientifique & Expert":
+            return f"{intro}\n\n📊 POURQUOI CE PRODUIT EST RECOMMANDÉ PAR LES EXPERTS :\nNotre formule/mécanisme cible précisément la frustration majeure des {audience}. Contrairement aux produits standards, il intègre des composants premium testés en laboratoire.\n\n✅ AVANTAGES TECHNIQUES :\n- Efficacité mesurable en moins de 24 heures.\n- Matériaux durables hypoallergéniques adaptés pour {audience}.\n- Garantie satisfait ou remboursé de 30 jours.\n\n📦 Inclus dans votre colis : 1x {product}, 1x Guide d'utilisation expert."
+        elif tone == "🎯 Humoristique & Décalé":
+            return f"{intro}\n\n⚠️ ALERTE : Ce produit risque de rendre vos voisins extrêmement jaloux.\n\nOn sait ce que vous vous dites : 'Encore un gadget'. Sauf que le {product} a déjà fait perdre la tête à plus de 1000 {audience}. \n\n🔥 POURQUOI VOUS EN AVEZ BESOIN :\n- Règle votre problème avant que vous ayez le temps de râler.\n- Validé à 100% par la communauté.\n- Si vous n'aimez pas, on vous rembourse (et on pleure un bon coup)."
+        else:
+            return f"{intro}\n\n⚠️ ATTENTION : Le {product} est victime de son succès. Stock ultra-limité.\n\nLes {audience} qui franchissent le pas ne reviennent jamais en arrière. C'est l'arme secrète qu'il manquait à votre routine.\n\n🧠 LES 3 PILIERS DE NOTRE SUCCÈS :\n1. Éradique la douleur principale des {audience}.\n2. Un design épuré, robuste et redoutablement efficace.\n3. Zéro risque : Garantie totale ou remboursement immédiat.\n\n⚡ Plus que 47 unités disponibles avant la prochaine rupture de stock."
 
-    templates = {
-        "📢 1er post TikTok": {
-            "basic": f"""🔥 HOOK: "POV: Tu as trouvé ce {product} et ta vie a changé"
-🎯 SCRIPT 6s: Montrer la frustration -> Sortir le {product} -> Montrer le résultat magique
-📝 CTA: "Lien en bio avant la rupture de stock" """,
-            "premium": f"""🚀 HOOK: "3 raisons pour lesquelles les {audience} s'arrachent ce {product}"
-🎯 SCRIPT: Douleur (2s) + Solution {product} (2s) + Résultat/Bénéfice (2s)
-💎 ANGLES RECOMMANDÉS: Avant/Après percutant ou Unboxing ultra dynamique
-[CTA]: "Clique sur le lien en bio, expédié sous 24h" """,
-            "ultra": tiktok_ultra
-        },
-        "📢 Description produit Shopify": {
-            "basic": f"Transforme ton quotidien avec le {product}. Recommandé pour les {audience}. Achetez aujourd'hui !",
-            "premium": f"Découvre le {product} - Le choix n'1 des {audience}. \n\n✅ Bénéfice 1 : Un gain de temps absolu au quotidien\n✅ Bénéfice 2 : Conçu avec des matériaux durables et premium\n✅ Bénéfice 3 : Garantie 30 jours satisfait ou remboursé.\nRejoins la communauté !",
-            "ultra": desc_ultra
-        },
-        "📢 Bio Instagram": {
-            "basic": f"On aide les {audience} grâce au {product} | DM pour commander 🛍️",
-            "premium": f"🛍️ L'incontournable {product} pour les {audience}\n🚚 Livraison rapide avec suivi\n⭐ Plus de 200 avis clients vérifiés\n👇 Profite de la réduction ici",
-            "ultra": f"Arrête de chercher. Commence à en profiter.\nLe {product} = Ton meilleur raccourci quotidien ⚡\nValidé par des centaines de {audience}.\n🎁 -20% sur ton premier achat avec le code : VIP20\n👇 Lien juste ici"
-        },
-        "📢 Message DM client froid": {
-            "basic": f"Salut ! J'ai vu que tu aimais ce style de produits. Tu veux des infos sur le {product} ?",
-            "premium": f"Hello ! Petite question rapide pour un ou une {audience} : Tu galères souvent avec ce problème ? \nNotre {product} a réglé ça pour des centaines de personnes. Je t'envoie la démo ?",
-            "ultra": f"Lecture 3 secondes : {product} = le game changer ultime pour les {audience}.\n\nOn permet aux profils comme le tien d'exploser leurs résultats cette semaine.\n\nRÉPONDS 'INFO' et je t'envoie les accès privés."
-        },
-        "📢 Email abandon panier": {
-            "basic": f"Tu as oublié quelque chose ? Ton {product} t'attend encore dans ton panier. Finalise ta commande !",
-            "premium": f"Hé... ton {product} va être remis en vente.\nPanier réservé pendant 2 heures seulement. Les {audience} s'arrachent ce produit.\n[Finaliser ma commande] + Livraison offerte si tu agis maintenant.",
-            "ultra": f"DERNIER RAPPEL : Le {product} est presque en rupture complète.\n\nDes {audience} ont validé 12 nouvelles commandes ces dernières minutes.\nTon panier expire dans exactement 47 minutes.\n\n[RÉCUPÉRER MON PANIER] ou laisse un autre concurrent en profiter."
-        },
-        "📢 Script vidéo 6s": {
-            "basic": f"0-2s : Plan frustration/douleur\n2-4s : Apparition dynamique du {product}\n4-6s : Plan grand sourire + texte incrusté 'Lien en bio'",
-            "premium": f"HOOK : 'Fatigué de perdre du temps ?'\nDÉMO 2s : Le {product} utilisé de manière satisfaisante\nPREUVE : Texte 'Avant / Après' clair\nCTA : 'Disponible immédiatement via le lien en bio'",
-            "ultra": f"0-1s : TEXTE CHOC 'POV: Tu as enfin trouvé le secret des {audience}'\n1-3s : Plan ultra-serré sur le {product} résolvant le problème en vitesse x2\n3-5s : Client soulagé + gros plan sur le résultat impeccable\n5-6s : '-50% UNIQUEMENT CE SOIR - Lien en bio'"
-        },
-        "📢 Hook Facebook Ads": {
-            "basic": f"Arrête de gaspiller ton budget publicitaire dans des produits moins performants que le {product}.",
-            "premium": f"Les {audience} commandent ce {product} en masse. Voici la raison cachée...",
-            "ultra": f"Ton principal concurrent fait un carton avec ce {product}.\nPas toi.\nReprends l'avantage sur tes publicités avec ce script de 6s →"
-        }
-    }
+    # --- BLOCK 3 : SCRIPT VIDÉO TIKTOK & REELS (Format minuté avec indications de plans et voix off) ---
+    elif content_type in ["📢 1er post TikTok", "📢 Script vidéo 6s"]:
+        if tone == "🧠 Scientifique & Expert":
+            return f"🎬 SCRIPT VIDÉO DE CONVERSION (Niveau : {level})\n\n⏱️ 0s - 2s [Plan macro serré] \n🗣️ Voix off : 'Voici la vérité scientifique que les marques vous cachent sur le problème des {audience}...'\n\n⏱️ 2s - 4s [Démonstration produit en action lente]\n🗣️ Voix off : 'Le {product} utilise un mécanisme breveté pour agir instantanément.'\n\n⏱️ 4s - 6s [Texte incrusté : Testé & Approuvé]\n🗣️ Voix off : 'Cliquez en bio pour voir l'analyse complète des laboratoires.'"
+        elif tone == "🎯 Humoristique & Décalé":
+            return f"🎬 SCRIPT VIRAL HUMOUR (Niveau : {level})\n\n⏱️ 0s - 2s [Gros plan visage fatigué + objet qui tombe] \n🗣️ Voix off : 'Dis-moi que tu es un {audience} sans me dire que tu es un {audience}...'\n\n⏱️ 2s - 4s [Transition rapide vers un sourire éclatant avec le {product}]\n🗣️ Voix off : 'Quand ce petit {product} sauve littéralement ta santé mentale.'\n\n⏱️ 4s - 6s [Plan sur le lien en bio pointé du doigt]\n🗣️ Voix off : 'Profite du stock avant que mon patron ne supprime la page !'"
+        else:
+            return f"🎬 SCRIPT CHOC ACQUISITION (Niveau : {level})\n\n⏱️ 0s - 2s [Rupture visuelle forte / Geste brusque]\n🗣️ Voix off : 'Arrête immédiatement de scroller si tu fais partie des {audience} !'\n\n⏱️ 2s - 4s [Focus sur le produit résolvant le problème en vitesse x2]\n🗣️ Voix off : 'Ce {product} est en train de briser toutes les frustrations du marché.'\n\n⏱️ 4s - 6s [Texte clignotant : -50% CE SOIR]\n🗣️ Voix off : 'Profite de l'offre de lancement via le lien en bio !'"
 
-    # Génération automatique des hashtags SEO selon le produit
-    niche_keyword = product.lower().replace(" ", "")
-    hashtags = f"\n\n#️⃣ TAGS RECOMMANDÉS : #{niche_keyword} #ecomfrance #shopifyfrance #tiktokmademebuyit #dropshippingfr #astuce{niche_keyword}"
+    # --- BLOCK 4 : EMAIL ABANDON PANIER (Format épistolaire, accroche mail, lien cliquable, sentiment d'urgence) ---
+    elif content_type == "📢 Email abandon panier":
+        sujet = f"🛒 Objet : Ton panier pour {product} expire dans 47 minutes..."
+        if tone == "🧠 Scientifique & Expert":
+            return f"{sujet}\n\nBonjour,\n\nNous avons remarqué que vous n'avez pas finalisé la configuration de votre {product}.\n\nEn tant que {audience}, vous savez que négliger ce problème engendre des complications au quotidien. Notre solution a été optimisée pour vous éviter cela.\n\nVotre panier technique est réservé pour quelques heures encore.\n\n[🔬 Finaliser ma commande sécurisée]"
+        elif tone == "🎯 Humoristique & Décalé":
+            return f"{sujet}\n\nHey ! 👋\n\nTon {product} se sent terriblement seul et abandonné au fond de ton panier... \n\nLes autres {audience} l'achètent en masse et on va bientôt devoir lui trouver un nouveau propriétaire si tu ne viens pas le chercher.\n\nNe le laisse pas filer, on t'offre la livraison pour sceller votre réconciliation !\n\n[🎁 Sauver mon panier de la solitude]"
+        else:
+            return f"{sujet}\n\n⚠️ DERNIER AVERTISSEMENT\n\nLe {product} que tu as laissé de côté est presque en rupture complète de stock.\n\nPlusieurs {audience} ont validé leur panier ces dernières minutes. Passé ce délai, ton exemplaire sera attribué au client suivant.\n\n[⚡ Récupérer mon panier avant qu'il ne soit trop tard]"
 
-    return f"{tone_intro[tone]}{hooks[level]}\n\n{templates[content_type][level]}{hashtags}"
+    # --- BLOCK 5 : MESSAGES DM ET HOOKS ADS (Formats accrocheurs de prospection courts) ---
+    else: 
+        if tone == "🧠 Scientifique & Expert":
+            return f"📊 Message ciblé pour {audience} :\n'Bonjour, suite à nos analyses des besoins chez les {audience}, nous avons développé une approche mécanique via le {product}. Souhaitez-vous recevoir notre documentation technique ?'"
+        elif tone == "🎯 Humoristique & Décalé":
+            return f"🤪 Approche décalée :\n'Avis aux {audience} : On a créé le {product} pour arrêter de souffrir en silence. Promis, ça fait moins mal que de regarder son compte en banque. Tu veux la vidéo démo ?'"
+        else:
+            return f"💥 Accroche Cash :\n'Ton concurrent direct utilise déjà le {product} pour cibler les {audience} pendant que tu hésites. Ne reste pas à la traîne. Réponds INFO pour voir notre étude de cas.'"
 
 # HEADER
 st.markdown("<div class='title'>🛍️ ClientBoost Shopify</div>", unsafe_allow_html=True)
@@ -109,7 +84,7 @@ if st.session_state.page == "home":
     st.write("❌ Ta description produit = 0 vente")
     st.write("❌ Tu sais pas quoi écrire pour vendre")
     st.write("---")
-    st.write("💡 L'IA génère du contenu à haute conversion pour ton produit e-commerce en 6 secondes chrono.")
+    st.write("💡 L'IA génère du contenu à haute conversion adapté au format exact de ton choix (TikTok, Bio, Shopify).")
     if st.button("🚀 Générer mon 1er contenu qui vend"):
         st.session_state.page = "content"
         st.rerun()
@@ -146,7 +121,7 @@ elif st.session_state.page == "levels":
 
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown("<div class='card' style='text-align:center;'><h3>🥉 BASIC</h3><h2 style='color:#9CA3AF;'>$5</h2><p>Structure simple & rapide pour démarrer.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='card' style='text-align:center;'><h3>🥉 BASIC</h3><h2 style='color:#9CA3AF;'>$5</h2><p>Structure simple pour démarrer.</p></div>", unsafe_allow_html=True)
         if st.button("Choisir l'offre Basic"): 
             st.session_state.level = "basic"
             st.session_state.page = "payment"
@@ -160,7 +135,7 @@ elif st.session_state.page == "levels":
             st.rerun()
             
     with col3:
-        st.markdown("<div class='card' style='text-align:center; border: 1px solid #FACC15;'><h3>🥇 ULTRA 👑</h3><h2 style='color:#FACC15;'>$29</h2><p>Formule virale complète + Secrets de psychologie.</p></div>", unsafe_allow_html=True)
+        st.markdown("<div class='card' style='text-align:center; border: 1px solid #FACC15;'><h3>🥇 ULTRA 👑</h3><h2 style='color:#FACC15;'>$29</h2><p>Formule complète + Secrets de psychologie.</p></div>", unsafe_allow_html=True)
         if st.button("Choisir l'offre Ultra"): 
             st.session_state.level = "ultra"
             st.session_state.page = "payment"
@@ -185,12 +160,14 @@ elif st.session_state.page == "payment":
         with col_pay_trigger:
             if st.button("💳 Valider le paiement de Démo ($0)"):
                 st.session_state.paid = True
+                # CORRECTIF : On prépare l'affichage des bulles pour le prochain rechargement
+                st.session_state.trigger_balloons = True
                 st.rerun()
     else:
-        # 1. EXPÉRIENCE CLIENT DE FOLIE : NOTIFICATION WOW
-        if "wow_shown" not in st.session_state:
+        # CORRECTIF DES BULLES : Déclenchement propre au moment du rendu de la page payée
+        if st.session_state.get("trigger_balloons", False):
             st.balloons()
-            st.session_state.wow_shown = True
+            st.session_state.trigger_balloons = False # On éteint le trigger pour ne pas spammer
 
         st.markdown("""
         <div style="background: linear-gradient(135deg, #1e1b4b 0%, #111827 100%); padding: 25px; border-radius: 16px; border: 2px solid #F97316; margin-bottom: 25px;">
@@ -204,7 +181,7 @@ elif st.session_state.page == "payment":
         </div>
         """, unsafe_allow_html=True)
 
-        # 2. RELANCE ABONNEMENT EN FIN DE MOIS (DU 28 AU 31)
+        # RELANCE ABONNEMENT EN FIN DE MOIS (DU 28 AU 31)
         if datetime.now().day >= 28:
             st.markdown("""
             <div style="background-color: #7c2d12; padding: 20px; border-radius: 12px; border-left: 5px solid #f97316; margin-bottom: 25px;">
@@ -218,7 +195,7 @@ elif st.session_state.page == "payment":
             </div>
             """, unsafe_allow_html=True)
 
-        # 3. CRÉATION DU CONTENU ET CONFIGURATION DES PARAMÈTRES
+        # CONFIGURATION DES PARAMÈTRES
         st.write("### ⚙️ Personnalise tes données de vente")
         
         col_in1, col_in2 = st.columns(2)
@@ -227,7 +204,6 @@ elif st.session_state.page == "payment":
         with col_in2:
             audience = st.text_input("Qui est ton client idéal ? (Audience)", placeholder="Ex: travailleurs de bureau mal de dos")
             
-        # LE SÉLECTEUR DE TONALITÉ
         st.session_state.tone = st.selectbox(
             "Style et Tonalité de l'IA :", 
             ["💥 Cash & Agressif", "🧠 Scientifique & Expert", "🎯 Humoristique & Décalé"]
@@ -256,7 +232,6 @@ elif st.session_state.page == "payment":
             
             col_copy, col_download = st.columns(2)
             with col_copy:
-                # Échappement des caractères spéciaux JavaScript pour un bouton ultra stable
                 escaped_result = result_text.replace('`', '\\`').replace('$', '\\$').replace('\n', '\\n')
                 components.html(f"""
                 <button onclick="navigator.clipboard.writeText(`{escaped_result}`)"
@@ -279,8 +254,6 @@ elif st.session_state.page == "payment":
             st.session_state.page = "home"
             st.session_state.paid = False
             if "generated_result" in st.session_state: del st.session_state.generated_result
-            if "wow_shown" in st.session_state: del st.session_state.wow_shown
             st.rerun()
 
 st.caption("Built by kēllønę 🔗💨 | ClientBoost Shopify v3")
-    
