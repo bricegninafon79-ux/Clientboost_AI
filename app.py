@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // ==========================================
-// 1. STRUCTURE DES DONNÉES (Nos 7 Problèmes Validés)
+// 1. DÉFINITION DES TYPES (TypeScript)
 // ==========================================
 interface Field {
   label: string;
@@ -16,6 +16,9 @@ interface MarketingProblem {
   fields: Field[];
 }
 
+// ==========================================
+// 2. BASE DE DONNÉES DES 7 CAS D'USAGE
+// ==========================================
 const MARKETING_PROBLEMS: MarketingProblem[] = [
   {
     id: "instagram_bio",
@@ -174,7 +177,7 @@ const MARKETING_PROBLEMS: MarketingProblem[] = [
 ];
 
 // ==========================================
-// 2. COMPOSANT PRINCIPAL DE L'INTERFACE
+// 3. COMPOSANT D'INTERFACE PRINCIPAL
 // ==========================================
 export default function CopywritingDashboard() {
   const [selectedProblem, setSelectedProblem] = useState<MarketingProblem>(MARKETING_PROBLEMS[0]);
@@ -182,6 +185,7 @@ export default function CopywritingDashboard() {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [aiResult, setAiResult] = useState<string>("");
 
+  // Switch d'outil (reset les inputs et le résultat précédent)
   const handleProblemChange = (problemId: string) => {
     const problem = MARKETING_PROBLEMS.find(p => p.id === problemId);
     if (problem) {
@@ -191,10 +195,12 @@ export default function CopywritingDashboard() {
     }
   };
 
+  // Capture des entrées du formulaire
   const handleInputChange = (label: string, value: string) => {
     setFormValues(prev => ({ ...prev, [label]: value }));
   };
 
+  // Soumission et appel de génération (Simulé - Prêt pour Fetch/Axios)
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault();
     setIsGenerating(true);
@@ -202,23 +208,37 @@ export default function CopywritingDashboard() {
 
     setTimeout(() => {
       setIsGenerating(false);
-      setAiResult(`✨ [Résultat IA simulé pour : ${selectedProblem.title}]\n\nVoici le livrable généré en se basant sur vos entrées : \n${Object.entries(formValues).map(([key, val]) => `- ${key} : ${val}`).join('\n')}\n\nVotre copie marketing optimisée pour la conversion est prête !`);
-    }, 1500);
+      // Exemple de formatage de sortie propre
+      const inputsReview = Object.entries(formValues)
+        .map(([key, val]) => `📍 ${key} : "${val}"`)
+        .join('\n');
+
+      setAiResult(
+        `✨ [Copie Optimisée Rédaction IA]\n\n` +
+        `Framework appliqué avec succès pour : ${selectedProblem.title}\n` +
+        `----------------------------------------\n` +
+        `${inputsReview}\n\n` +
+        `👉 [Votre Texte Final] : "Imaginez pouvoir accomplir cela en un clic. Découvrez notre méthode exclusive dès aujourd'hui. Cliquez sur le lien ci-dessous pour transformer vos résultats immédiatement."`
+      );
+    }, 1200);
   };
 
   return (
     <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '40px 20px', fontFamily: 'system-ui, sans-serif', color: '#1a1a1a' }}>
+      
+      {/* Header */}
       <header style={{ marginBottom: '40px', borderBottom: '1px solid #eaeaea', paddingBottom: '20px' }}>
-        <h1 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '8px' }}>⚡️ IA Copywriting Suite</h1>
-        <p style={{ color: '#666', margin: 0 }}>Sélectionnez un problème marketing pour générer une copie haute conversion basée sur notre framework en 3 champs.</p>
+        <h1 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '8px', letterSpacing: '-0.5px' }}>⚡️ IA Copywriting Suite</h1>
+        <p style={{ color: '#666', margin: 0, fontSize: '16px' }}>Sélectionnez un levier marketing pour générer des textes à forte conversion basés sur notre framework précis en 3 champs.</p>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '30px' }}>
+      {/* Grid de mise en page */}
+      <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: '35px' }}>
         
-        {/* Navigation gauche */}
+        {/* Navigation latérale gauche */}
         <aside>
-          <h3 style={{ fontSize: '14px', textTransform: 'uppercase', color: '#999', letterSpacing: '1px', marginBottom: '15px' }}>
-            Outils disponibles ({MARKETING_PROBLEMS.length})
+          <h3 style={{ fontSize: '12px', textTransform: 'uppercase', color: '#888', letterSpacing: '1.2px', marginBottom: '15px', fontWeight: '700' }}>
+            Leviers de conversion ({MARKETING_PROBLEMS.length})
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {MARKETING_PROBLEMS.map((problem) => (
@@ -228,15 +248,17 @@ export default function CopywritingDashboard() {
                 onClick={() => handleProblemChange(problem.id)}
                 style={{
                   padding: '14px 16px',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   border: '1px solid',
                   borderColor: selectedProblem.id === problem.id ? '#0066cc' : '#e0e0e0',
-                  backgroundColor: selectedProblem.id === problem.id ? '#f0f7ff' : '#fff',
+                  backgroundColor: selectedProblem.id === problem.id ? '#f0f7ff' : '#flex',
                   color: selectedProblem.id === problem.id ? '#0066cc' : '#333',
                   textAlign: 'left',
-                  fontWeight: selectedProblem.id === problem.id ? '600' : '400',
+                  fontWeight: selectedProblem.id === problem.id ? '600' : '500',
+                  fontSize: '14px',
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease'
+                  transition: 'all 0.15s ease-in-out',
+                  boxShadow: selectedProblem.id === problem.id ? '0 2px 4px rgba(0,102,204,0.08)' : 'none'
                 }}
               >
                 {problem.title}
@@ -245,17 +267,20 @@ export default function CopywritingDashboard() {
           </div>
         </aside>
 
-        {/* Zone droite */}
-        <main style={{ backgroundColor: '#f9f9f9', padding: '30px', borderRadius: '12px', border: '1px solid #eaeaea' }}>
-          <div style={{ marginBottom: '25px' }}>
-            <h2 style={{ fontSize: '22px', margin: '0 0 8px 0' }}>{selectedProblem.title}</h2>
-            <p style={{ color: '#555', fontSize: '15px', lineHeight: '1.5', margin: 0 }}>{selectedProblem.description}</p>
+        {/* Espace de travail central droit */}
+        <main style={{ backgroundColor: '#ffffff', padding: '35px', borderRadius: '14px', border: '1px solid #eaeaea', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
+          
+          {/* Entête du problème sélectionné */}
+          <div style={{ marginBottom: '30px', borderBottom: '1px solid #f5f5f5', paddingBottom: '20px' }}>
+            <h2 style={{ fontSize: '24px', fontWeight: '700', margin: '0 0 10px 0', color: '#111' }}>{selectedProblem.title}</h2>
+            <p style={{ color: '#555', fontSize: '15px', lineHeight: '1.6', margin: 0 }}>{selectedProblem.description}</p>
           </div>
 
-          <form onSubmit={handleGenerate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {/* Formulaire dynamique */}
+          <form onSubmit={handleGenerate} style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
             {selectedProblem.fields.map((field, index) => (
-              <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                <label style={{ fontWeight: '600', fontSize: '14px', color: '#333' }}>
+              <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <label style={{ fontWeight: '600', fontSize: '14px', color: '#222' }}>
                   {field.label} <span style={{ color: '#ff4d4f' }}>*</span>
                 </label>
                 <input
@@ -265,43 +290,49 @@ export default function CopywritingDashboard() {
                   value={formValues[field.label] || ''}
                   onChange={(e) => handleInputChange(field.label, e.target.value)}
                   style={{
-                    padding: '12px',
-                    borderRadius: '6px',
-                    border: '1px solid #ccc',
+                    padding: '14px',
+                    borderRadius: '8px',
+                    border: '1px solid #d9d9d9',
                     fontSize: '15px',
-                    outline: 'none'
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                    backgroundColor: '#fafafa'
                   }}
+                  onFocus={(e) => (e.target.style.borderColor = '#0066cc')}
+                  onBlur={(e) => (e.target.style.borderColor = '#d9d9d9')}
                 />
-                <span style={{ fontSize: '12px', color: '#777', fontStyle: 'italic' }}>{field.description}</span>
+                <span style={{ fontSize: '13px', color: '#666', fontStyle: 'italic' }}>{field.description}</span>
               </div>
             ))}
 
+            {/* Bouton CTA d'envoi */}
             <button
               type="submit"
               disabled={isGenerating}
               style={{
-                marginTop: '10px',
-                padding: '14px',
-                borderRadius: '6px',
+                marginTop: '12px',
+                padding: '15px',
+                borderRadius: '8px',
                 border: 'none',
                 backgroundColor: '#0066cc',
-                color: '#fff',
+                color: '#ffffff',
                 fontSize: '16px',
                 fontWeight: '600',
                 cursor: isGenerating ? 'not-allowed' : 'pointer',
                 opacity: isGenerating ? 0.7 : 1,
-                transition: 'background-color 0.2s'
+                boxShadow: '0 4px 10px rgba(0, 102, 204, 0.2)',
+                transition: 'all 0.2s'
               }}
             >
-              {isGenerating ? 'Génération de la pépite en cours... ⚙️' : 'Générer le contenu 🚀'}
+              {isGenerating ? 'Génération de la pépite en cours... ⚙️' : 'Générer la copie magique 🚀'}
             </button>
           </form>
 
-          {/* Affichage du résultat */}
+          {/* Zone d'affichage du résultat de l'IA */}
           {aiResult && (
-            <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#fff', borderLeft: '4px solid #0066cc', borderRadius: '4px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
-              <h4 style={{ margin: '0 0 10px 0', color: '#0066cc' }}>🎯 Copie rédigée avec succès :</h4>
-              <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: '15px', lineHeight: '1.6', margin: 0, color: '#333' }}>{aiResult}</pre>
+            <div style={{ marginTop: '35px', padding: '24px', backgroundColor: '#f8faff', borderLeft: '4px solid #0066cc', borderRadius: '8px', borderTop: '1px solid #e6f0fa', borderRight: '1px solid #e6f0fa', borderBottom: '1px solid #e6f0fa' }}>
+              <h4 style={{ margin: '0 0 12px 0', color: '#0066cc', fontWeight: '700', fontSize: '15px' }}>🎯 Contenu généré prêt pour la conversion :</h4>
+              <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', fontSize: '14px', lineHeight: '1.6', margin: 0, color: '#2c3e50', backgroundColor: '#ffffff', padding: '15px', borderRadius: '6px', border: '1px solid #e2e8f0' }}>{aiResult}</pre>
             </div>
           )}
         </main>
