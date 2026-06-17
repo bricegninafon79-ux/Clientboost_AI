@@ -1,203 +1,312 @@
-import streamlit as st
-import streamlit.components.v1 as components
-from datetime import datetime
+import React, { useState } from 'react';
 
-st.set_page_config(page_title="ClientBoost Shopify", page_icon="🛍️", layout="wide")
+// ==========================================
+// 1. STRUCTURE DES DONNÉES (Nos 7 Problèmes Validés)
+// ==========================================
+interface Field {
+  label: string;
+  placeholder: string;
+  description: string;
+}
 
-# STATE
-if "page" not in st.session_state: st.session_state.page = "home"
-if "content_type" not in st.session_state: st.session_state.content_type = ""
-if "tone" not in st.session_state: st.session_state.tone = "💥 Cash & Aggressive"
-if "level" not in st.session_state: st.session_state.level = ""
-if "paid" not in st.session_state: st.session_state.paid = False
+interface MarketingProblem {
+  id: string;
+  title: string;
+  description: string;
+  fields: Field[];
+}
 
-# DYNAMIC INPUTS STATE
-if "input_1" not in st.session_state: st.session_state.input_1 = ""
-if "input_2" not in st.session_state: st.session_state.input_2 = ""
-if "input_3" not in st.session_state: st.session_state.input_3 = ""
-
-# DESIGN
-st.markdown("""
-<style>
-.stApp {background-color: #0a0e1a; color: white;}
-.title {text-align: center; font-size: 48px; font-weight: 800; background: linear-gradient(90deg, #F97316 0%, #FACC15 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-.card {background-color: #111827; padding: 25px; border-radius: 16px; margin-top: 15px; border: 1px solid #1f2937;}
-.stButton > button {background: linear-gradient(90deg, #F97316 0%, #FB923C 100%); color: white; font-weight: bold; border-radius: 12px; width: 100%; padding: 16px; font-size: 16px; border: none;}
-.trust {text-align: center; color: #9CA3AF; font-size: 14px;}
-</style>
-""", unsafe_allow_html=True)
-
-# SMART COPYWRITING ENGINE USING DYNAMIC VARIABLES
-def generate_shopify_content(content_type, i1, i2, i3, level, tone):
-    if content_type == "📢 Instagram Bio":
-        # i1 = Product/Brand, i2 = Niche/Audience, i3 = Promo Code
-        if tone == "💥 Cash & Aggressive":
-            return f"❌ Tired of cheap alternatives?\n🛍️ The original {i1} for {i2} has finally arrived.\n⚡ Limited: -20% off with code: {i3}\n👇 Claim yours before stock hits zero!"
-        else:
-            return f"🔬 Certified {i1} Hub\n💡 Engineered for high-performance results among {i2}.\n🌿 Code active: {i3}\n👇 Read our report here:"
-
-    elif content_type == "📢 Shopify Product Description":
-        # i1 = Product Name, i2 = Target Pain Point, i3 = Guarantee/Bonus
-        return f"### 📑 Premium {i1} — Eradicate {i2} Permanently\n\nSpecifically engineered to tackle the main struggle of modern users, the {i1} redefines efficiency standard.\n\n#### 🔬 Why it changes everything:\nStop dealing with {i2} every day. This formula delivers noticeable improvements within 24 hours.\n\n#### 📊 What you lock in today:\n* **Risk-Free Trial:** {i3} covered on every purchase.\n* **Premium Build Quality:** Tested and certified structure.\n\n*Hit 'Add to Cart' to protect your routine.*"
-
-    elif content_type in ["📢 1st TikTok Post", "📢 6s Video Script"]:
-        # i1 = Main hook hook trend, i2 = Product, i3 = Main Action on screen
-        return f"🎬 VIRAL CONVERSION VIDEO SCRIPT ({level.upper()})\n\n[0s - 2s: Pattern Interrupt]\n🎥 VISUAL: {i3}\n🗣️ VOICE-OVER: \"Stop scrolling if you are dealing with {i1} right now!\"\n\n[2s - 4s: Solution Showcased]\n🎥 VISUAL: Smooth cut showing how {i2} acts instantly.\n🗣️ VOICE-OVER: \"This {i2} is literally breaking the market.\"\n\n[4s - 6s: Quick CTA]\n🎥 VISUAL: Fast pointing gesture towards bio.\n🗣️ VOICE-OVER: \"Secure yours via our bio link right now!\""
-
-    elif content_type == "📢 Cart Abandonment Email":
-        # i1 = Product left behind, i2 = Scarcity time limit, i3 = Incentive/Free shipping
-        return f"🛒 Subject: ⏳ Your {i1} cart expires in {i2}...\n\nHey there!\n\nWe noticed you left your custom {i1} behind. Demand is exceptionally high and your slot will expire in exactly {i2}.\n\nTo help you make up your mind, we unlocked this special perk just for you: {i3}.\n\n⚡ [Reclaim My Order & Applied Perk]"
-
-    else:
-        # Defaults / Ads
-        return f"💥 ACQUISITION HOOK ({tone})\n\nFocus: {i1} | Solution: {i2}\n\n👉 Angle: \"Tired of {i1}? {i2} is the missing link your ecommerce store needed. Click learn more to claim our blueprint.\""
-
-# HEADER
-st.markdown("<div class='title'>🛍️ ClientBoost Shopify</div>", unsafe_allow_html=True)
-st.markdown("<div class='trust'>2,941 Shopify Beginners • Dynamic Generation Engine • No signup</div>", unsafe_allow_html=True)
-
-# PAGE 1: HOME
-if st.session_state.page == "home":
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
-    st.write("## ❌ Are you a struggling Shopify Beginner?")
-    st.write("❌ Your TikTok videos get stuck at 12 views")
-    st.write("❌ Your current product description = 0 sales")
-    st.write("---")
-    st.write("💡 Our engine dynamically adapts its forms and outputs based on the exact problem you are solving.")
-    if st.button("🚀 Choose My Copywriting Asset"):
-        st.session_state.page = "content"
-        st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# PAGE 2: SELECT CONTENT TYPE
-elif st.session_state.page == "content":
-    st.subheader("💡 Select Your Asset Type")
-    content_types = [
-        "📢 1st TikTok Post",
-        "📢 Shopify Product Description",
-        "📢 Instagram Bio",
-        "📢 Cart Abandonment Email",
-        "📢 Facebook Ads Hook"
+const MARKETING_PROBLEMS: MarketingProblem[] = [
+  {
+    id: "instagram_bio",
+    title: "📢 Instagram Bio",
+    description: "Crée une bio Instagram percutante qui accroche le visiteur et le pousse à cliquer sur le lien de la boutique grâce à une phrase de motivation ou une promesse forte.",
+    fields: [
+      {
+        label: "Motivational Headline / Strong Promise",
+        placeholder: "e.g., Become the absolute best version of yourself everyday.",
+        description: "La phrase de motivation ou promesse forte qui donne envie d'agir."
+      },
+      {
+        label: "The Destination / Value Proposition",
+        placeholder: "e.g., Join 10,000+ people crushing their fitness goals.",
+        description: "Ce qu'ils vont découvrir s'ils rejoignent le mouvement."
+      },
+      {
+        label: "Urgent Call To Action",
+        placeholder: "e.g., Start your transformation journey right here 👇",
+        description: "L'appel à l'action direct pour pousser à cliquer immédiatement sur le lien juste en dessous."
+      }
     ]
-    st.session_state.content_type = st.radio("What are we building?", content_types)
-    
-    if st.button("Configure Dynamic Setup →"):
-        st.session_state.page = "config"
-        st.rerun()
+  },
+  {
+    id: "1st_tiktok_post",
+    title: "📢 1st TikTok Post",
+    description: "Génère un script complet (texte écran, voix-off, visuel) pour ton tout premier post TikTok basé sur une situation du quotidien ou une tendance.",
+    fields: [
+      {
+        label: "Relatable hook problem or TikTok trend",
+        placeholder: "e.g., POV: Your phone battery dies right when you start GPS navigation",
+        description: "Le problème quotidien ou le format de tendance pour que l'utilisateur s'arrête."
+      },
+      {
+        label: "Product name being showcased",
+        placeholder: "e.g., VoltMax Ultra Slim Powerbank",
+        description: "Le nom du produit mis en avant dans la vidéo."
+      },
+      {
+        label: "Visual action taking place in first 2 seconds",
+        placeholder: "e.g., Slamming a dead phone on the desk out of frustration",
+        description: "L'action visuelle de départ pour synchroniser le texte et l'image."
+      }
+    ]
+  },
+  {
+    id: "shopify_product_description",
+    title: "📢 Shopify Product Description",
+    description: "Rédige une page de vente e-commerce complète qui transforme les visiteurs en acheteurs en insistant sur leurs frustrations.",
+    fields: [
+      {
+        label: "Product Name & Core Function",
+        placeholder: "e.g., AuraGlow LED Mirror - Smart makeup mirror with adjustable lighting",
+        description: "Le nom de ton produit et ce à quoi il sert de manière simple."
+      },
+      {
+        label: "Target Customer's Pain Point",
+        placeholder: "e.g., Bad lighting in the bathroom making makeup look patchy or unnatural",
+        description: "Le problème majeur ou la frustration quotidienne de ton client cible."
+      },
+      {
+        label: "Unfair advantage or unique feature",
+        placeholder: "e.g., True-color lighting technology mimicking natural sunlight with a 10x magnetic zoom",
+        description: "L'avantage unique qui rend ton produit supérieur aux autres."
+      }
+    ]
+  },
+  {
+    id: "cart_abandonment_email",
+    title: "📢 Cart Abandonment Email",
+    description: "Crée un email de relance automatique pour récupérer les clients qui ont quitté le panier au moment de payer.",
+    fields: [
+      {
+        label: "Name of items left in shopping cart",
+        placeholder: "e.g., Wireless Massage Gun",
+        description: "Le rappel textuel exact de l'objet oublié dans le panier."
+      },
+      {
+        label: "Urgency countdown / Time limit",
+        placeholder: "e.g., 47 minutes",
+        description: "La limite de temps avant que leur panier ou le stock ne soit expiré."
+      },
+      {
+        label: "Extra customer checkout incentive",
+        placeholder: "e.g., Free Shipping + Extra 10% off automated coupon",
+        description: "Le petit cadeau ou code promo exclusif pour éliminer l'objection du prix."
+      }
+    ]
+  },
+  {
+    id: "cold_dm_message",
+    title: "📢 Cold DM Customer Message",
+    description: "Génère un message d'approche privé (Instagram, TikTok) ultra-personnalisé pour démarcher sans vendre de force.",
+    fields: [
+      {
+        label: "Target niche or account type",
+        placeholder: "e.g., Fitness Influencers / Fashion Stores",
+        description: "Le type de compte ou la niche de la personne que tu contactes."
+      },
+      {
+        label: "Personalized compliment / Icebreaker angle",
+        placeholder: "e.g., Their latest reel about leg day workouts",
+        description: "Le compliment ou le détail précis de leur contenu pour briser la glace."
+      },
+      {
+        label: "Irresistible offer / Collaboration value",
+        placeholder: "e.g., Sending 3 free product samples with no strings attached",
+        description: "L'offre gratuite ou l'avantage immédiat que tu leur apportes."
+      }
+    ]
+  },
+  {
+    id: "6s_video_script",
+    title: "📢 6s Video Script",
+    description: "Crée un script vidéo ultra-court et rythmé (format B-roll / Reels) pour capter l'attention en un éclair.",
+    fields: [
+      {
+        label: "Aggressive 2-second hook text",
+        placeholder: "e.g., Stop buying expensive teeth whitening kits...",
+        description: "La phrase choc ou provocante des 2 premières secondes pour stopper le scroll."
+      },
+      {
+        label: "Main lightning-fast result",
+        placeholder: "e.g., White teeth in exactly 6 seconds",
+        description: "Le bénéfice ou résultat immédiat affiché au milieu de la vidéo."
+      },
+      {
+        label: "Call to action overlay",
+        placeholder: "e.g., Click 'Shop Now' before stock ends",
+        description: "L'appel à l'action flash qui s'affiche à la fin de la vidéo."
+      }
+    ]
+  },
+  {
+    id: "facebook_ads_hook",
+    title: "📢 Facebook Ads Hook",
+    description: "Rédige les premières lignes textuelles d'une publicité Facebook pour bousculer les croyances de ton audience.",
+    fields: [
+      {
+        label: "Target Audience or Customer Persona",
+        placeholder: "e.g., Busy remote workers with back pain",
+        description: "L'audience ou le profil type du client à qui s'adresse la publicité."
+      },
+      {
+        label: "The big alternative / What they are currently doing wrong",
+        placeholder: "e.g., Buying expensive ergonomic chairs that don't fix posture",
+        description: "La fausse solution ou la mauvaise habitude actuelle de la cible."
+      },
+      {
+        label: "The direct benefit of the product",
+        placeholder: "e.g., Instantly straightens the spine with a lightweight daily brace",
+        description: "La promesse principale et le bénéfice direct apporté par ton produit."
+      }
+    ]
+  }
+];
 
-# PAGE 3: FULLY DYNAMIC CONFIGURATION PAGE (Changes according to choice)
-elif st.session_state.page == "config":
-    st.subheader("⚙️ Contextual Data Setup")
-    st.info(f"Customizing parameters specifically for: **{st.session_state.content_type}**")
-    
-    st.markdown("<div class='card'>", unsafe_allow_html=True)
-    
-    # CONDITION 1: INSTAGRAM BIO
-    if st.session_state.content_type == "📢 Instagram Bio":
-        st.session_state.input_1 = st.text_input("Brand or Product Name", value=st.session_state.input_1, placeholder="e.g., PosturePro")
-        st.session_state.input_2 = st.text_input("Target Community / Audience niche", value=st.session_state.input_2, placeholder="e.g., Developers & Office Workers")
-        st.session_state.input_3 = st.text_input("Bio Discount Code", value=st.session_state.input_3, placeholder="e.g., BIO20")
+// ==========================================
+// 2. COMPOSANT PRINCIPAL DE L'INTERFACE
+// ==========================================
+export default function CopywritingDashboard() {
+  const [selectedProblem, setSelectedProblem] = useState<MarketingProblem>(MARKETING_PROBLEMS[0]);
+  const [formValues, setFormValues] = useState<{ [key: string]: string }>({});
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [aiResult, setAiResult] = useState<string>("");
+
+  // Gérer le changement de problème sélectionné
+  const handleProblemChange = (problemId: string) => {
+    const problem = MARKETING_PROBLEMS.find(p => p.id === problemId);
+    if (problem) {
+      setSelectedProblem(problem);
+      setFormValues({}); // Réinitialise le formulaire
+      setAiResult("");  // Réinitialise le résultat précédent
+    }
+  };
+
+  // Gérer la saisie dans les champs
+  const handleInputChange = (label: string, value: string) => {
+    setFormValues(prev => ({ ...prev, [label]: value }));
+  };
+
+  // Simuler l'appel API à l'IA (à lier avec ton backend GPT/Claude)
+  const handleGenerate = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsGenerating(true);
+    setAiResult("");
+
+    setTimeout(() => {
+      setIsGenerating(false);
+      setAiResult(`✨ [Résultat IA simulé pour : ${selectedProblem.title}]\n\nVoici le livrable généré en se basant sur vos entrées : \n${Object.entries(formValues).map(([key, val]) => `- ${key} : ${val}`).join('\n')}\n\nVotre copie marketing optimisée pour la conversion est prête !`);
+    }, 1500);
+  };
+
+  return (
+    <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '40px 20px', fontFamily: 'system-ui, sans-serif', color: '#1a1a1a' }}>
+      <header style={{ marginBottom: '40px', borderBottom: '1px solid #eaeaea', paddingBottom: '20px' }}>
+        <h1 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '8px' }}>⚡️ IA Copywriting Suite</h1>
+        <p style={{ color: '#666', margin: 0 }}>Sélectionnez un problème marketing pour générer une copie haute conversion basée sur notre framework en 3 champs.</p>
+      </header>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '30px' }}>
         
-    # CONDITION 2: PRODUCT DESCRIPTION
-    elif st.session_state.content_type == "📢 Shopify Product Description":
-        st.session_state.input_1 = st.text_input("Main Product Name", value=st.session_state.input_1, placeholder="e.g., Orthopedic Pillow")
-        st.session_state.input_2 = st.text_input("Biggest Pain Point / Frustration solved", value=st.session_state.input_2, placeholder="e.g., Chronic Neck Pain & Insomnia")
-        st.session_state.input_3 = st.text_input("Guarantee policy or Free Bonus included", value=st.session_state.input_3, placeholder="e.g., 90-Day Money Back Guarantee")
-        
-    # CONDITION 3: TIKTOK / VIDEO SCRIPTS
-    elif st.session_state.content_type in ["📢 1st TikTok Post", "📢 6s Video Script"]:
-        st.session_state.input_1 = st.text_input("Relatable hook problem or TikTok trend", value=st.session_state.input_1, placeholder="e.g., Waking up completely crushed at 7 AM")
-        st.session_state.input_2 = st.text_input("Product name being showcased", value=st.session_state.input_2, placeholder="e.g., DeepSleep Mask")
-        st.session_state.input_3 = st.text_input("Visual action taking place in first 2 seconds", value=st.session_state.input_3, placeholder="e.g., Throwing a pillow face-camera out of pure exhaustion")
+        {/* Navigation gauche : Liste des problèmes */}
+        <aside>
+          <h3 style={{ fontSize: '14px', uppercase: 'true', color: '#999', letterSpacing: '1px', marginBottom: '15px' }}>Outils disponibles ({MARKETING_PROBLEMS.length})</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {MARKETING_PROBLEMS.map((problem) => (
+              <button
+                key={problem.id}
+                onClick={() => handleProblemChange(problem.id)}
+                style={{
+                  padding: '14px 16px',
+                  borderRadius: '8px',
+                  border: '1px solid',
+                  borderColor: selectedProblem.id === problem.id ? '#0066cc' : '#e0e0e0',
+                  backgroundColor: selectedProblem.id === problem.id ? '#f0f7ff' : '#fff',
+                  color: selectedProblem.id === problem.id ? '#0066cc' : '#333',
+                  textAlign: 'left',
+                  fontWeight: selectedProblem.id === problem.id ? '600' : '400',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                {problem.title}
+              </button>
+            ))}
+          </div>
+        </aside>
 
-    # CONDITION 4: ABANDONED CART EMAIL
-    elif st.session_state.content_type == "📢 Cart Abandonment Email":
-        st.session_state.input_1 = st.text_input("Name of items left in shopping cart", value=st.session_state.input_1, placeholder="e.g., Wireless Massage Gun")
-        st.session_state.input_2 = st.text_input("Urgency countdown / Time limit", value=st.session_state.input_2, placeholder="e.g., 47 minutes")
-        st.session_state.input_3 = st.text_input("Extra customer checkout incentive", value=st.session_state.input_3, placeholder="e.g., Free Shipping + Extra 10% off automated coupon")
+        {/* Zone droite : Formulaire Dynamique & Résultats */}
+        <main style={{ backgroundColor: '#f9f9f9', padding: '30px', borderRadius: '12px', border: '1px solid #eaeaea' }}>
+          <div style={{ marginBottom: '25px' }}>
+            <h2 style={{ fontSize: '22px', margin: '0 0 8px 0' }}>{selectedProblem.title}</h2>
+            <p style={{ color: '#555', fontSize: '15px', lineHeight: '1.5', margin: 0 }}>{selectedProblem.description}</p>
+          </div>
 
-    # DEFAULT FALLBACK
-    else:
-        st.session_state.input_1 = st.text_input("Core Customer Frustration", value=st.session_state.input_1)
-        st.session_state.input_2 = st.text_input("Core Unique Selling Proposition", value=st.session_state.input_2)
-        st.session_state.input_3 = st.text_input("Call to Action text", value=st.session_state.input_3)
+          <form onSubmit={handleGenerate} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            {selectedProblem.fields.map((field, index) => (
+              <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <label style={{ fontWeight: '600', fontSize: '14px', color: '#333' }}>
+                  {field.label} <span style={{ color: '#ff4d4f' }}>*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder={field.placeholder}
+                  value={formValues[field.label] || ''}
+                  onChange={(e) => handleInputChange(field.label, e.target.value)}
+                  style={{
+                    padding: '12px',
+                    borderRadius: '6px',
+                    border: '1px solid #ccc',
+                    fontSize: '15px',
+                    outline: 'none'
+                  }}
+                />
+                <span style={{ fontSize: '12px', color: '#777', italic: 'true' }}>{field.description}</span>
+              </div>
+            ))}
 
-    st.session_state.tone = st.selectbox("Brand Voice Tone:", ["💥 Cash & Aggressive", "🧠 Scientific & Expert", "🎯 Humorous & Quirky"])
-    st.markdown("</div>", unsafe_allow_html=True)
-    
-    col_back, col_next = st.columns([1, 4])
-    with col_back:
-        if st.button("⬅ Change Format"):
-            st.session_state.page = "content"
-            st.rerun()
-    with col_next:
-        if st.button("Proceed to Strategy Level →"):
-            if st.session_state.input_1 and st.session_state.input_2:
-                st.session_state.page = "levels"
-                st.rerun()
-            else:
-                st.error("⚠️ Please fill out the dynamic fields before matching your strategy!")
+            <button
+              type="submit"
+              disabled={isGenerating}
+              style={{
+                marginTop: '10px',
+                padding: '14px',
+                borderRadius: '6px',
+                border: 'none',
+                backgroundColor: '#0066cc',
+                color: '#fff',
+                fontSize: '16px',
+                fontWeight: '600',
+                cursor: isGenerating ? 'not-allowed' : 'pointer',
+                opacity: isGenerating ? 0.7 : 1,
+                transition: 'background-color 0.2s'
+              }}
+            >
+              {isGenerating ? 'Génération de la pépite en cours... ⚙️' : 'Générer le contenu 🚀'}
+            </button>
+          </form>
 
-# PAGE 4: PRICING LEVELS
-elif st.session_state.page == "levels":
-    st.subheader("💎 Step 3: Select Copywriting Power")
-    
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("<div class='card' style='text-align:center;'><h3>🥉 BASIC</h3><h2 style='color:#9CA3AF;'>$5</h2></div>", unsafe_allow_html=True)
-        if st.button("Choose Basic Plan"): 
-            st.session_state.level = "basic"; st.session_state.page = "payment"; st.rerun()
-    with col2:
-        st.markdown("<div class='card' style='text-align:center; border: 1px solid #F97316;'><h3>🥈 PRO ⭐</h3><h2 style='color:#F97316;'>$15</h2></div>", unsafe_allow_html=True)
-        if st.button("Choose Pro Plan"): 
-            st.session_state.level = "premium"; st.session_state.page = "payment"; st.rerun()
-    with col3:
-        st.markdown("<div class='card' style='text-align:center; border: 1px solid #FACC15;'><h3>🥇 ULTRA 👑</h3><h2 style='color:#FACC15;'>$29</h2></div>", unsafe_allow_html=True)
-        if st.button("Choose Ultra Plan"): 
-            st.session_state.level = "ultra"; st.session_state.page = "payment"; st.rerun()
+          {/* Affichage du résultat de l'IA */}
+          {aiResult && (
+            <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#fff', borderLeft: '4px solid #0066cc', borderRadius: '4px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+              <h4 style={{ margin: '0 0 10px 0', color: '#0066cc' }}>🎯 Copie rédigée avec succès :</h4>
+              <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: '15px', lineHeight: '1.6', margin: 0, color: '#333' }}>{aiResult}</pre>
+            </div>
+          )}
+        </main>
 
-# PAGE 5: PAYMENT & RESULT DELIVERY
-elif st.session_state.page == "payment":
-    if not st.session_state.paid:
-        st.warning("🔒 Unlock your custom dynamic asset")
-        st.info("💳 Sandbox Gateway - Test card: 4242 4242 4242 4242")
-        if st.button("💳 Validate Demo Payment ($0)"):
-            st.session_state.paid = True
-            st.rerun()
-    else:
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #1e1b4b 0%, #111827 100%); padding: 25px; border-radius: 16px; border: 2px solid #F97316; margin-bottom: 25px;">
-            <h3 style="color: #FACC15; margin-top: 0;">🎉 Generation Complete!</h3>
-        </div>
-        """, unsafe_allow_html=True)
-
-        # ENGINE CONVERSION
-        result_text = generate_shopify_content(
-            st.session_state.content_type, 
-            st.session_state.input_1, 
-            st.session_state.input_2, 
-            st.session_state.input_3, 
-            st.session_state.level,
-            st.session_state.tone
-        )
-        
-        st.markdown("<div class='card'>", unsafe_allow_html=True)
-        st.text_area("Your Copywriting Output:", result_text, height=380, key="out")
-        
-        # Clipboard component
-        escaped_result = result_text.replace('`', '\\`').replace('$', '\\$').replace('\n', '\\n')
-        components.html(f"""
-        <button onclick="navigator.clipboard.writeText(`{escaped_result}`)"
-        style="background: linear-gradient(90deg, #F97316 0%, #FACC15 100%); color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; width:100%; font-size:15px; height: 45px;">
-        📋 1-Click Copy To Clipboard
-        </button>
-        """, height=55)
-        st.markdown("</div>", unsafe_allow_html=True)
-
-        if st.button("🔄 Create Another Asset"):
-            st.session_state.page = "home"
-            st.session_state.paid = False
-            st.rerun()
-
-st.caption("Built by kēllønę | ClientBoost Shopify v3")
-            
+      </div>
+    </div>
+  );
+}
