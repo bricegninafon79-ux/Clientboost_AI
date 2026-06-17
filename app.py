@@ -7,9 +7,14 @@ st.set_page_config(page_title="ClientBoost Shopify", page_icon="🛍️", layout
 # STATE
 if "page" not in st.session_state: st.session_state.page = "home"
 if "content_type" not in st.session_state: st.session_state.content_type = ""
+if "tone" not in st.session_state: st.session_state.tone = "💥 Cash & Aggressive"
 if "level" not in st.session_state: st.session_state.level = ""
-if "tone" not in st.session_state: st.session_state.tone = "💥 Cash & Agressif"
 if "paid" not in st.session_state: st.session_state.paid = False
+
+# DYNAMIC INPUTS STATE
+if "input_1" not in st.session_state: st.session_state.input_1 = ""
+if "input_2" not in st.session_state: st.session_state.input_2 = ""
+if "input_3" not in st.session_state: st.session_state.input_3 = ""
 
 # DESIGN
 st.markdown("""
@@ -22,238 +27,177 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# MOTEUR DE COPYWRITING AVEC ARCHITECTURES ADAPTÉES ET UNIQUES
-def generate_shopify_content(content_type, product, audience, level, tone):
-    
-    # --- BLOCK 1 : BIO INSTAGRAM (Format court, percutant, listes d'emojis, puces, max 150 car.) ---
-    if content_type == "📢 Bio Instagram":
-        if tone == "💥 Cash & Agressif":
-            return f"❌ Marre des alternatives bas de gamme ?\n🛍️ Voici le {product} original pour les {audience}.\n⚡ -20% sur TOUT le site avec le code : REBELLE20\n👇 Ne rate pas l'offre unique"
-        elif tone == "🧠 Scientifique & Expert":
-            return f"🔬 Expertise & Qualité certifiée\n💡 Solution n°1 pour les {audience} exigeants.\n🌱 Conception ergonomique du {product} breveté\n👇 Découvrez notre étude clinique"
+# SMART COPYWRITING ENGINE USING DYNAMIC VARIABLES
+def generate_shopify_content(content_type, i1, i2, i3, level, tone):
+    if content_type == "📢 Instagram Bio":
+        # i1 = Product/Brand, i2 = Niche/Audience, i3 = Promo Code
+        if tone == "💥 Cash & Aggressive":
+            return f"❌ Tired of cheap alternatives?\n🛍️ The original {i1} for {i2} has finally arrived.\n⚡ Limited: -20% off with code: {i3}\n👇 Claim yours before stock hits zero!"
         else:
-            return f"🤪 On est désolés pour votre banquier...\n🔥 Le {product} qui fait vriller tous les {audience}.\n📦 Livraison gratuite (parce qu'on est sympas)\n👇 Craquez ici"
+            return f"🔬 Certified {i1} Hub\n💡 Engineered for high-performance results among {i2}.\n🌿 Code active: {i3}\n👇 Read our report here:"
 
-    # --- BLOCK 2 : DESCRIPTION PRODUIT SHOPIFY (Format long, marketing de structure, bénéfices) ---
-    elif content_type == "📢 Description produit Shopify":
-        intro = f"Découvrez le {product}, conçu spécifiquement pour transformer le quotidien des {audience}."
-        if tone == "🧠 Scientifique & Expert":
-            return f"{intro}\n\n📊 POURQUOI CE PRODUIT EST RECOMMANDÉ PAR LES EXPERTS :\nNotre formule/mécanisme cible précisément la frustration majeure des {audience}. Contrairement aux produits standards, il intègre des composants premium testés en laboratoire.\n\n✅ AVANTAGES TECHNIQUES :\n- Efficacité mesurable en moins de 24 heures.\n- Matériaux durables hypoallergéniques adaptés pour {audience}.\n- Garantie satisfait ou remboursé de 30 jours.\n\n📦 Inclus dans votre colis : 1x {product}, 1x Guide d'utilisation expert."
-        elif tone == "🎯 Humoristique & Décalé":
-            return f"{intro}\n\n⚠️ ALERTE : Ce produit risque de rendre vos voisins extrêmement jaloux.\n\nOn sait ce que vous vous dites : 'Encore un gadget'. Sauf que le {product} a déjà fait perdre la tête à plus de 1000 {audience}. \n\n🔥 POURQUOI VOUS EN AVEZ BESOIN :\n- Règle votre problème avant que vous ayez le temps de râler.\n- Validé à 100% par la communauté.\n- Si vous n'aimez pas, on vous rembourse (et on pleure un bon coup)."
-        else:
-            return f"{intro}\n\n⚠️ ATTENTION : Le {product} est victime de son succès. Stock ultra-limité.\n\nLes {audience} qui franchissent le pas ne reviennent jamais en arrière. C'est l'arme secrète qu'il manquait à votre routine.\n\n🧠 LES 3 PILIERS DE NOTRE SUCCÈS :\n1. Éradique la douleur principale des {audience}.\n2. Un design épuré, robuste et redoutablement efficace.\n3. Zéro risque : Garantie totale ou remboursement immédiat.\n\n⚡ Plus que 47 unités disponibles avant la prochaine rupture de stock."
+    elif content_type == "📢 Shopify Product Description":
+        # i1 = Product Name, i2 = Target Pain Point, i3 = Guarantee/Bonus
+        return f"### 📑 Premium {i1} — Eradicate {i2} Permanently\n\nSpecifically engineered to tackle the main struggle of modern users, the {i1} redefines efficiency standard.\n\n#### 🔬 Why it changes everything:\nStop dealing with {i2} every day. This formula delivers noticeable improvements within 24 hours.\n\n#### 📊 What you lock in today:\n* **Risk-Free Trial:** {i3} covered on every purchase.\n* **Premium Build Quality:** Tested and certified structure.\n\n*Hit 'Add to Cart' to protect your routine.*"
 
-    # --- BLOCK 3 : SCRIPT VIDÉO TIKTOK & REELS (Format minuté avec indications de plans et voix off) ---
-    elif content_type in ["📢 1er post TikTok", "📢 Script vidéo 6s"]:
-        if tone == "🧠 Scientifique & Expert":
-            return f"🎬 SCRIPT VIDÉO DE CONVERSION (Niveau : {level})\n\n⏱️ 0s - 2s [Plan macro serré] \n🗣️ Voix off : 'Voici la vérité scientifique que les marques vous cachent sur le problème des {audience}...'\n\n⏱️ 2s - 4s [Démonstration produit en action lente]\n🗣️ Voix off : 'Le {product} utilise un mécanisme breveté pour agir instantanément.'\n\n⏱️ 4s - 6s [Texte incrusté : Testé & Approuvé]\n🗣️ Voix off : 'Cliquez en bio pour voir l'analyse complète des laboratoires.'"
-        elif tone == "🎯 Humoristique & Décalé":
-            return f"🎬 SCRIPT VIRAL HUMOUR (Niveau : {level})\n\n⏱️ 0s - 2s [Gros plan visage fatigué + objet qui tombe] \n🗣️ Voix off : 'Dis-moi que tu es un {audience} sans me dire que tu es un {audience}...'\n\n⏱️ 2s - 4s [Transition rapide vers un sourire éclatant avec le {product}]\n🗣️ Voix off : 'Quand ce petit {product} sauve littéralement ta santé mentale.'\n\n⏱️ 4s - 6s [Plan sur le lien en bio pointé du doigt]\n🗣️ Voix off : 'Profite du stock avant que mon patron ne supprime la page !'"
-        else:
-            return f"🎬 SCRIPT CHOC ACQUISITION (Niveau : {level})\n\n⏱️ 0s - 2s [Rupture visuelle forte / Geste brusque]\n🗣️ Voix off : 'Arrête immédiatement de scroller si tu fais partie des {audience} !'\n\n⏱️ 2s - 4s [Focus sur le produit résolvant le problème en vitesse x2]\n🗣️ Voix off : 'Ce {product} est en train de briser toutes les frustrations du marché.'\n\n⏱️ 4s - 6s [Texte clignotant : -50% CE SOIR]\n🗣️ Voix off : 'Profite de l'offre de lancement via le lien en bio !'"
+    elif content_type in ["📢 1st TikTok Post", "📢 6s Video Script"]:
+        # i1 = Main hook hook trend, i2 = Product, i3 = Main Action on screen
+        return f"🎬 VIRAL CONVERSION VIDEO SCRIPT ({level.upper()})\n\n[0s - 2s: Pattern Interrupt]\n🎥 VISUAL: {i3}\n🗣️ VOICE-OVER: \"Stop scrolling if you are dealing with {i1} right now!\"\n\n[2s - 4s: Solution Showcased]\n🎥 VISUAL: Smooth cut showing how {i2} acts instantly.\n🗣️ VOICE-OVER: \"This {i2} is literally breaking the market.\"\n\n[4s - 6s: Quick CTA]\n🎥 VISUAL: Fast pointing gesture towards bio.\n🗣️ VOICE-OVER: \"Secure yours via our bio link right now!\""
 
-    # --- BLOCK 4 : EMAIL ABANDON PANIER (Format épistolaire, accroche mail, lien cliquable, sentiment d'urgence) ---
-    elif content_type == "📢 Email abandon panier":
-        sujet = f"🛒 Objet : Ton panier pour {product} expire dans 47 minutes..."
-        if tone == "🧠 Scientifique & Expert":
-            return f"{sujet}\n\nBonjour,\n\nNous avons remarqué que vous n'avez pas finalisé la configuration de votre {product}.\n\nEn tant que {audience}, vous savez que négliger ce problème engendre des complications au quotidien. Notre solution a été optimisée pour vous éviter cela.\n\nVotre panier technique est réservé pour quelques heures encore.\n\n[🔬 Finaliser ma commande sécurisée]"
-        elif tone == "🎯 Humoristique & Décalé":
-            return f"{sujet}\n\nHey ! 👋\n\nTon {product} se sent terriblement seul et abandonné au fond de ton panier... \n\nLes autres {audience} l'achètent en masse et on va bientôt devoir lui trouver un nouveau propriétaire si tu ne viens pas le chercher.\n\nNe le laisse pas filer, on t'offre la livraison pour sceller votre réconciliation !\n\n[🎁 Sauver mon panier de la solitude]"
-        else:
-            return f"{sujet}\n\n⚠️ DERNIER AVERTISSEMENT\n\nLe {product} que tu as laissé de côté est presque en rupture complète de stock.\n\nPlusieurs {audience} ont validé leur panier ces dernières minutes. Passé ce délai, ton exemplaire sera attribué au client suivant.\n\n[⚡ Récupérer mon panier avant qu'il ne soit trop tard]"
+    elif content_type == "📢 Cart Abandonment Email":
+        # i1 = Product left behind, i2 = Scarcity time limit, i3 = Incentive/Free shipping
+        return f"🛒 Subject: ⏳ Your {i1} cart expires in {i2}...\n\nHey there!\n\nWe noticed you left your custom {i1} behind. Demand is exceptionally high and your slot will expire in exactly {i2}.\n\nTo help you make up your mind, we unlocked this special perk just for you: {i3}.\n\n⚡ [Reclaim My Order & Applied Perk]"
 
-    # --- BLOCK 5 : MESSAGES DM ET HOOKS ADS (Formats accrocheurs de prospection courts) ---
-    else: 
-        if tone == "🧠 Scientifique & Expert":
-            return f"📊 Message ciblé pour {audience} :\n'Bonjour, suite à nos analyses des besoins chez les {audience}, nous avons développé une approche mécanique via le {product}. Souhaitez-vous recevoir notre documentation technique ?'"
-        elif tone == "🎯 Humoristique & Décalé":
-            return f"🤪 Approche décalée :\n'Avis aux {audience} : On a créé le {product} pour arrêter de souffrir en silence. Promis, ça fait moins mal que de regarder son compte en banque. Tu veux la vidéo démo ?'"
-        else:
-            return f"💥 Accroche Cash :\n'Ton concurrent direct utilise déjà le {product} pour cibler les {audience} pendant que tu hésites. Ne reste pas à la traîne. Réponds INFO pour voir notre étude de cas.'"
+    else:
+        # Defaults / Ads
+        return f"💥 ACQUISITION HOOK ({tone})\n\nFocus: {i1} | Solution: {i2}\n\n👉 Angle: \"Tired of {i1}? {i2} is the missing link your ecommerce store needed. Click learn more to claim our blueprint.\""
 
 # HEADER
 st.markdown("<div class='title'>🛍️ ClientBoost Shopify</div>", unsafe_allow_html=True)
-st.markdown("<div class='trust'>2,941 débutants Shopify • Contenu qui vend en 6s • No signup</div>", unsafe_allow_html=True)
+st.markdown("<div class='trust'>2,941 Shopify Beginners • Dynamic Generation Engine • No signup</div>", unsafe_allow_html=True)
 
-# HOME
+# PAGE 1: HOME
 if st.session_state.page == "home":
     st.markdown("<div class='card'>", unsafe_allow_html=True)
-    st.write("## ❌ T'es débutant Shopify?")
-    st.write("❌ Tes posts TikTok font 12 vues")
-    st.write("❌ Ta description produit = 0 vente")
-    st.write("❌ Tu sais pas quoi écrire pour vendre")
+    st.write("## ❌ Are you a struggling Shopify Beginner?")
+    st.write("❌ Your TikTok videos get stuck at 12 views")
+    st.write("❌ Your current product description = 0 sales")
     st.write("---")
-    st.write("💡 L'IA génère du contenu à haute conversion adapté au format exact de ton choix (TikTok, Bio, Shopify).")
-    if st.button("🚀 Générer mon 1er contenu qui vend"):
+    st.write("💡 Our engine dynamically adapts its forms and outputs based on the exact problem you are solving.")
+    if st.button("🚀 Choose My Copywriting Asset"):
         st.session_state.page = "content"
         st.rerun()
     st.markdown("</div>", unsafe_allow_html=True)
 
-# CONTENT TYPE
+# PAGE 2: SELECT CONTENT TYPE
 elif st.session_state.page == "content":
-    st.subheader("💡 Quel contenu tu veux créer AUJOURD'HUI?")
+    st.subheader("💡 Select Your Asset Type")
     content_types = [
-        "📢 1er post TikTok",
-        "📢 Description produit Shopify",
-        "📢 Bio Instagram",
-        "📢 Message DM client froid",
-        "📢 Email abandon panier",
-        "📢 Script vidéo 6s",
-        "📢 Hook Facebook Ads"
+        "📢 1st TikTok Post",
+        "📢 Shopify Product Description",
+        "📢 Instagram Bio",
+        "📢 Cart Abandonment Email",
+        "📢 Facebook Ads Hook"
     ]
-    st.session_state.content_type = st.radio("Choisis une option :", content_types)
+    st.session_state.content_type = st.radio("What are we building?", content_types)
+    
+    if st.button("Configure Dynamic Setup →"):
+        st.session_state.page = "config"
+        st.rerun()
+
+# PAGE 3: FULLY DYNAMIC CONFIGURATION PAGE (Changes according to choice)
+elif st.session_state.page == "config":
+    st.subheader("⚙️ Contextual Data Setup")
+    st.info(f"Customizing parameters specifically for: **{st.session_state.content_type}**")
+    
+    st.markdown("<div class='card'>", unsafe_allow_html=True)
+    
+    # CONDITION 1: INSTAGRAM BIO
+    if st.session_state.content_type == "📢 Instagram Bio":
+        st.session_state.input_1 = st.text_input("Brand or Product Name", value=st.session_state.input_1, placeholder="e.g., PosturePro")
+        st.session_state.input_2 = st.text_input("Target Community / Audience niche", value=st.session_state.input_2, placeholder="e.g., Developers & Office Workers")
+        st.session_state.input_3 = st.text_input("Bio Discount Code", value=st.session_state.input_3, placeholder="e.g., BIO20")
+        
+    # CONDITION 2: PRODUCT DESCRIPTION
+    elif st.session_state.content_type == "📢 Shopify Product Description":
+        st.session_state.input_1 = st.text_input("Main Product Name", value=st.session_state.input_1, placeholder="e.g., Orthopedic Pillow")
+        st.session_state.input_2 = st.text_input("Biggest Pain Point / Frustration solved", value=st.session_state.input_2, placeholder="e.g., Chronic Neck Pain & Insomnia")
+        st.session_state.input_3 = st.text_input("Guarantee policy or Free Bonus included", value=st.session_state.input_3, placeholder="e.g., 90-Day Money Back Guarantee")
+        
+    # CONDITION 3: TIKTOK / VIDEO SCRIPTS
+    elif st.session_state.content_type in ["📢 1st TikTok Post", "📢 6s Video Script"]:
+        st.session_state.input_1 = st.text_input("Relatable hook problem or TikTok trend", value=st.session_state.input_1, placeholder="e.g., Waking up completely crushed at 7 AM")
+        st.session_state.input_2 = st.text_input("Product name being showcased", value=st.session_state.input_2, placeholder="e.g., DeepSleep Mask")
+        st.session_state.input_3 = st.text_input("Visual action taking place in first 2 seconds", value=st.session_state.input_3, placeholder="e.g., Throwing a pillow face-camera out of pure exhaustion")
+
+    # CONDITION 4: ABANDONED CART EMAIL
+    elif st.session_state.content_type == "📢 Cart Abandonment Email":
+        st.session_state.input_1 = st.text_input("Name of items left in shopping cart", value=st.session_state.input_1, placeholder="e.g., Wireless Massage Gun")
+        st.session_state.input_2 = st.text_input("Urgency countdown / Time limit", value=st.session_state.input_2, placeholder="e.g., 47 minutes")
+        st.session_state.input_3 = st.text_input("Extra customer checkout incentive", value=st.session_state.input_3, placeholder="e.g., Free Shipping + Extra 10% off automated coupon")
+
+    # DEFAULT FALLBACK
+    else:
+        st.session_state.input_1 = st.text_input("Core Customer Frustration", value=st.session_state.input_1)
+        st.session_state.input_2 = st.text_input("Core Unique Selling Proposition", value=st.session_state.input_2)
+        st.session_state.input_3 = st.text_input("Call to Action text", value=st.session_state.input_3)
+
+    st.session_state.tone = st.selectbox("Brand Voice Tone:", ["💥 Cash & Aggressive", "🧠 Scientific & Expert", "🎯 Humorous & Quirky"])
+    st.markdown("</div>", unsafe_allow_html=True)
     
     col_back, col_next = st.columns([1, 4])
     with col_back:
-        if st.button("⬅ Retour"):
-            st.session_state.page = "home"
+        if st.button("⬅ Change Format"):
+            st.session_state.page = "content"
             st.rerun()
     with col_next:
-        if st.button("Continuer vers l'offre →"):
-            st.session_state.page = "levels"
-            st.rerun()
-
-# LEVELS
-elif st.session_state.page == "levels":
-    st.subheader("💎 Choisis la puissance de ton copywriting")
-    st.write(f"### Format sélectionné : {st.session_state.content_type}")
-
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.markdown("<div class='card' style='text-align:center;'><h3>🥉 BASIC</h3><h2 style='color:#9CA3AF;'>$5</h2><p>Structure simple pour démarrer.</p></div>", unsafe_allow_html=True)
-        if st.button("Choisir l'offre Basic"): 
-            st.session_state.level = "basic"
-            st.session_state.page = "payment"
-            st.rerun()
-            
-    with col2:
-        st.markdown("<div class='card' style='text-align:center; border: 1px solid #F97316;'><h3>🥈 PRO ⭐</h3><h2 style='color:#F97316;'>$15</h2><p>Taux de conversion boosté par x2.3.</p></div>", unsafe_allow_html=True)
-        if st.button("Choisir l'offre Pro"): 
-            st.session_state.level = "premium"
-            st.session_state.page = "payment"
-            st.rerun()
-            
-    with col3:
-        st.markdown("<div class='card' style='text-align:center; border: 1px solid #FACC15;'><h3>🥇 ULTRA 👑</h3><h2 style='color:#FACC15;'>$29</h2><p>Formule complète + Secrets de psychologie.</p></div>", unsafe_allow_html=True)
-        if st.button("Choisir l'offre Ultra"): 
-            st.session_state.level = "ultra"
-            st.session_state.page = "payment"
-            st.rerun()
-            
-    st.write("---")
-    if st.button("⬅ Modifier le type de contenu"):
-        st.session_state.page = "content"
-        st.rerun()
-
-# PAYMENT + RESULT
-elif st.session_state.page == "payment":
-    if not st.session_state.paid:
-        st.warning("🔒 Débloque la puissance de l'IA")
-        st.info("💳 Passerelle Lemon Squeezy sécurisée - Test avec la carte : 4242 4242 4242 4242")
-        
-        col_pay_back, col_pay_trigger = st.columns([1, 4])
-        with col_pay_back:
-            if st.button("⬅ Retour"):
+        if st.button("Proceed to Strategy Level →"):
+            if st.session_state.input_1 and st.session_state.input_2:
                 st.session_state.page = "levels"
                 st.rerun()
-        with col_pay_trigger:
-            if st.button("💳 Valider le paiement de Démo ($0)"):
-                st.session_state.paid = True
-                # CORRECTIF : On prépare l'affichage des bulles pour le prochain rechargement
-                st.session_state.trigger_balloons = True
-                st.rerun()
-    else:
-        # CORRECTIF DES BULLES : Déclenchement propre au moment du rendu de la page payée
-        if st.session_state.get("trigger_balloons", False):
-            st.balloons()
-            st.session_state.trigger_balloons = False # On éteint le trigger pour ne pas spammer
+            else:
+                st.error("⚠️ Please fill out the dynamic fields before matching your strategy!")
 
+# PAGE 4: PRICING LEVELS
+elif st.session_state.page == "levels":
+    st.subheader("💎 Step 3: Select Copywriting Power")
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown("<div class='card' style='text-align:center;'><h3>🥉 BASIC</h3><h2 style='color:#9CA3AF;'>$5</h2></div>", unsafe_allow_html=True)
+        if st.button("Choose Basic Plan"): 
+            st.session_state.level = "basic"; st.session_state.page = "payment"; st.rerun()
+    with col2:
+        st.markdown("<div class='card' style='text-align:center; border: 1px solid #F97316;'><h3>🥈 PRO ⭐</h3><h2 style='color:#F97316;'>$15</h2></div>", unsafe_allow_html=True)
+        if st.button("Choose Pro Plan"): 
+            st.session_state.level = "premium"; st.session_state.page = "payment"; st.rerun()
+    with col3:
+        st.markdown("<div class='card' style='text-align:center; border: 1px solid #FACC15;'><h3>🥇 ULTRA 👑</h3><h2 style='color:#FACC15;'>$29</h2></div>", unsafe_allow_html=True)
+        if st.button("Choose Ultra Plan"): 
+            st.session_state.level = "ultra"; st.session_state.page = "payment"; st.rerun()
+
+# PAGE 5: PAYMENT & RESULT DELIVERY
+elif st.session_state.page == "payment":
+    if not st.session_state.paid:
+        st.warning("🔒 Unlock your custom dynamic asset")
+        st.info("💳 Sandbox Gateway - Test card: 4242 4242 4242 4242")
+        if st.button("💳 Validate Demo Payment ($0)"):
+            st.session_state.paid = True
+            st.rerun()
+    else:
         st.markdown("""
         <div style="background: linear-gradient(135deg, #1e1b4b 0%, #111827 100%); padding: 25px; border-radius: 16px; border: 2px solid #F97316; margin-bottom: 25px;">
-            <h3 style="color: #FACC15; margin-top: 0;">🎉 Paiement validé ! Bienvenue dans l'élite de Shopify.</h3>
-            <p style="color: #F3F4F6; font-size: 16px; line-height: 1.6;">
-                Merci pour ta confiance. Tu viens d'activer l'algorithme de conversion utilisé secrètement par le <b>top 1% des e-commerçants</b>. 
-            </p>
-            <p style="color: #9CA3AF; font-size: 14px; font-style: italic;">
-                👀 Prépare-toi... Ce que l'IA va te sortir dans quelques secondes va littéralement ringardiser tes anciens textes. Tes concurrents ne sont pas prêts.
-            </p>
+            <h3 style="color: #FACC15; margin-top: 0;">🎉 Generation Complete!</h3>
         </div>
         """, unsafe_allow_html=True)
 
-        # RELANCE ABONNEMENT EN FIN DE MOIS (DU 28 AU 31)
-        if datetime.now().day >= 28:
-            st.markdown("""
-            <div style="background-color: #7c2d12; padding: 20px; border-radius: 12px; border-left: 5px solid #f97316; margin-bottom: 25px;">
-                <h4 style="color: #ffedd5; margin: 0 0 5px 0;">⏳ Fin de mois imminente : Ne perds pas tes accès exclusifs !</h4>
-                <p style="color: #fed7aa; font-size: 14px; margin: 0 0 12px 0;">
-                    Ton pass unique arrive bientôt à échéance. Sécurise ton business et passe sur l'abonnement mensuel pour générer du contenu pro en illimité.
-                </p>
-                <a href="https://ton-lien-de-paiement-stripe.com" target="_blank" style="background-color: #f97316; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 13px; display: inline-block;">
-                    🚀 Activer mon Pass Mensuel (-30% inclus)
-                </a>
-            </div>
-            """, unsafe_allow_html=True)
-
-        # CONFIGURATION DES PARAMÈTRES
-        st.write("### ⚙️ Personnalise tes données de vente")
-        
-        col_in1, col_in2 = st.columns(2)
-        with col_in1:
-            product = st.text_input("Nom exact de ton produit Shopify", placeholder="Ex: Correcteur de posture magique")
-        with col_in2:
-            audience = st.text_input("Qui est ton client idéal ? (Audience)", placeholder="Ex: travailleurs de bureau mal de dos")
-            
-        st.session_state.tone = st.selectbox(
-            "Style et Tonalité de l'IA :", 
-            ["💥 Cash & Agressif", "🧠 Scientifique & Expert", "🎯 Humoristique & Décalé"]
+        # ENGINE CONVERSION
+        result_text = generate_shopify_content(
+            st.session_state.content_type, 
+            st.session_state.input_1, 
+            st.session_state.input_2, 
+            st.session_state.input_3, 
+            st.session_state.level,
+            st.session_state.tone
         )
+        
+        st.markdown("<div class='card'>", unsafe_allow_html=True)
+        st.text_area("Your Copywriting Output:", result_text, height=380, key="out")
+        
+        # Clipboard component
+        escaped_result = result_text.replace('`', '\\`').replace('$', '\\$').replace('\n', '\\n')
+        components.html(f"""
+        <button onclick="navigator.clipboard.writeText(`{escaped_result}`)"
+        style="background: linear-gradient(90deg, #F97316 0%, #FACC15 100%); color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; width:100%; font-size:15px; height: 45px;">
+        📋 1-Click Copy To Clipboard
+        </button>
+        """, height=55)
+        st.markdown("</div>", unsafe_allow_html=True)
 
-        if st.button("🚀 Libérer la puissance de l'IA"):
-            if product and audience:
-                result = generate_shopify_content(
-                    st.session_state.content_type, 
-                    product, 
-                    audience, 
-                    st.session_state.level,
-                    st.session_state.tone
-                )
-                st.session_state.generated_result = result
-            else:
-                st.error("⚠️ Erreur : Remplis d'abord le nom du produit et ton audience cible !")
-
-        # AFFICHAGE DU RÉSULTAT COPIABLE EN 1 CLIC
-        if "generated_result" in st.session_state:
-            result_text = st.session_state.generated_result
-            
-            st.markdown("<div class='card'>", unsafe_allow_html=True)
-            st.subheader("🚀 Ton contenu prêt à vendre")
-            st.text_area("Copie le contenu ci-dessous :", result_text, height=380, key="out")
-            
-            col_copy, col_download = st.columns(2)
-            with col_copy:
-                escaped_result = result_text.replace('`', '\\`').replace('$', '\\$').replace('\n', '\\n')
-                components.html(f"""
-                <button onclick="navigator.clipboard.writeText(`{escaped_result}`)"
-                style="background: linear-gradient(90deg, #F97316 0%, #FACC15 100%); color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; width:100%; font-size:15px; height: 45px;">
-                📋 Copier le texte en 1 clic
-                </button>
-                """, height=55)
-                
-            with col_download:
-                st.download_button(
-                    label="⬇ Télécharger au format .txt", 
-                    data=result_text, 
-                    file_name="clientboost_copywriting.txt",
-                    use_container_width=True
-                )
-            st.markdown("</div>", unsafe_allow_html=True)
-
-        st.write("---")
-        if st.button("🔄 Réinitialiser et créer un autre texte"):
+        if st.button("🔄 Create Another Asset"):
             st.session_state.page = "home"
             st.session_state.paid = False
-            if "generated_result" in st.session_state: del st.session_state.generated_result
             st.rerun()
 
-st.caption("Built by kēllønę 🔗💨 | ClientBoost Shopify v3")
+st.caption("Built by kēllønę | ClientBoost Shopify v3")
+            
