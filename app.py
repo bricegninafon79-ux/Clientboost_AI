@@ -1,15 +1,10 @@
-# app.py
 import streamlit as st
 
-# Configuration de la page
 st.set_page_config(page_title="⚡️ IA Copywriting Suite", layout="wide")
 
 st.title("⚡️ IA Copywriting Suite")
 st.caption("Sélectionnez un levier marketing pour générer des textes à forte conversion basés sur notre framework précis en 3 champs.")
 
-# ==========================================
-# 1. LA BASE DE DONNÉES DES 7 CAS D'USAGE
-# ==========================================
 MARKETING_PROBLEMS = [
     {
         "id": "instagram_bio",
@@ -45,7 +40,7 @@ MARKETING_PROBLEMS = [
         "id": "cart_abandonment_email",
         "title": "📢 Cart Abandonment Email",
         "description": "Crée un email de relance automatique pour récupérer les clients qui ont quitté le panier au moment de payer.",
-        "fields=[
+        "fields": [
             {"label": "Name of items left in shopping cart", "placeholder": "e.g., Wireless Massage Gun", "description": "Le rappel textuel exact de l'objet oublié dans le panier."},
             {"label": "Urgency countdown / Time limit", "placeholder": "e.g., 47 minutes", "description": "La limite de temps avant que leur panier ou le stock ne soit expiré."},
             {"label": "Extra customer checkout incentive", "placeholder": "e.g., Free Shipping + Extra 10% off automated coupon", "description": "Le petit cadeau ou code promo exclusif pour éliminer l'objection du prix."}
@@ -78,23 +73,17 @@ MARKETING_PROBLEMS = [
         "fields": [
             {"label": "Target Audience or Customer Persona", "placeholder": "e.g., Busy remote workers with back pain", "description": "L'audience ou le profil type du client à qui s'adresse la publicité."},
             {"label": "The big alternative / What they are currently doing wrong", "placeholder": "e.g., Buying expensive ergonomic chairs that don't fix posture", "description": "La fausse solution ou la mauvaise habitude actuelle de la cible."},
-            {"label": "The direct benefit of the product", "placeholder": "e.g., Instantly straightens the spine with a lightweight daily brace", "description": "La promise principale et le bénéfice direct apporté par ton produit."}
+            {"label": "The direct benefit of the product", "placeholder": "e.g., Instantly straightens the spine with a lightweight daily brace", "description": "La promesse principale et le bénéfice direct apporté par ton produit."}
         ]
     }
 ]
 
-# ==========================================
-# 2. INTERFACE GRAPHIQUE (Streamlit)
-# ==========================================
-# Création des colonnes (Sidebar gauche et Zone droite)
 col1, col2 = st.columns([1, 2])
 
 with col1:
     st.subheader("🤖 Leviers disponibles")
     problem_titles = [p["title"] for p in MARKETING_PROBLEMS]
     selected_title = st.radio("Choisir un outil :", problem_titles, label_visibility="collapsed")
-    
-    # Récupérer l'outil sélectionné
     selected_problem = next(p for p in MARKETING_PROBLEMS if p["title"] == selected_title)
 
 with col2:
@@ -102,7 +91,6 @@ with col2:
     st.write(selected_problem["description"])
     st.divider()
 
-    # Formulaire dynamique
     form_values = {}
     with st.form(key=f"form_{selected_problem['id']}"):
         for field in selected_problem["fields"]:
@@ -111,26 +99,19 @@ with col2:
                 placeholder=field["placeholder"],
                 help=field["description"]
             )
-        
         submit_button = st.form_submit_button(label="Générer la copie magique 🚀", use_container_width=True)
 
-    # Logique de génération (directement dans le fichier)
     if submit_button:
         if any(val.strip() == "" for val in form_values.values()):
             st.warning("⚠️ Veuillez remplir tous les champs.")
         else:
             with st.spinner("Génération de la pépite en cours... ⚙️"):
-                
-                # Formatage du texte de simulation (Ici tu pourras greffer ton API OpenAI plus tard)
                 summary_inputs = "\n".join([f"- {k} : {v}" for k, v in form_values.items()])
-                
                 generated_text = (
                     f"✨ [Résultat IA - Framework {selected_problem['title']}]\n\n"
                     f"Données prises en compte :\n{summary_inputs}\n\n"
                     f"👉 [Texte Final Haute Conversion] :\n"
                     f"\"Voici votre texte de vente optimisé pour la conversion. Prêt à être publié !\""
                 )
-                
                 st.success("🎯 Contenu généré avec succès :")
                 st.text_area(label="Résultat final", value=generated_text, height=250)
-
