@@ -182,22 +182,19 @@ export default function CopywritingDashboard() {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [aiResult, setAiResult] = useState<string>("");
 
-  // Gérer le changement de problème sélectionné
   const handleProblemChange = (problemId: string) => {
     const problem = MARKETING_PROBLEMS.find(p => p.id === problemId);
     if (problem) {
       setSelectedProblem(problem);
-      setFormValues({}); // Réinitialise le formulaire
-      setAiResult("");  // Réinitialise le résultat précédent
+      setFormValues({});
+      setAiResult("");
     }
   };
 
-  // Gérer la saisie dans les champs
   const handleInputChange = (label: string, value: string) => {
     setFormValues(prev => ({ ...prev, [label]: value }));
   };
 
-  // Simuler l'appel API à l'IA (à lier avec ton backend GPT/Claude)
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault();
     setIsGenerating(true);
@@ -218,13 +215,16 @@ export default function CopywritingDashboard() {
 
       <div style={{ display: 'grid', gridTemplateColumns: '320px 1fr', gap: '30px' }}>
         
-        {/* Navigation gauche : Liste des problèmes */}
+        {/* Navigation gauche */}
         <aside>
-          <h3 style={{ fontSize: '14px', uppercase: 'true', color: '#999', letterSpacing: '1px', marginBottom: '15px' }}>Outils disponibles ({MARKETING_PROBLEMS.length})</h3>
+          <h3 style={{ fontSize: '14px', textTransform: 'uppercase', color: '#999', letterSpacing: '1px', marginBottom: '15px' }}>
+            Outils disponibles ({MARKETING_PROBLEMS.length})
+          </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {MARKETING_PROBLEMS.map((problem) => (
               <button
                 key={problem.id}
+                type="button"
                 onClick={() => handleProblemChange(problem.id)}
                 style={{
                   padding: '14px 16px',
@@ -245,7 +245,7 @@ export default function CopywritingDashboard() {
           </div>
         </aside>
 
-        {/* Zone droite : Formulaire Dynamique & Résultats */}
+        {/* Zone droite */}
         <main style={{ backgroundColor: '#f9f9f9', padding: '30px', borderRadius: '12px', border: '1px solid #eaeaea' }}>
           <div style={{ marginBottom: '25px' }}>
             <h2 style={{ fontSize: '22px', margin: '0 0 8px 0' }}>{selectedProblem.title}</h2>
@@ -272,7 +272,7 @@ export default function CopywritingDashboard() {
                     outline: 'none'
                   }}
                 />
-                <span style={{ fontSize: '12px', color: '#777', italic: 'true' }}>{field.description}</span>
+                <span style={{ fontSize: '12px', color: '#777', fontStyle: 'italic' }}>{field.description}</span>
               </div>
             ))}
 
@@ -297,7 +297,7 @@ export default function CopywritingDashboard() {
             </button>
           </form>
 
-          {/* Affichage du résultat de l'IA */}
+          {/* Affichage du résultat */}
           {aiResult && (
             <div style={{ marginTop: '30px', padding: '20px', backgroundColor: '#fff', borderLeft: '4px solid #0066cc', borderRadius: '4px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
               <h4 style={{ margin: '0 0 10px 0', color: '#0066cc' }}>🎯 Copie rédigée avec succès :</h4>
