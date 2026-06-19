@@ -8,144 +8,178 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- INITIALISATION DE L'ÉTAT DE SESSION ---
+# --- DICTIONNAIRE DE TRADUCTION POUR L'INTERFACE ---
+T = {
+    "English": {
+        "nav_home": "🏠 Home",
+        "nav_gen": "🚀 Generator",
+        "nav_sub": "💳 My Subscription",
+        "nav_hist": "📜 History",
+        "nav_set": "⚙️ Settings",
+        "tagline": "The intelligent sales copy generator that converts prospects into loyal customers.",
+        "description": "Stop wasting time writing generic messages. ClientBoost AI analyzes your prospect's pain points to create high-impact, personalized hooks that trigger immediate interest.",
+        "motivation_title": "Daily Motivation",
+        "motivation": "“Don't sell a product. Sell the solution to your customer's deepest pain.”",
+        "cta": "🚀 Start Now",
+        "lang_info": "Target language active",
+        "secteur_lbl": "Your industry / Product :",
+        "secteur_ph": "e.g., SEO Agency, Fitness Coach, HR SaaS...",
+        "cible_lbl": "Who is your ideal customer (Persona)?",
+        "cible_ph": "e.g., Marketing Directors, Busy parents...",
+        "prob_lbl": "What is your customer's main pain point?",
+        "prob_ph": "e.g., They lack online visibility, they don't have time to cook...",
+        "gen_btn": "✨ Generate my sales copy",
+        "gen_wait": "AI is drafting your copy in",
+        "gen_success": "Your copy has been generated in",
+        "gen_ready": "Your copy ready to copy-paste:",
+        "gen_sample": "Example of persuasive copy written in",
+        "gen_warn": "Please fill in all fields before launching the generation.",
+        "sub_title": "💳 Pricing & Plans",
+        "sub_sub": "Upgrade to unlock unlimited AI generations.",
+        "sub_std": "🥉 Standard Plan",
+        "sub_std_price": "$9 / month",
+        "sub_pro": "🥈 Pro Plan (Popular)",
+        "sub_pro_price": "$29 / month",
+        "sub_agn": "🥇 Agency Plan",
+        "sub_agn_price": "$79 / month"
+    },
+    "Français": {
+        "nav_home": "🏠 Accueil",
+        "nav_gen": "🚀 Générateur",
+        "nav_sub": "💳 Mon Abonnement",
+        "nav_hist": "📜 Historique",
+        "nav_set": "⚙️ Paramètres",
+        "tagline": "Le générateur de messages de vente intelligent qui convertit vos prospects en clients.",
+        "description": "Arrêtez d'envoyer des messages génériques. ClientBoost AI cible la douleur majeure de votre prospect pour rédiger des accroches percutantes et adaptées qui déclenchent des ventes.",
+        "motivation_title": "Motivation du jour",
+        "motivation": "« Ne vendez pas un produit. Vendez la solution à la douleur la plus profonde de votre client. »",
+        "cta": "🚀 Commencer maintenant",
+        "lang_info": "Langue de génération active",
+        "secteur_lbl": "Votre secteur d'activité / Produit :",
+        "secteur_ph": "Ex : Agence SEO, Coach de fitness, SaaS RH...",
+        "cible_lbl": "Qui est votre client idéal (Persona) ?",
+        "cible_ph": "Ex : Directeurs Marketing, Particuliers débordés...",
+        "prob_lbl": "Quel est le problème principal de votre client ?",
+        "prob_ph": "Ex : Ils manquent de visibilité en ligne, ils n'ont pas le temps...",
+        "gen_btn": "✨ Générer mon message de vente",
+        "gen_wait": "L'IA rédige votre message en",
+        "gen_success": "Votre message a été généré en",
+        "gen_ready": "Votre texte prêt à copier :",
+        "gen_sample": "Exemple de message persuasif rédigé en",
+        "gen_warn": "Veuillez remplir tous les champs avant de lancer la génération.",
+        "sub_title": "💳 Tarifs & Abonnement",
+        "sub_sub": "Passez à la vitesse supérieure pour débloquer l'illimité.",
+        "sub_std": "🥉 Plan Standard",
+        "sub_std_price": "9€ / mois",
+        "sub_pro": "🥈 Plan Pro (Populaire)",
+        "sub_pro_price": "29€ / mois",
+        "sub_agn": "🥇 Plan Agence",
+        "sub_agn_price": "79€ / mois"
+    }
+}
+
+# --- GESTION DE L'ÉTAT (SESSION STATE) ---
 if "page_actuelle" not in st.session_state:
-    st.session_state.page_actuelle = "🚀 Générateur"
-if "paiement_effectue" not in st.session_state:
-    st.session_state.paiement_effectue = False
+    st.session_state.page_actuelle = "🏠 Home"
 
-
-# --- BARRE LATÉRALE : MENU, TRADUCTION & OPTIONS ---
+# --- BARRE LATÉRALE (SIDEBAR) ---
 with st.sidebar:
     st.title("🚀 ClientBoost AI")
-    st.write("Transformez vos prospects en clients.")
+    st.write("Turn your prospects into buyers.")
     st.write("---")
     
-    # ÉTAPE 1 : Choix de la langue
-    st.subheader("🌐 Traduction")
+    # Langue de génération (Anglais par défaut / index 0)
     langue_cible = st.selectbox(
-        "Langue de génération :",
-        ["Français", "English", "Español", "Deutsch", "Italiano", "Português"],
-        help="L'IA rédigera automatiquement votre message dans cette langue."
+        "Target Language (AI) :",
+        ["English", "Français", "Español", "Deutsch", "Italiano", "Português"],
+        index=0
     )
+    
+    # Choix de la langue de l'interface (Automatique selon langue_cible)
+    ui_lang = "Français" if langue_cible == "Français" else "English"
+    trans = T[ui_lang]
     
     st.write("---")
     
-    # ÉTAPE 2 : Menu de navigation
-    st.subheader("🧭 Navigation")
-    page_selectionnee = st.radio(
-        "Aller à :",
-        ["🚀 Générateur", "💳 Mon Abonnement", "📜 Historique", "⚙️ Paramètres"],
-        label_visibility="collapsed"
-    )
-    st.session_state.page_actuelle = page_selectionnee
-
-
-# --- CONTENU PRINCIPAL DE L'APPLICATION ---
-
-# PAGE 1 : LE GÉNÉRATEUR IA (PAGE D'ACCUEIL)
-if st.session_state.page_actuelle == "🚀 Générateur":
-    # --- SECTION EN-TÊTE / ACCUEIL ---
-    st.title("🚀 ClientBoost AI")
-    st.markdown("### *Le générateur de messages de vente intelligent qui convertit vos prospects en clients fidèles.*")
+    # Navigation
+    st.subheader("Navigation")
+    nav_map = {
+        trans["nav_home"]: "🏠 Home",
+        trans["nav_gen"]: "🚀 Generator",
+        trans["nav_sub"]: "💳 My Subscription",
+        trans["nav_hist"]: "📜 History",
+        trans["nav_set"]: "⚙️ Settings"
+    }
     
-    # Encadré de motivation
-    st.info(
-        "💡 **Motivation du jour :** *« Le marketing n'est pas l'art de trouver des moyens astucieux de vous débarrasser de ce que vous faites. C'est l'art de créer de la véritable valeur pour le client. » – Philip Kotler* — **Prêt à propulser vos ventes ? Remplissez les champs ci-dessous !**"
-    )
-    st.write("---")
-    
-    st.write(f"⚙️ Langue cible sélectionnée : **{langue_cible}**")
+    # Inversion pour retrouver l'index actuel
+    current_nav_label = [k for k, v in nav_map.items() if v == st.session_state.page_actuelle][0]
+    selection = st.radio("Menu", list(nav_map.keys()), index=list(nav_map.keys()).index(current_nav_label), label_visibility="collapsed")
+    st.session_state.page_actuelle = nav_map[selection]
+
+
+# --- CONTENU DES PAGES ---
+
+# 🏠 PAGE D'ACCUEIL (LANDING PAGE)
+if st.session_state.page_actuelle == "🏠 Home":
     st.write("")
+    st.write("")
+    st.markdown(f"<h1 style='text-align: center; font-size: 70px; color: #0ea5e9;'>ClientBoost AI</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='text-align: center; color: #334155; font-weight: 500;'>{trans['tagline']}</h3>", unsafe_allow_html=True)
     
-    # Formulaire utilisateur
+    st.markdown(f"<p style='text-align: center; max-width: 800px; margin: 20px auto; font-size: 19px; color: #475569;'>{trans['description']}</p>", unsafe_allow_html=True)
+    
+    # Bloc Motivation
+    st.markdown(f"""
+        <div style="background-color: #f0f9ff; border-left: 5px solid #0ea5e9; padding: 25px; border-radius: 10px; max-width: 800px; margin: 40px auto; text-align: center;">
+            <p style="font-size: 14px; font-weight: bold; color: #0284c7; text-transform: uppercase; margin-bottom: 10px;">💡 {trans['motivation_title']}</p>
+            <p style="font-size: 22px; font-style: italic; color: #0f172a;">{trans['motivation']}</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # CTA - Bouton d'appel à l'action
+    _, col_btn, _ = st.columns([1, 2, 1])
+    with col_btn:
+        if st.button(trans["cta"], type="primary", use_container_width=True):
+            st.session_state.page_actuelle = "🚀 Generator"
+            st.rerun()
+
+# 🚀 GÉNÉRATEUR
+elif st.session_state.page_actuelle == "🚀 Generator":
+    st.title(trans["nav_gen"])
+    st.info(f"{trans['lang_info']}: **{langue_cible}**")
+    
     col1, col2 = st.columns(2)
-    
     with col1:
-        secteur = st.text_input(
-            "Votre secteur d'activité / Produit :", 
-            placeholder="Ex: Agence SEO, Coach de fitness, SaaS RH..."
-        )
-        cible = st.text_input(
-            "Qui est votre client idéal (Persona) ?", 
-            placeholder="Ex: Directeurs Marketing, Particuliers voulant perdre du poids..."
-        )
-        
+        secteur = st.text_input(trans["secteur_lbl"], placeholder=trans["secteur_ph"])
+        cible = st.text_input(trans["cible_lbl"], placeholder=trans["cible_ph"])
     with col2:
-        probleme = st.text_area(
-            "Quel est le problème principal de votre client ?", 
-            placeholder="Ex: Ils n'ont pas le temps de gérer leurs réseaux sociaux, ils manquent de visibilité..."
-        )
-    
-    # Bouton de génération
-    st.write("")
-    if st.button("✨ Générer mon message de vente", type="primary", use_container_width=True):
-        if secteur and probleme and cible:
-            with st.spinner(f"L'IA rédige votre message de vente en {langue_cible}..."):
-                
-                prompt_complet = f"""
-                Tu es un copywriter expert. Rédige un message de vente persuasif.
-                Secteur : {secteur}
-                Cible : {cible}
-                Problème à résoudre : {probleme}
-                
-                CONSIGNE CRITIQUE : Tu dois obligatoirement rédiger l'intégralité du message en {langue_cible}.
-                """
-                
+        probleme = st.text_area(trans["prob_lbl"], placeholder=trans["prob_ph"])
+        
+    if st.button(trans["gen_btn"], type="primary", use_container_width=True):
+        if secteur and cible and probleme:
+            with st.spinner(f"{trans['gen_wait']} {langue_cible}..."):
                 import time
-                time.sleep(2) # Simule l'attente
-                
-                st.success(f"✅ Votre message a été généré avec succès en {langue_cible} !")
-                st.text_area(
-                    "Votre message prêt à copier :", 
-                    value=f"[Exemple de message persuasif rédigé en {langue_cible} basé sur le problème : '{probleme}']", 
-                    height=200
-                )
+                time.sleep(1.5)
+                st.success(f"✅ {trans['gen_success']} {langue_cible}!")
+                st.text_area(trans["gen_ready"], value=f"[{trans['gen_sample']} {langue_cible} : '{probleme}']", height=200)
         else:
-            st.warning("⚠️ Veuillez remplir tous les champs avant de lancer la génération.")
+            st.warning(trans["gen_warn"])
 
-
-# PAGE 2 : MON ABONNEMENT / PAIEMENT
-elif st.session_state.page_actuelle == "💳 Mon Abonnement":
-    st.title("💳 Tarifs & Abonnement")
-    st.write("Passez à la vitesse supérieure pour débloquer des générations illimitées.")
-    st.write("---")
+# 💳 ABONNEMENT
+elif st.session_state.page_actuelle == "💳 My Subscription":
+    st.title(trans["sub_title"])
+    st.write(trans["sub_sub"])
     
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.markdown("### 🥉 Plan Standard")
-        st.write("**9€ / mois**")
-        st.write("- 20 générations par mois\n- Support par email")
-        st.button("Choisir Standard", key="plan_1")
-        
-    with col2:
-        st.markdown("### 🥈 Plan Pro (Populaire)")
-        st.write("**29€ / mois**")
-        st.write("- Générations illimitées\n- Accès aux prompts avancés\n- Support prioritaire")
-        if st.button("Débloquer le Plan Pro", type="primary", key="plan_2"):
-            st.session_state.paiement_effectue = True
-            st.success("💳 Simulation de paiement réussie ! Compte passé en PRO.")
-            
-    with col3:
-        st.markdown("### 🥇 Plan Agence")
-        st.write("**79€ / mois**")
-        st.write("- Multi-comptes équipe\n- Intégration API personnalisée\n- Support 24/7")
-        st.button("Choisir Agence", key="plan_3")
+    c1, c2, c3 = st.columns(3)
+    with c1: st.subheader(trans["sub_std"]); st.write(trans["sub_std_price"]); st.button("Select", key="b1")
+    with c2: st.subheader(trans["sub_pro"]); st.write(trans["sub_pro_price"]); st.button("Upgrade", type="primary", key="b2")
+    with c3: st.subheader(trans["sub_agn"]); st.write(trans["sub_agn_price"]); st.button("Contact Sales", key="b3")
 
+# 📜 HISTORIQUE & PARAMÈTRES
+elif st.session_state.page_actuelle == "📜 History":
+    st.title("History")
+    st.write("Your past generations will appear here.")
 
-# PAGE 3 : HISTORIQUE
-elif st.session_state.page_actuelle == "📜 Historique":
-    st.title("📜 Historique de vos générations")
-    st.write("Retrouvez ici tous les textes que vous avez générés précédemment.")
-    st.write("---")
-    st.info("Aucun historique pour le moment. Lancez votre première génération !")
-
-
-# PAGE 4 : PARAMÈTRES
-elif st.session_state.page_actuelle == "⚙️ Paramètres":
-    st.title("⚙️ Paramètres du compte")
-    st.write("Gérez la configuration de votre application SaaS.")
-    st.write("---")
-    api_key = st.text_input("Clé API OpenAI (Optionnel)", type="password")
-    st.caption("Laissez vide si vous utilisez l'API par défaut du SaaS.")
+elif st.session_state.page_actuelle == "⚙️ Settings":
+    st.title("Settings")
+    st.text_input("API Key", type="password")
