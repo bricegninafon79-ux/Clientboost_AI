@@ -1,117 +1,197 @@
 import streamlit as st
+import time
 
-st.set_page_config(page_title="⚡️ IA Copywriting Suite", layout="wide")
+# ==========================================
+# --- PAGE CONFIGURATION ---
+# ==========================================
+st.set_page_config(
+    page_title="ClientBoost AI v2",
+    page_icon="🚀",
+    layout="centered"
+)
 
-st.title("⚡️ IA Copywriting Suite")
-st.caption("Sélectionnez un levier marketing pour générer des textes à forte conversion basés sur notre framework précis en 3 champs.")
+# ==========================================
+# --- INITIALIZE SESSION STATE ---
+# ==========================================
+if "step" not in st.session_state:
+    st.session_state.step = 1
+if "selected_pain" not in st.session_state:
+    st.session_state.selected_pain = None
+if "selected_plan" not in st.session_state:
+    st.session_state.selected_plan = None
+if "payment_done" not in st.session_state:
+    st.session_state.payment_done = False
 
-MARKETING_PROBLEMS = [
-    {
-        "id": "instagram_bio",
-        "title": "📢 Instagram Bio",
-        "description": "Crée une bio Instagram percutante qui accroche le visiteur et le pousse à cliquer sur le lien de la boutique grâce à une phrase de motivation ou une promesse forte.",
-        "fields": [
-            {"label": "Motivational Headline / Strong Promise", "placeholder": "e.g., Become the absolute best version of yourself everyday.", "description": "La phrase de motivation ou promesse forte qui donne envie d'agir."},
-            {"label": "The Destination / Value Proposition", "placeholder": "e.g., Join 10,000+ people crushing their fitness goals.", "description": "Ce qu'ils vont découvrir s'ils rejoignent le mouvement."},
-            {"label": "Urgent Call To Action", "placeholder": "e.g., Start your transformation journey right here 👇", "description": "L'appel à l'action direct pour pousser à cliquer immédiatement sur le lien juste en dessous."}
-        ]
-    },
-    {
-        "id": "1st_tiktok_post",
-        "title": "📢 1st TikTok Post",
-        "description": "Génère un script complet (texte écran, voix-off, visuel) pour ton tout premier post TikTok basé sur une situation du quotidien ou une tendance.",
-        "fields": [
-            {"label": "Relatable hook problem or TikTok trend", "placeholder": "e.g., POV: Your phone battery dies right when you start GPS navigation", "description": "Le problème quotidien ou le format de tendance pour que l'utilisateur s'arrête."},
-            {"label": "Product name being showcased", "placeholder": "e.g., VoltMax Ultra Slim Powerbank", "description": "Le nom du produit mis en avant dans la vidéo."},
-            {"label": "Visual action taking place in first 2 seconds", "placeholder": "e.g., Slamming a dead phone on the desk out of frustration", "description": "L'action visuelle de départ pour synchroniser le texte et l'image."}
-        ]
-    },
-    {
-        "id": "shopify_product_description",
-        "title": "📢 Shopify Product Description",
-        "description": "Rédige une page de vente e-commerce complète qui transforme les visiteurs en acheteurs en insistant sur leurs frustrations.",
-        "fields": [
-            {"label": "Product Name & Core Function", "placeholder": "e.g., AuraGlow LED Mirror - Smart makeup mirror with adjustable lighting", "description": "Le nom de ton produit et ce à quoi il sert de manière simple."},
-            {"label": "Target Customer's Pain Point", "placeholder": "e.g., Bad lighting in the bathroom making makeup look patchy or unnatural", "description": "Le problème majeur ou la frustration quotidienne de ton client cible."},
-            {"label": "Unfair advantage or unique feature", "placeholder": "e.g., True-color lighting technology mimicking natural sunlight with a 10x magnetic zoom", "description": "L'avantage unique qui rend ton produit supérieur aux autres."}
-        ]
-    },
-    {
-        "id": "cart_abandonment_email",
-        "title": "📢 Cart Abandonment Email",
-        "description": "Crée un email de relance automatique pour récupérer les clients qui ont quitté le panier au moment de payer.",
-        "fields": [
-            {"label": "Name of items left in shopping cart", "placeholder": "e.g., Wireless Massage Gun", "description": "Le rappel textuel exact de l'objet oublié dans le panier."},
-            {"label": "Urgency countdown / Time limit", "placeholder": "e.g., 47 minutes", "description": "La limite de temps avant que leur panier ou le stock ne soit expiré."},
-            {"label": "Extra customer checkout incentive", "placeholder": "e.g., Free Shipping + Extra 10% off automated coupon", "description": "Le petit cadeau ou code promo exclusif pour éliminer l'objection du prix."}
-        ]
-    },
-    {
-        "id": "cold_dm_message",
-        "title": "📢 Cold DM Customer Message",
-        "description": "Génère un message d'approche privé (Instagram, TikTok) ultra-personnalisé pour démarcher sans vendre de force.",
-        "fields": [
-            {"label": "Target niche or account type", "placeholder": "e.g., Fitness Influencers / Fashion Stores", "description": "Le type de compte ou la niche de la personne que tu contactes."},
-            {"label": "Personalized compliment / Icebreaker angle", "placeholder": "e.g., Their latest reel about leg day workouts", "description": "Le compliment ou le détail précis de leur contenu pour briser la glace."},
-            {"label": "Irresistible offer / Collaboration value", "placeholder": "e.g., Sending 3 free product samples with no strings attached", "description": "L'offre gratuite ou l'avantage immédiat que tu leur apportes."}
-        ]
-    },
-    {
-        "id": "6s_video_script",
-        "title": "📢 6s Video Script",
-        "description": "Crée un script vidéo ultra-court et rythmé (format B-roll / Reels) pour capter l'attention en un éclair.",
-        "fields": [
-            {"label": "Aggressive 2-second hook text", "placeholder": "e.g., Stop buying expensive teeth whitening kits...", "description": "La phrase choc ou provocante des 2 premières secondes pour stopper le scroll."},
-            {"label": "Main lightning-fast result", "placeholder": "e.g., White teeth in exactly 6 seconds", "description": "Le bénéfice ou résultat immédiat affiché au milieu de la vidéo."},
-            {"label": "Call to action overlay", "placeholder": "e.g., Click 'Shop Now' before stock ends", "description": "L'appel à l'action flash qui s'affiche à la fin de la vidéo."}
-        ]
-    },
-    {
-        "id": "facebook_ads_hook",
-        "title": "📢 Facebook Ads Hook",
-        "description": "Rédige les premières lignes textuelles d'une publicité Facebook pour bousculer les croyances de ton audience.",
-        "fields": [
-            {"label": "Target Audience or Customer Persona", "placeholder": "e.g., Busy remote workers with back pain", "description": "L'audience ou le profil type du client à qui s'adresse la publicité."},
-            {"label": "The big alternative / What they are currently doing wrong", "placeholder": "e.g., Buying expensive ergonomic chairs that don't fix posture", "description": "La fausse solution ou la mauvaise habitude actuelle de la cible."},
-            {"label": "The direct benefit of the product", "placeholder": "e.g., Instantly straightens the spine with a lightweight daily brace", "description": "La promesse principale et le bénéfice direct apporté par ton produit."}
-        ]
-    }
-]
-
-col1, col2 = st.columns([1, 2])
-
-with col1:
-    st.subheader("🤖 Leviers disponibles")
-    problem_titles = [p["title"] for p in MARKETING_PROBLEMS]
-    selected_title = st.radio("Choisir un outil :", problem_titles, label_visibility="collapsed")
-    selected_problem = next(p for p in MARKETING_PROBLEMS if p["title"] == selected_title)
-
-with col2:
-    st.header(selected_problem["title"])
-    st.write(selected_problem["description"])
+# ==========================================
+# --- STEP 1: HOME & MOTIVATION ---
+# ==========================================
+if st.session_state.step == 1:
+    st.title("🚀 ClientBoost AI v2")
+    
+    st.markdown("""
+    ### Turn cold prospects into loyal customers.
+    **ClientBoost AI** analyzes the specific pain points of your target audience to generate high-converting outreach messages and marketing copy. No more spending hours looking for the right words: our AI handles it for you.
+    """)
+    
+    st.success("💡 *The success of a sale doesn't depend on what you sell, but on how you solve your customer's problem. Take action today!*")
+    
     st.divider()
+    
+    if st.button("Start analyzing your business ➔", type="primary", use_container_width=True):
+        st.session_state.step = 2
+        st.rerun()
 
-    form_values = {}
-    with st.form(key=f"form_{selected_problem['id']}"):
-        for field in selected_problem["fields"]:
-            form_values[field["label"]] = st.text_input(
-                label=field["label"],
-                placeholder=field["placeholder"],
-                help=field["description"]
-            )
-        submit_button = st.form_submit_button(label="Générer la copie magique 🚀", use_container_width=True)
+# ==========================================
+# --- STEP 2: DIAGNOSTIC (PROBLEM SELECTION) ---
+# ==========================================
+elif st.session_state.step == 2:
+    st.title("🎯 Step 2: What is your biggest challenge?")
+    st.write("Select the primary problem your business currently faces to guide the AI.")
+    
+    pains = [
+        "I can't seem to find qualified clients.",
+        "My email conversion rate is too low.",
+        "My sales pages are not converting enough.",
+        "I spend too much time writing prospecting messages."
+    ]
+    
+    default_index = pains.index(st.session_state.selected_pain) if st.session_state.selected_pain in pains else 0
+    selected = st.radio("Choose your main challenge:", pains, index=default_index)
+    
+    st.divider()
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("⬅ Back to Home", use_container_width=True):
+            st.session_state.step = 1
+            st.rerun()
+    with col2:
+        if st.button("Continue to Plans ➔", type="primary", use_container_width=True):
+            st.session_state.selected_pain = selected
+            st.session_state.step = 3
+            st.rerun()
 
-    if submit_button:
-        if any(val.strip() == "" for val in form_values.values()):
-            st.warning("⚠️ Veuillez remplir tous les champs.")
+# ==========================================
+# --- STEP 3: PLAN SELECTION & PAYMENT (PAYWALL) ---
+# ==========================================
+elif st.session_state.step == 3:
+    st.title("💳 Step 3: Choose your plan")
+    st.caption(f"🎯 Targeted Problem: {st.session_state.selected_pain}")
+    st.info("Unlock access to AI content generation by choosing one of our plans below.")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("### 🥉 Basic")
+        st.subheader("$9 / mo")
+        st.write("• 5 generations / month")
+        st.write("• Standard support")
+        if st.button("Choose Basic", key="btn_basic", use_container_width=True):
+            st.session_state.selected_plan = "Basic"
+            st.session_state.payment_done = True
+            
+    with col2:
+        st.markdown("### 🥈 Premium")
+        st.subheader("$29 / mo")
+        st.write("• Unlimited generations")
+        st.write("• Access to new models")
+        if st.button("🔥 Choose Premium", key="btn_premium", use_container_width=True):
+            st.session_state.selected_plan = "Premium"
+            st.session_state.payment_done = True
+            
+    with col3:
+        st.markdown("### 🥇 Ultra")
+        st.subheader("$49 / mo")
+        st.write("• Team & Collaboration")
+        st.write("• 24/7 VIP Support")
+        if st.button("Choose Ultra", key="btn_ultra", use_container_width=True):
+            st.session_state.selected_plan = "Ultra"
+            st.session_state.payment_done = True
+
+    st.divider()
+    
+    if st.session_state.payment_done:
+        st.success(f"✅ Payment simulated successfully for the **{st.session_state.selected_plan}** plan!")
+        if st.button("Access Product Description ➔", type="primary", use_container_width=True):
+            st.session_state.step = 4
+            st.rerun()
+            
+    if st.button("⬅ Back", key="back_to_2"):
+        st.session_state.step = 2
+        st.session_state.payment_done = False 
+        st.rerun()
+
+# ==========================================
+# --- STEP 4: DESCRIPTION & CUSTOM GENERATION ---
+# ==========================================
+elif st.session_state.step == 4:
+    st.title("✍️ Step 4: Create your campaign with AI")
+    st.caption(f"Active Plan: **{st.session_state.selected_plan}** | Solving Problem: *{st.session_state.selected_pain}*")
+    
+    st.subheader("Describe your product or service")
+    product_desc = st.text_area(
+        "Briefly explain what you sell and who it is for:", 
+        placeholder="E.g., An online course for freelancers who want to double their rates...",
+        height=120
+    )
+    
+    if st.button("✨ Generate My Marketing Copy", type="primary", use_container_width=True):
+        if product_desc.strip() == "":
+            st.warning("⚠️ Please enter a description before generating.")
         else:
-            with st.spinner("Génération de la pépite en cours... ⚙️"):
-                summary_inputs = "\n".join([f"- {k} : {v}" for k, v in form_values.items()])
-                generated_text = (
-                    f"✨ [Résultat IA - Framework {selected_problem['title']}]\n\n"
-                    f"Données prises en compte :\n{summary_inputs}\n\n"
-                    f"👉 [Texte Final Haute Conversion] :\n"
-                    f"\"Voici votre texte de vente optimisé pour la conversion. Prêt à être publié !\""
-                )
-                st.success("🎯 Contenu généré avec succès :")
-                st.text_area(label="Résultat final", value=generated_text, height=250)
+            with st.spinner("🔮 AI is applying the best psychological strategy for your problem..."):
+                time.sleep(2) 
+                
+                st.success("🎉 Here is the strategic solution generated by the AI:")
+                
+                # --- STRATEGIC LOGIC BASED ON THE CHOSEN PROBLEM ---
+                if st.session_state.selected_pain == "I can't seem to find qualified clients.":
+                    st.info("💡 **AI Strategy Activated:** Lead Generation & Qualification Framework.")
+                    st.markdown(f"""
+                    ### 🎯 Your Client Attraction Sequence
+                    * **The Magnetic Hook:** \"Stop chasing window shoppers. If you are tired of spending hours on the phone with people who don't have the budget, here is how to flip the script.\"
+                    * **The Value Angle:** Thanks to **{product_desc}**, you won't have to chase leads anymore: ideal clients will apply to work with you.
+                    * **Immediate Action Plan:** Filter your requests from the very start with a quick 3-question qualification survey.
+                    """)
+                    
+                elif st.session_state.selected_pain == "My email conversion rate is too low.":
+                    st.info("💡 **AI Strategy Activated:** Curiosity Psychology & Follow-up (PAS Framework).")
+                    st.markdown(f"""
+                    ### 📧 Your High-Open-Rate Subject Lines & Email Structure
+                    * **Recommended Subject Lines (Run an A/B test):** 
+                      1. *« The invisible problem killing your results... »*
+                      2. *« {product_desc} (What no one is telling you) »*
+                    * **The Body Copy (Narrative Hook):** « Do your emails end up in the 'Promotions' tab or worse, get deleted within 2 seconds? That's because they lack dramatic tension. »
+                    * **The Transition:** That is exactly why we built an approach around **{product_desc}** to rebuild that connection from the very first line.
+                    """)
+                    
+                elif st.session_state.selected_pain == "My sales pages are not converting enough.":
+                    st.info("💡 **AI Strategy Activated:** AIDA Restructuring (Attention, Interest, Desire, Action) + Friction Reduction.")
+                    st.markdown(f"""
+                    ### ⚡ Your Main Headline Structure (Hero Section)
+                    * **The Hook Headline:** « Don't change your product. Change the story you tell on your page. »
+                    * **The Subheadline:** Discover how **{product_desc}** eliminates your visitors' objections before they even reach the buy button.
+                    * **Urgent Trust Element to Add:** Implement a 14-day \"Money-Back Guarantee\" right under your pricing to break down the final psychological barrier.
+                    """)
+                    
+                elif st.session_state.selected_pain == "I spend too much time writing prospecting messages.":
+                    st.info("💡 **AI Strategy Activated:** Automation & Ultra-short Script (Cold Outreach).")
+                    st.markdown(f"""
+                    ### ✉️ Your Direct Prospecting Script (LinkedIn / DM)
+                    * **Golden Rule:** Under 150 words. Nobody reads walls of text.
+                    * **Ready-to-send Message:**
+                    > « Hello [First Name], I see you are scaling your business. Often, the most time-consuming part is finding the right messaging. We developed **{product_desc}** to automate this process while keeping it 100% human. Would a 2-minute demo catch your eye this week? »
+                    """)
+
+    st.divider()
+    
+    # --- FOOTER & AUTHOR SIGNATURE ---
+    st.caption("Made with ❤️ by **kēllønę🔗💨**")
+    
+    if st.button("🔄 Restart From Beginning", key="reset_flow", use_container_width=True):
+        st.session_state.step = 1
+        st.session_state.selected_pain = None
+        st.session_state.selected_plan = None
+        st.session_state.payment_done = False
+        st.rerun()
+    
