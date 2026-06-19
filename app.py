@@ -1,197 +1,147 @@
 import streamlit as st
-import time
 
-# ==========================================
-# --- PAGE CONFIGURATION ---
-# ==========================================
+# 1. CONFIGURATION DE LA PAGE (Doit toujours être la première commande Streamlit)
 st.set_page_config(
-    page_title="ClientBoost AI v2",
+    page_title="ClientBoost AI",
     page_icon="🚀",
-    layout="centered"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# ==========================================
-# --- INITIALIZE SESSION STATE ---
-# ==========================================
-if "step" not in st.session_state:
-    st.session_state.step = 1
-if "selected_pain" not in st.session_state:
-    st.session_state.selected_pain = None
-if "selected_plan" not in st.session_state:
-    st.session_state.selected_plan = None
-if "payment_done" not in st.session_state:
-    st.session_state.payment_done = False
+# --- INITIALISATION DE L'ÉTAT DE SESSION ---
+# Permet de garder en mémoire l'étape ou les données si l'utilisateur change d'onglet
+if "page_actuelle" not in st.session_state:
+    st.session_state.page_actuelle = "🚀 Générateur"
+if "paiement_effectue" not in st.session_state:
+    st.session_state.paiement_effectue = False
 
-# ==========================================
-# --- STEP 1: HOME & MOTIVATION ---
-# ==========================================
-if st.session_state.step == 1:
-    st.title("🚀 ClientBoost AI v2")
-    
-    st.markdown("""
-    ### Turn cold prospects into loyal customers.
-    **ClientBoost AI** analyzes the specific pain points of your target audience to generate high-converting outreach messages and marketing copy. No more spending hours looking for the right words: our AI handles it for you.
-    """)
-    
-    st.success("💡 *The success of a sale doesn't depend on what you sell, but on how you solve your customer's problem. Take action today!*")
-    
-    st.divider()
-    
-    if st.button("Start analyzing your business ➔", type="primary", use_container_width=True):
-        st.session_state.step = 2
-        st.rerun()
 
-# ==========================================
-# --- STEP 2: DIAGNOSTIC (PROBLEM SELECTION) ---
-# ==========================================
-elif st.session_state.step == 2:
-    st.title("🎯 Step 2: What is your biggest challenge?")
-    st.write("Select the primary problem your business currently faces to guide the AI.")
+# --- BARRE LATÉRALE : MENU, TRADUCTION & OPTIONS ---
+with st.sidebar:
+    st.title("🚀 ClientBoost AI")
+    st.write("Le générateur de messages de vente intelligent.")
+    st.write("---")
     
-    pains = [
-        "I can't seem to find qualified clients.",
-        "My email conversion rate is too low.",
-        "My sales pages are not converting enough.",
-        "I spend too much time writing prospecting messages."
-    ]
+    # ÉTAPE 1 : Choix de la langue (Traduction automatique)
+    st.subheader("🌐 Traduction")
+    langue_cible = st.selectbox(
+        "Langue de génération :",
+        ["Français", "English", "Español", "Deutsch", "Italiano", "Português"],
+        help="L'IA rédigera automatiquement votre message dans cette langue."
+    )
     
-    default_index = pains.index(st.session_state.selected_pain) if st.session_state.selected_pain in pains else 0
-    selected = st.radio("Choose your main challenge:", pains, index=default_index)
+    st.write("---")
     
-    st.divider()
+    # ÉTAPE 2 : Menu de navigation principal
+    st.subheader("🧭 Navigation")
+    page_selectionnee = st.radio(
+        "Aller à :",
+        ["🚀 Générateur", "💳 Mon Abonnement", "📜 Historique", "⚙️ Paramètres"],
+        label_visibility="collapsed"
+    )
+    st.session_state.page_actuelle = page_selectionnee
+
+
+# --- CONTENU PRINCIPAL DE L'APPLICATION ---
+
+# PAGE 1 : LE GÉNÉRATEUR IA
+if st.session_state.page_actuelle == "🚀 Générateur":
+    st.title("🔮 Espace de Génération IA")
+    st.write(f"Configurez votre campagne. L'IA rédigera votre contenu en : **{langue_cible}**.")
+    st.write("---")
     
+    # Formulaire utilisateur
     col1, col2 = st.columns(2)
+    
     with col1:
-        if st.button("⬅ Back to Home", use_container_width=True):
-            st.session_state.step = 1
-            st.rerun()
+        secteur = st.text_input(
+            "Votre secteur d'activité / Produit :", 
+            placeholder="Ex: Agence SEO, Coach de fitness, SaaS RH..."
+        )
+        cible = st.text_input(
+            "Qui est votre client idéal (Persona) ?", 
+            placeholder="Ex: Directeurs Marketing, Particuliers voulant perdre du poids..."
+        )
+        
     with col2:
-        if st.button("Continue to Plans ➔", type="primary", use_container_width=True):
-            st.session_state.selected_pain = selected
-            st.session_state.step = 3
-            st.rerun()
+        probleme = st.text_area(
+            "Quel est le problème principal de votre client ?", 
+            placeholder="Ex: Ils n'ont pas le temps de gérer leurs réseaux sociaux, ils manquent de visibilité..."
+        )
+    
+    # Bouton de génération
+    st.write("")
+    if st.button("✨ Générer mon message de vente", type="primary", use_container_width=True):
+        if secteur and probleme and cible:
+            with st.spinner(f"L'IA rédige votre message de vente en {langue_cible}..."):
+                
+                # --- EXEMPLE DE STRUCTURE DE PROMPT POUR TON IA ---
+                # C'est ici qu'on intègre dynamiquement la langue choisie
+                prompt_complet = f"""
+                Tu es un copywriter expert. Rédige un message de vente persuasif.
+                Secteur : {secteur}
+                Cible : {cible}
+                Problème à résoudre : {probleme}
+                
+                CONSIGNE CRITIQUE : Tu dois obligatoirement rédiger l'intégralité du message en {langue_cible}.
+                """
+                
+                # Simulation de la réponse de l'IA (à remplacer par ton appel API OpenAI / Claude etc.)
+                import time
+                time.sleep(2) # Simule l'attente
+                
+                # Affichage du résultat
+                st.success(f"✅ Votre message a été généré avec succès en {langue_cible} !")
+                st.text_area(
+                    "Votre message prêt à copier :", 
+                    value=f"[Exemple de message persuasif rédigé en {langue_cible} basé sur le problème : '{probleme}']", 
+                    height=200
+                )
+        else:
+            st.warning("⚠️ Veuillez remplir tous les champs avant de lancer la génération.")
 
-# ==========================================
-# --- STEP 3: PLAN SELECTION & PAYMENT (PAYWALL) ---
-# ==========================================
-elif st.session_state.step == 3:
-    st.title("💳 Step 3: Choose your plan")
-    st.caption(f"🎯 Targeted Problem: {st.session_state.selected_pain}")
-    st.info("Unlock access to AI content generation by choosing one of our plans below.")
+
+# PAGE 2 : MON ABONNEMENT / PAIEMENT
+elif st.session_state.page_actuelle == "💳 Mon Abonnement":
+    st.title("💳 Tarifs & Abonnement")
+    st.write("Passez à la vitesse supérieure pour débloquer des générations illimitées.")
+    st.write("---")
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("### 🥉 Basic")
-        st.subheader("$9 / mo")
-        st.write("• 5 generations / month")
-        st.write("• Standard support")
-        if st.button("Choose Basic", key="btn_basic", use_container_width=True):
-            st.session_state.selected_plan = "Basic"
-            st.session_state.payment_done = True
-            
+        st.markdown("### 🥉 Plan Standard")
+        st.write("**9€ / mois**")
+        st.write("- 20 générations par mois\n- Support par email")
+        st.button("Choisir Standard", key="plan_1")
+        
     with col2:
-        st.markdown("### 🥈 Premium")
-        st.subheader("$29 / mo")
-        st.write("• Unlimited generations")
-        st.write("• Access to new models")
-        if st.button("🔥 Choose Premium", key="btn_premium", use_container_width=True):
-            st.session_state.selected_plan = "Premium"
-            st.session_state.payment_done = True
+        st.markdown("### 🥈 Plan Pro (Populaire)")
+        st.write("**29€ / mois**")
+        st.write("- Générations illimitées\n- Accès aux prompts avancés\n- Support prioritaire")
+        if st.button("Débloquer le Plan Pro", type="primary", key="plan_2"):
+            st.session_state.paiement_effectue = True
+            st.success("💳 Simulation de paiement réussie ! Compte passé en PRO.")
             
     with col3:
-        st.markdown("### 🥇 Ultra")
-        st.subheader("$49 / mo")
-        st.write("• Team & Collaboration")
-        st.write("• 24/7 VIP Support")
-        if st.button("Choose Ultra", key="btn_ultra", use_container_width=True):
-            st.session_state.selected_plan = "Ultra"
-            st.session_state.payment_done = True
+        st.markdown("### 🥇 Plan Agence")
+        st.write("**79€ / mois**")
+        st.write("- Multi-comptes équipe\n- Intégration API personnalisée\n- Support 24/7")
+        st.button("Choisir Agence", key="plan_3")
 
-    st.divider()
-    
-    if st.session_state.payment_done:
-        st.success(f"✅ Payment simulated successfully for the **{st.session_state.selected_plan}** plan!")
-        if st.button("Access Product Description ➔", type="primary", use_container_width=True):
-            st.session_state.step = 4
-            st.rerun()
-            
-    if st.button("⬅ Back", key="back_to_2"):
-        st.session_state.step = 2
-        st.session_state.payment_done = False 
-        st.rerun()
 
-# ==========================================
-# --- STEP 4: DESCRIPTION & CUSTOM GENERATION ---
-# ==========================================
-elif st.session_state.step == 4:
-    st.title("✍️ Step 4: Create your campaign with AI")
-    st.caption(f"Active Plan: **{st.session_state.selected_plan}** | Solving Problem: *{st.session_state.selected_pain}*")
-    
-    st.subheader("Describe your product or service")
-    product_desc = st.text_area(
-        "Briefly explain what you sell and who it is for:", 
-        placeholder="E.g., An online course for freelancers who want to double their rates...",
-        height=120
-    )
-    
-    if st.button("✨ Generate My Marketing Copy", type="primary", use_container_width=True):
-        if product_desc.strip() == "":
-            st.warning("⚠️ Please enter a description before generating.")
-        else:
-            with st.spinner("🔮 AI is applying the best psychological strategy for your problem..."):
-                time.sleep(2) 
-                
-                st.success("🎉 Here is the strategic solution generated by the AI:")
-                
-                # --- STRATEGIC LOGIC BASED ON THE CHOSEN PROBLEM ---
-                if st.session_state.selected_pain == "I can't seem to find qualified clients.":
-                    st.info("💡 **AI Strategy Activated:** Lead Generation & Qualification Framework.")
-                    st.markdown(f"""
-                    ### 🎯 Your Client Attraction Sequence
-                    * **The Magnetic Hook:** \"Stop chasing window shoppers. If you are tired of spending hours on the phone with people who don't have the budget, here is how to flip the script.\"
-                    * **The Value Angle:** Thanks to **{product_desc}**, you won't have to chase leads anymore: ideal clients will apply to work with you.
-                    * **Immediate Action Plan:** Filter your requests from the very start with a quick 3-question qualification survey.
-                    """)
-                    
-                elif st.session_state.selected_pain == "My email conversion rate is too low.":
-                    st.info("💡 **AI Strategy Activated:** Curiosity Psychology & Follow-up (PAS Framework).")
-                    st.markdown(f"""
-                    ### 📧 Your High-Open-Rate Subject Lines & Email Structure
-                    * **Recommended Subject Lines (Run an A/B test):** 
-                      1. *« The invisible problem killing your results... »*
-                      2. *« {product_desc} (What no one is telling you) »*
-                    * **The Body Copy (Narrative Hook):** « Do your emails end up in the 'Promotions' tab or worse, get deleted within 2 seconds? That's because they lack dramatic tension. »
-                    * **The Transition:** That is exactly why we built an approach around **{product_desc}** to rebuild that connection from the very first line.
-                    """)
-                    
-                elif st.session_state.selected_pain == "My sales pages are not converting enough.":
-                    st.info("💡 **AI Strategy Activated:** AIDA Restructuring (Attention, Interest, Desire, Action) + Friction Reduction.")
-                    st.markdown(f"""
-                    ### ⚡ Your Main Headline Structure (Hero Section)
-                    * **The Hook Headline:** « Don't change your product. Change the story you tell on your page. »
-                    * **The Subheadline:** Discover how **{product_desc}** eliminates your visitors' objections before they even reach the buy button.
-                    * **Urgent Trust Element to Add:** Implement a 14-day \"Money-Back Guarantee\" right under your pricing to break down the final psychological barrier.
-                    """)
-                    
-                elif st.session_state.selected_pain == "I spend too much time writing prospecting messages.":
-                    st.info("💡 **AI Strategy Activated:** Automation & Ultra-short Script (Cold Outreach).")
-                    st.markdown(f"""
-                    ### ✉️ Your Direct Prospecting Script (LinkedIn / DM)
-                    * **Golden Rule:** Under 150 words. Nobody reads walls of text.
-                    * **Ready-to-send Message:**
-                    > « Hello [First Name], I see you are scaling your business. Often, the most time-consuming part is finding the right messaging. We developed **{product_desc}** to automate this process while keeping it 100% human. Would a 2-minute demo catch your eye this week? »
-                    """)
+# PAGE 3 : HISTORIQUE
+elif st.session_state.page_actuelle == "📜 Historique":
+    st.title("📜 Historique de vos générations")
+    st.write("Retrouvez ici tous les textes que vous avez générés précédemment.")
+    st.write("---")
+    st.info("Aucun historique pour le moment. Lancez votre première génération !")
 
-    st.divider()
-    
-    # --- FOOTER & AUTHOR SIGNATURE ---
-    st.caption("Made with ❤️ by **kēllønę🔗💨**")
-    
-    if st.button("🔄 Restart From Beginning", key="reset_flow", use_container_width=True):
-        st.session_state.step = 1
-        st.session_state.selected_pain = None
-        st.session_state.selected_plan = None
-        st.session_state.payment_done = False
-        st.rerun()
-    
+
+# PAGE 4 : PARAMÈTRES
+elif st.session_state.page_actuelle == "⚙️ Paramètres":
+    st.title("⚙️ Paramètres du compte")
+    st.write("Gérez la configuration de votre application SaaS.")
+    st.write("---")
+    api_key = st.text_input("Clé API OpenAI (Optionnel)", type="password")
+    st.caption("Laissez vide si vous utilisez l'API par défaut du SaaS.")
