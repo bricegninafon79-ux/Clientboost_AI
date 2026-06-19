@@ -2,7 +2,7 @@ import streamlit as st
 
 # 1. CONFIGURATION DE LA PAGE
 st.set_page_config(
-    page_title="ClientBoost AI",
+    page_title="ClientBoost",
     page_icon="🚀",
     layout="wide",
     initial_sidebar_state="expanded"
