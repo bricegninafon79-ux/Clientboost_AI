@@ -1,6 +1,6 @@
 import streamlit as st
 
-# 1. CONFIGURATION DE LA PAGE (Doit toujours être la première commande Streamlit)
+# 1. CONFIGURATION DE LA PAGE
 st.set_page_config(
     page_title="ClientBoost AI",
     page_icon="🚀",
@@ -9,7 +9,6 @@ st.set_page_config(
 )
 
 # --- INITIALISATION DE L'ÉTAT DE SESSION ---
-# Permet de garder en mémoire l'étape ou les données si l'utilisateur change d'onglet
 if "page_actuelle" not in st.session_state:
     st.session_state.page_actuelle = "🚀 Générateur"
 if "paiement_effectue" not in st.session_state:
@@ -19,10 +18,10 @@ if "paiement_effectue" not in st.session_state:
 # --- BARRE LATÉRALE : MENU, TRADUCTION & OPTIONS ---
 with st.sidebar:
     st.title("🚀 ClientBoost AI")
-    st.write("Le générateur de messages de vente intelligent.")
+    st.write("Transformez vos prospects en clients.")
     st.write("---")
     
-    # ÉTAPE 1 : Choix de la langue (Traduction automatique)
+    # ÉTAPE 1 : Choix de la langue
     st.subheader("🌐 Traduction")
     langue_cible = st.selectbox(
         "Langue de génération :",
@@ -32,7 +31,7 @@ with st.sidebar:
     
     st.write("---")
     
-    # ÉTAPE 2 : Menu de navigation principal
+    # ÉTAPE 2 : Menu de navigation
     st.subheader("🧭 Navigation")
     page_selectionnee = st.radio(
         "Aller à :",
@@ -44,11 +43,20 @@ with st.sidebar:
 
 # --- CONTENU PRINCIPAL DE L'APPLICATION ---
 
-# PAGE 1 : LE GÉNÉRATEUR IA
+# PAGE 1 : LE GÉNÉRATEUR IA (PAGE D'ACCUEIL)
 if st.session_state.page_actuelle == "🚀 Générateur":
-    st.title("🔮 Espace de Génération IA")
-    st.write(f"Configurez votre campagne. L'IA rédigera votre contenu en : **{langue_cible}**.")
+    # --- SECTION EN-TÊTE / ACCUEIL ---
+    st.title("🚀 ClientBoost AI")
+    st.markdown("### *Le générateur de messages de vente intelligent qui convertit vos prospects en clients fidèles.*")
+    
+    # Encadré de motivation
+    st.info(
+        "💡 **Motivation du jour :** *« Le marketing n'est pas l'art de trouver des moyens astucieux de vous débarrasser de ce que vous faites. C'est l'art de créer de la véritable valeur pour le client. » – Philip Kotler* — **Prêt à propulser vos ventes ? Remplissez les champs ci-dessous !**"
+    )
     st.write("---")
+    
+    st.write(f"⚙️ Langue cible sélectionnée : **{langue_cible}**")
+    st.write("")
     
     # Formulaire utilisateur
     col1, col2 = st.columns(2)
@@ -75,8 +83,6 @@ if st.session_state.page_actuelle == "🚀 Générateur":
         if secteur and probleme and cible:
             with st.spinner(f"L'IA rédige votre message de vente en {langue_cible}..."):
                 
-                # --- EXEMPLE DE STRUCTURE DE PROMPT POUR TON IA ---
-                # C'est ici qu'on intègre dynamiquement la langue choisie
                 prompt_complet = f"""
                 Tu es un copywriter expert. Rédige un message de vente persuasif.
                 Secteur : {secteur}
@@ -86,11 +92,9 @@ if st.session_state.page_actuelle == "🚀 Générateur":
                 CONSIGNE CRITIQUE : Tu dois obligatoirement rédiger l'intégralité du message en {langue_cible}.
                 """
                 
-                # Simulation de la réponse de l'IA (à remplacer par ton appel API OpenAI / Claude etc.)
                 import time
                 time.sleep(2) # Simule l'attente
                 
-                # Affichage du résultat
                 st.success(f"✅ Votre message a été généré avec succès en {langue_cible} !")
                 st.text_area(
                     "Votre message prêt à copier :", 
