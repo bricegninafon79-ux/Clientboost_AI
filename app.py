@@ -63,7 +63,7 @@ PROBLEMS = {
             "label": "I spend too much time writing messages",
             "desc": "You write prospecting messages one by one for hours instead of closing deals.",
             "solution_title": "⚡ Generate in 5 seconds — Save hours every day",
-            "solution": "ClientBoost AI writes a complete, personalized sales message in under 5 seconds. What used to take 30 minutes per prospect now takes one click. Focus on closing — let AI handle the writing.",
+            "solution": "ClientBoost AI writes a complete, personalized sales message in under 5 seconds. What used to take 30 minutes per prospect now takes one click. Focus on closing — let AI handle the grunt work.",
             "angle": "time"
         },
         {
@@ -87,7 +87,7 @@ PROBLEMS = {
             "label": "My pipeline is empty, I need more clients",
             "desc": "Your sales funnel is empty. You urgently need new leads and faster revenue.",
             "solution_title": "🚀 Fill your pipeline — Fast",
-            "solution": "Generate 10, 50 or 100 personalized outreach messages in minutes. Target your exact persona with messages tailored to their pain points. More outreach = more conversations = more clients.",
+            "solution": "Generate 10, 50 or 100 personalized outreach messages in minutes. Target your exact persona with messages tailored to their pain points. More outreach = more conversations = more revenue.",
             "angle": "growth"
         },
         {
@@ -95,7 +95,7 @@ PROBLEMS = {
             "label": "I hate cold outreach, I never get replies",
             "desc": "You hate cold outreach, feel awkward sending 'pushy' messages, and get zero replies.",
             "solution_title": "😊 Outreach you're proud to send",
-            "solution": "ClientBoost AI writes messages that feel natural, empathetic and human — not salesy. Your prospects will feel understood, not pitched. Result: higher reply rates and outreach you actually enjoy.",
+            "solution": "ClientBoost AI writes messages that feel natural, empathetic and human — not salesy. Your prospects will feel understood, not pitched. Result: higher reply rates and outreach that builds relationships.",
             "angle": "frustration"
         },
         {
@@ -121,7 +121,7 @@ PROBLEMS = {
             "label": "Je perds trop de temps à rédiger mes messages",
             "desc": "Vous rédigez vos messages de prospection un par un pendant des heures au lieu de signer des contrats.",
             "solution_title": "⚡ Génération en 5 secondes — Économisez des heures chaque jour",
-            "solution": "ClientBoost AI génère un message de vente complet et personnalisé en moins de 5 secondes. Ce qui vous prenait 30 minutes par prospect ne prend plus qu'un clic. Concentrez-vous sur la signature, l'IA s'occupe de la rédaction.",
+            "solution": "ClientBoost AI génère un message de vente complet et personnalisé en moins de 5 secondes. Ce qui vous prenait 30 minutes par prospect ne prend plus qu'un clic. Concentrez-vous sur la fermeture — laissez l'IA faire le travail.",
             "angle": "time"
         },
         {
@@ -129,7 +129,7 @@ PROBLEMS = {
             "label": "Mes campagnes ne convertissent pas, je perds de l'argent",
             "desc": "Vos campagnes ne convertissent pas. Vous brûlez votre budget pub ou n'avez pas les moyens d'une agence.",
             "solution_title": "💰 Arrêtez de brûler votre budget — Commencez à convertir",
-            "solution": "ClientBoost AI applique des frameworks éprouvés (AIDA, PAS, FAB) pour que chaque message soit conçu pour convertir. Plus de frais d'agence. Plus de budget gaspillé. Juste des messages qui génèrent du chiffre.",
+            "solution": "ClientBoost AI applique des frameworks éprouvés (AIDA, PAS, FAB) pour que chaque message soit conçu pour convertir. Plus de frais d'agence. Plus de budget gaspillé. Juste des messages qui génèrent du revenu.",
             "angle": "money"
         },
         {
@@ -137,7 +137,7 @@ PROBLEMS = {
             "label": "Je ne sais pas rédiger un bon message de vente",
             "desc": "Vous ne savez pas rédiger une accroche percutante, appliquer AIDA, ou surmonter la page blanche.",
             "solution_title": "🎓 Copywriting expert — Aucune compétence requise",
-            "solution": "ClientBoost AI intègre plus de 10 frameworks de vente éprouvés. Renseignez simplement votre produit, votre persona et sa douleur — l'IA gère les accroches, la structure et la persuasion. Aucune expérience requise.",
+            "solution": "ClientBoost AI intègre plus de 10 frameworks de vente éprouvés. Renseignez simplement votre produit, votre persona et sa douleur — l'IA gère les accroches, la structure, les CTA et la persuasion.",
             "angle": "skill"
         },
         {
@@ -145,7 +145,7 @@ PROBLEMS = {
             "label": "Mon pipeline est vide, j'ai besoin de clients",
             "desc": "Votre tunnel de vente est vide. Vous avez besoin de nouveaux leads et de revenus rapidement.",
             "solution_title": "🚀 Remplissez votre pipeline — Rapidement",
-            "solution": "Générez 10, 50 ou 100 messages personnalisés en quelques minutes. Ciblez votre persona exact avec des messages adaptés à ses douleurs. Plus de prospection = plus de conversations = plus de clients.",
+            "solution": "Générez 10, 50 ou 100 messages personnalisés en quelques minutes. Ciblez votre persona exact avec des messages adaptés à ses douleurs. Plus de prospection = plus de conversations = plus de revenus.",
             "angle": "growth"
         },
         {
@@ -153,7 +153,7 @@ PROBLEMS = {
             "label": "Je déteste la prospection, je n'ai aucune réponse",
             "desc": "Vous détestez la prospection à froid, vous sentez mal à l'aise et ne recevez aucune réponse.",
             "solution_title": "😊 Une prospection dont vous serez fier",
-            "solution": "ClientBoost AI rédige des messages naturels, empathiques et humains — pas racoleurs. Vos prospects se sentiront compris, pas démarchés. Résultat : un meilleur taux de réponse et une prospection que vous apprécierez enfin.",
+            "solution": "ClientBoost AI rédige des messages naturels, empathiques et humains — pas racoleurs. Vos prospects se sentiront compris, pas démarchés. Résultat : un meilleur taux de réponse et une prospection qui construit des relations.",
             "angle": "frustration"
         },
         {
@@ -161,7 +161,7 @@ PROBLEMS = {
             "label": "J'ai peur de griller ma base de prospects",
             "desc": "Vous craignez de griller votre liste avec des messages de mauvaise qualité ou de paraître non professionnel.",
             "solution_title": "✅ Qualité professionnelle — À chaque fois",
-            "solution": "Chaque message généré est soigné, professionnel et cohérent avec votre image. Les contrôles de ton intégrés garantissent que vous n'enverrez jamais un message que vous regretteriez.",
+            "solution": "Chaque message généré est soigné, professionnel et cohérent avec votre image. Les contrôles de ton intégrés garantissent que vous n'enverrez jamais un message que vous regrettiez. Protégez votre réputation en scalant.",
             "angle": "risk"
         },
         {
@@ -181,86 +181,86 @@ PROBLEMS = {
 TEMPLATES = {
     "time": {
         "en": {
-            "Professional": "Subject: Give your team back 10 hours a week\n\nHi [First Name],\n\nI work with {cible} who waste dozens of hours every month writing tasks that should take minutes.\n\nSpecifically: {probleme}\n\n{secteur} solves this in one click. Our clients reclaim an average of 10+ hours per week — redirected entirely toward closing deals.\n\nWould a 20-minute call this week make sense?\n\nBest,\n[Your Name]",
-            "Casual": "Hey [First Name] 👋\n\nHow much time do you lose every week on {probleme}?\n\nI ask because {cible} I work with had the same issue. {secteur} cut that time by 80%.\n\nWorth a 5-minute chat?\n\n[Your Name]",
-            "Urgent": "⚡ [First Name] — every hour counts.\n\nWhile you're stuck on {probleme}, your competitors are moving faster.\n\n{secteur} gives {cible} their time back — instantly.\n\nLet's talk this week.\n\n[Your Name]"
+            "Professional": "Subject: Give your team back 10 hours a week\n\nHi [First Name],\n\nI work with {cible} who waste dozens of hours every month writing tasks that should take minutes.\n\nSpecifically, {probleme}.\n\nIn the past 6 months, we've helped {secteur} cut this down by 80%. Result: teams focus on high-value work instead of admin.\n\nWould a quick call to explore options make sense?\n\nBest,\n[Your Name]",
+            "Casual": "Hey [First Name] 👋\n\nHow much time do you lose every week on {probleme}?\n\nI ask because {cible} I work with had the same issue. {secteur} cut that time by 80%.\n\nWorth a quick chat?\n\nCheers,\n[Your Name]",
+            "Urgent": "⚡ [First Name] — every hour counts.\n\nWhile you're stuck on {probleme}, your competitors are moving faster.\n\n{secteur} gives {cible} their time back — instantly.\n\nLet's talk?\n\n[Your Name]"
         },
         "fr": {
-            "Professionnel": "Objet : Récupérez 10h par semaine pour votre équipe\n\nBonjour [Prénom],\n\nJe travaille avec des {cible} qui perdent des dizaines d'heures chaque mois sur des tâches qui devraient prendre quelques minutes.\n\nConcrètement : {probleme}\n\n{secteur} règle ça en un clic. Nos clients récupèrent en moyenne 10h+ par semaine, entièrement redirigées vers la signature de contrats.\n\nUn échange de 20 minutes cette semaine ?\n\nCordialement,\n[Votre nom]",
-            "Décontracté": "Salut [Prénom] 👋\n\nCombien d'heures perdez-vous chaque semaine sur {probleme} ?\n\nJe pose la question parce que les {cible} avec qui je travaille avaient le même souci. {secteur} a réduit ce temps de 80%.\n\nÇa vaut 5 minutes ?\n\n[Votre nom]",
-            "Urgent": "⚡ [Prénom] — chaque heure compte.\n\nPendant que vous gérez {probleme}, vos concurrents avancent plus vite.\n\n{secteur} rend du temps aux {cible} — immédiatement.\n\nParlons-en cette semaine.\n\n[Votre nom]"
+            "Professionnel": "Objet : Récupérez 10h par semaine pour votre équipe\n\nBonjour [Prénom],\n\nJe travaille avec des {cible} qui perdent des dizaines d'heures chaque mois sur des tâches qui devraient prendre quelques minutes.\n\nSpécifiquement, {probleme}.\n\nCes 6 derniers mois, nous avons aidé {secteur} à réduire cela de 80%. Résultat : les équipes se concentrent sur le travail à haute valeur ajoutée.\n\nUn appel rapide pour explorer les options vous intéresserait-il ?\n\nCordialement,\n[Votre Nom]",
+            "Décontracté": "Salut [Prénom] 👋\n\nCombien d'heures perdez-vous chaque semaine sur {probleme} ?\n\nJe pose la question parce que les {cible} avec qui je travaille avaient le même souci. {secteur} a réduit ça de 80%.\n\nUn rapide appel ?\n\nCheers,\n[Votre Nom]",
+            "Urgent": "⚡ [Prénom] — chaque heure compte.\n\nPendant que vous gérez {probleme}, vos concurrents avancent plus vite.\n\n{secteur} rend du temps aux {cible} — instantanément.\n\nOn en parle ?\n\n[Votre Nom]"
         }
     },
     "money": {
         "en": {
-            "Professional": "Subject: Your campaigns deserve better results\n\nHi [First Name],\n\nI see it often: {cible} investing real budget into outreach, only to face {probleme}.\n\nThe problem isn't your product — it's the message.\n\n{secteur} applies AIDA and PAS frameworks to every message, turning cold prospects into warm conversations. Our clients typically see a 3x improvement in response rates within 30 days.\n\nWorth exploring?\n\n[Your Name]",
+            "Professional": "Subject: Your campaigns deserve better results\n\nHi [First Name],\n\nI see it often: {cible} investing real budget into outreach, only to face {probleme}.\n\nThe problem? Generic messaging doesn't convert.\n\n{secteur} uses proven frameworks (AIDA, PAS) to craft messages that turn prospects into customers. No agency markup. Just better ROI.\n\nWorth exploring?\n\nBest,\n[Your Name]",
             "Casual": "Hey [First Name],\n\nStill struggling with {probleme}?\n\nI've helped {cible} fix this exact issue with {secteur}. Better messages = better ROI. Simple.\n\nWant to see how?\n\n[Your Name]",
-            "Urgent": "🔥 [First Name] — your budget is leaking.\n\nEvery day with {probleme} is money left on the table.\n\n{secteur} helps {cible} convert more, spend less, and scale faster.\n\nLet's fix this — this week.\n\n[Your Name]"
+            "Urgent": "🔥 [First Name] — your budget is leaking.\n\nEvery day with {probleme} is money left on the table.\n\n{secteur} helps {cible} convert more, spend less, and scale faster.\n\nLet's talk?\n\n[Your Name]"
         },
         "fr": {
-            "Professionnel": "Objet : Vos campagnes méritent de meilleurs résultats\n\nBonjour [Prénom],\n\nJe le vois trop souvent : des {cible} qui investissent un vrai budget dans leur prospection, pour faire face à {probleme}.\n\nLe problème n'est pas votre produit — c'est le message.\n\n{secteur} applique AIDA et PAS à chaque message, transformant des prospects froids en conversations qualifiées. Nos clients voient généralement une amélioration 3x de leur taux de réponse en 30 jours.\n\nCela mérite-t-il qu'on en parle ?\n\n[Votre nom]",
-            "Décontracté": "Salut [Prénom],\n\nToujours confronté à {probleme} ?\n\nJ'ai aidé des {cible} à régler exactement ce problème avec {secteur}. De meilleurs messages = un meilleur ROI. Simple.\n\nVous voulez voir comment ?\n\n[Votre nom]",
-            "Urgent": "🔥 [Prénom] — votre budget fuit.\n\nChaque jour avec {probleme} est de l'argent perdu.\n\n{secteur} aide les {cible} à convertir plus, dépenser moins et scaler plus vite.\n\nRéglons ça — cette semaine.\n\n[Votre nom]"
+            "Professionnel": "Objet : Vos campagnes méritent de meilleurs résultats\n\nBonjour [Prénom],\n\nJe le vois trop souvent : des {cible} qui investissent un vrai budget dans leur prospection, seulement pour faire face à {probleme}.\n\nLe problème ? Les messages génériques ne convertissent pas.\n\n{secteur} utilise des frameworks éprouvés (AIDA, PAS) pour rédiger des messages qui transforment les prospects en clients. Pas de surcoût d'agence. Juste un meilleur ROI.\n\nCela vous intéresse ?\n\nCordialement,\n[Votre Nom]",
+            "Décontracté": "Salut [Prénom],\n\nToujours confronté à {probleme} ?\n\nJ'ai aidé des {cible} à régler exactement ce problème avec {secteur}. De meilleurs messages = un meilleur ROI. Simple.\n\nTu veux voir comment ?\n\n[Votre Nom]",
+            "Urgent": "🔥 [Prénom] — votre budget fuit.\n\nChaque jour avec {probleme} est de l'argent perdu.\n\n{secteur} aide les {cible} à convertir plus, dépenser moins et scaler plus vite.\n\nOn en parle ?\n\n[Votre Nom]"
         }
     },
     "skill": {
         "en": {
-            "Professional": "Subject: You don't need to be a copywriter to sell\n\nHi [First Name],\n\nMost {cible} I talk to are experts in their field — but when it comes to {probleme}, they're stuck.\n\nThat's not a talent gap. It's a tool gap.\n\n{secteur} handles the copywriting for you: hooks, structure, persuasion — all built in. You provide the context; the AI does the rest.\n\nNo learning curve. No blank page. Just results.\n\nWant to try?\n\n[Your Name]",
-            "Casual": "Hey [First Name] 👋\n\nBe honest — how much time do you waste staring at a blank screen because of {probleme}?\n\n{secteur} fixes that instantly. I've seen {cible} go from blank page to ready-to-send in under a minute.\n\nLet me show you.\n\n[Your Name]",
-            "Urgent": "📝 [First Name] — stop struggling with {probleme}.\n\nYou're an expert in what you do. Writing copy shouldn't be your problem.\n\n{secteur} gives {cible} professional-grade messages in seconds.\n\nStart today.\n\n[Your Name]"
+            "Professional": "Subject: You don't need to be a copywriter to sell\n\nHi [First Name],\n\nMost {cible} I talk to are experts in their field — but when it comes to {probleme}, they're stuck.\n\n{secteur} solves that. It embeds 10+ proven sales frameworks so you don't need copywriting skills. Just fill in your offer.\n\nInterested in learning more?\n\nBest,\n[Your Name]",
+            "Casual": "Hey [First Name] 👋\n\nBe honest — how much time do you waste staring at a blank screen because of {probleme}?\n\n{secteur} fixes that instantly. I've seen {cible} go from stuck to shipping messages in minutes.\n\nWorth a chat?\n\n[Your Name]",
+            "Urgent": "📝 [First Name] — stop struggling with {probleme}.\n\nYou're an expert in what you do. Writing copy shouldn't be your problem.\n\n{secteur} gives {cible} professional-grade copy with zero copywriting experience needed.\n\nLet's connect?\n\n[Your Name]"
         },
         "fr": {
-            "Professionnel": "Objet : Vous n'avez pas besoin d'être copywriter pour vendre\n\nBonjour [Prénom],\n\nLa plupart des {cible} que je rencontre sont experts dans leur domaine — mais face à {probleme}, ils sont bloqués.\n\nCe n'est pas un manque de talent. C'est un manque d'outil.\n\n{secteur} s'occupe du copywriting à votre place : accroches, structure, persuasion — tout est intégré. Vous fournissez le contexte, l'IA fait le reste.\n\nAucune courbe d'apprentissage. Plus de page blanche. Juste des résultats.\n\nEnvie d'essayer ?\n\n[Votre nom]",
-            "Décontracté": "Salut [Prénom] 👋\n\nSoyons honnêtes — combien de temps perdez-vous à fixer un écran blanc à cause de {probleme} ?\n\n{secteur} règle ça instantanément. J'ai vu des {cible} passer de la page blanche au message prêt à envoyer en moins d'une minute.\n\nLaissez-moi vous montrer.\n\n[Votre nom]",
-            "Urgent": "📝 [Prénom] — arrêtez de lutter avec {probleme}.\n\nVous êtes expert dans votre domaine. La rédaction ne devrait pas être votre problème.\n\n{secteur} donne aux {cible} des messages professionnels en secondes.\n\nCommencez aujourd'hui.\n\n[Votre nom]"
+            "Professionnel": "Objet : Vous n'avez pas besoin d'être copywriter pour vendre\n\nBonjour [Prénom],\n\nLa plupart des {cible} que je rencontre sont experts dans leur domaine — mais face à {probleme}, ils sont bloqués.\n\n{secteur} résout ça. Il intègre plus de 10 frameworks de vente éprouvés pour que vous n'ayez pas besoin d'être copywriter. Remplissez juste votre offre.\n\nCurieux d'en savoir plus ?\n\nCordialement,\n[Votre Nom]",
+            "Décontracté": "Salut [Prénom] 👋\n\nSoyons honnêtes — combien de temps perdez-vous à fixer un écran blanc à cause de {probleme} ?\n\n{secteur} règle ça instantanément. J'ai vu des {cible} passer de bloqués à livrant des messages en quelques minutes.\n\nOn parle ?\n\n[Votre Nom]",
+            "Urgent": "📝 [Prénom] — arrêtez de lutter avec {probleme}.\n\nVous êtes expert dans votre domaine. La rédaction ne devrait pas être votre problème.\n\n{secteur} donne aux {cible} des messages de qualité professionnelle sans avoir besoin d'expérience en copywriting.\n\nOn se contacte ?\n\n[Votre Nom]"
         }
     },
     "growth": {
         "en": {
-            "Professional": "Subject: Your pipeline deserves more attention\n\nHi [First Name],\n\nA common pattern with {cible}: great offer, but {probleme} keeps the pipeline from growing.\n\nThe math is simple — more personalized outreach = more conversations = more clients.\n\n{secteur} lets you generate 50+ tailored messages in the time it used to take to write one. Imagine what that does to your pipeline.\n\nShall we talk?\n\n[Your Name]",
-            "Casual": "Hey [First Name],\n\nIf {probleme} is holding your growth back, the fix is simple.\n\n{secteur} helps {cible} scale their outreach without scaling their effort.\n\n10x the messages. Same time invested. Chat?\n\n[Your Name]",
-            "Urgent": "📈 [First Name] — your competitors are outreaching you.\n\nWhile {probleme} slows you down, others fill their pipeline daily.\n\n{secteur} gives {cible} the volume advantage — now.\n\nLet's talk today.\n\n[Your Name]"
+            "Professional": "Subject: Your pipeline deserves more attention\n\nHi [First Name],\n\nA common pattern with {cible}: great offer, but {probleme} keeps the pipeline from growing.\n\nThe math is simple: more personalized outreach = more conversations = more revenue.\n\n{secteur} helps {cible} generate 100+ personalized messages weekly, not manually.\n\nWould a conversation about growth strategy make sense?\n\nBest,\n[Your Name]",
+            "Casual": "Hey [First Name],\n\nIf {probleme} is holding your growth back, the fix is simple.\n\n{secteur} helps {cible} scale their outreach without scaling their effort.\n\n10x the messages. Same team.\n\nWorth exploring?\n\n[Your Name]",
+            "Urgent": "📈 [First Name] — your competitors are outreaching you.\n\nWhile {probleme} slows you down, others fill their pipeline daily.\n\n{secteur} gives {cible} the volume advantage.\n\nLet's talk growth?\n\n[Your Name]"
         },
         "fr": {
-            "Professionnel": "Objet : Votre pipeline mérite plus d'attention\n\nBonjour [Prénom],\n\nUn schéma courant chez les {cible} : une super offre, mais {probleme} empêche le pipeline de croître.\n\nLa logique est simple — plus de prospection personnalisée = plus de conversations = plus de clients.\n\n{secteur} vous permet de générer 50+ messages personnalisés dans le temps qu'il fallait pour en écrire un seul. Imaginez l'impact.\n\nOn en parle ?\n\n[Votre nom]",
-            "Décontracté": "Salut [Prénom],\n\nSi {probleme} freine votre croissance, la solution est simple.\n\n{secteur} aide les {cible} à scaler leur prospection sans scaler leurs efforts.\n\n10x les messages. Même temps investi. On se fait un appel ?\n\n[Votre nom]",
-            "Urgent": "📈 [Prénom] — vos concurrents prospectent plus vite que vous.\n\nPendant que {probleme} vous ralentit, d'autres remplissent leur pipeline chaque jour.\n\n{secteur} donne aux {cible} l'avantage du volume — maintenant.\n\nParlons-en aujourd'hui.\n\n[Votre nom]"
+            "Professionnel": "Objet : Votre pipeline mérite plus d'attention\n\nBonjour [Prénom],\n\nUn schéma courant chez les {cible} : une super offre, mais {probleme} empêche le pipeline de croître.\n\nLes maths sont simples : plus de prospection personnalisée = plus de conversations = plus de revenus.\n\n{secteur} aide les {cible} à générer 100+ messages personnalisés par semaine, pas manuellement.\n\nUne conversation sur la stratégie de croissance vous intéresserait-elle ?\n\nCordialement,\n[Votre Nom]",
+            "Décontracté": "Salut [Prénom],\n\nSi {probleme} freine votre croissance, la solution est simple.\n\n{secteur} aide les {cible} à scaler leur prospection sans scaler leurs efforts.\n\n10x les messages. Même équipe.\n\nOn explore ?\n\n[Votre Nom]",
+            "Urgent": "📈 [Prénom] — vos concurrents prospectent plus vite que vous.\n\nPendant que {probleme} vous ralentit, d'autres remplissent leur pipeline chaque jour.\n\n{secteur} donne aux {cible} l'avantage du volume.\n\nOn parle croissance ?\n\n[Votre Nom]"
         }
     },
     "frustration": {
         "en": {
-            "Professional": "Subject: Outreach that feels human (because it is)\n\nHi [First Name],\n\nI hear this from {cible} constantly: {probleme}.\n\nThe reason? Most outreach sounds like a template — because it is.\n\n{secteur} generates messages built around your prospect's specific situation, not generic scripts. The result: outreach that feels personal, earns trust, and gets replies.\n\nWant to see the difference?\n\n[Your Name]",
-            "Casual": "Hey [First Name] 👋\n\nIf {probleme} sounds familiar — I get it.\n\nI've helped dozens of {cible} go from zero replies to real conversations — without being salesy.\n\n{secteur} makes that shift easy. Want to try?\n\n[Your Name]",
-            "Urgent": "📬 [First Name] — your inbox should be fuller.\n\nIf {probleme} is your reality right now, something needs to change.\n\n{secteur} helps {cible} send messages people actually want to reply to.\n\nLet's fix your reply rate — this week.\n\n[Your Name]"
+            "Professional": "Subject: Outreach that feels human (because it is)\n\nHi [First Name],\n\nI hear this from {cible} constantly: {probleme}.\n\nThe reason? Most outreach sounds like templates.\n\n{secteur} writes messages that feel natural and empathetic — not salesy. Your prospects feel understood, not pitched.\n\nResult: higher reply rates and relationships that last.\n\nWorth a chat?\n\nBest,\n[Your Name]",
+            "Casual": "Hey [First Name] 👋\n\nIf {probleme} sounds familiar — I get it.\n\nI've helped dozens of {cible} go from zero replies to real conversations — without being salesy.\n\n{secteur} makes outreach feel human again.\n\nInterested?\n\n[Your Name]",
+            "Urgent": "📬 [First Name] — your inbox should be fuller.\n\nIf {probleme} is your reality right now, something needs to change.\n\n{secteur} helps {cible} send messages people actually want to read.\n\nLet's reconnect your inbox?\n\n[Your Name]"
         },
         "fr": {
-            "Professionnel": "Objet : Une prospection humaine qui obtient des réponses\n\nBonjour [Prénom],\n\nJ'entends constamment ça de la part des {cible} : {probleme}.\n\nLa raison ? La plupart des messages ressemblent à des templates — parce que c'est ce qu'ils sont.\n\n{secteur} génère des messages construits autour de la situation spécifique du prospect, pas des scripts génériques. Résultat : une prospection qui inspire confiance et obtient des réponses.\n\nVous voulez voir la différence ?\n\n[Votre nom]",
-            "Décontracté": "Salut [Prénom] 👋\n\nSi {probleme} vous parle — je comprends.\n\nJ'ai aidé des dizaines de {cible} à passer de zéro réponse à de vraies conversations — sans être racoleurs.\n\n{secteur} rend ce changement facile. Envie d'essayer ?\n\n[Votre nom]",
-            "Urgent": "📬 [Prénom] — votre boîte de réception devrait être plus remplie.\n\nSi {probleme} est votre réalité en ce moment, quelque chose doit changer.\n\n{secteur} aide les {cible} à envoyer des messages auxquels les gens ont vraiment envie de répondre.\n\nRéglons votre taux de réponse — cette semaine.\n\n[Votre nom]"
+            "Professionnel": "Objet : Une prospection humaine qui obtient des réponses\n\nBonjour [Prénom],\n\nJ'entends constamment ça de la part des {cible} : {probleme}.\n\nLa raison ? La plupart de la prospection ressemble à des templates.\n\n{secteur} rédige des messages qui se sentent naturels et empathiques — pas racoleurs. Vos prospects se sentent compris, pas démarchés.\n\nRésultat : un meilleur taux de réponse et des relations durables.\n\nUn appel rapide ?\n\nCordialement,\n[Votre Nom]",
+            "Décontracté": "Salut [Prénom] 👋\n\nSi {probleme} vous parle — je comprends.\n\nJ'ai aidé des dizaines de {cible} à passer de zéro réponse à de vraies conversations — sans être racoleur.\n\n{secteur} redonne une âme humaine à la prospection.\n\nIntéressé ?\n\n[Votre Nom]",
+            "Urgent": "�� [Prénom] — votre boîte de réception devrait être plus remplie.\n\nSi {probleme} est votre réalité en ce moment, quelque chose doit changer.\n\n{secteur} aide les {cible} à envoyer des messages que les gens veulent réellement lire.\n\nOn remplisse votre boîte ?\n\n[Votre Nom]"
         }
     },
     "risk": {
         "en": {
-            "Professional": "Subject: Prospect at scale without risking your reputation\n\nHi [First Name],\n\nFor {cible}, reputation is everything. And {probleme} puts that at risk every time you hit send.\n\n{secteur} builds quality controls into every message: right tone, right framing, right professionalism — automatically.\n\nScale your outreach with confidence. Your brand stays protected.\n\nWant to see how it works?\n\n[Your Name]",
-            "Casual": "Hey [First Name],\n\nEver hesitated before hitting send because of {probleme}?\n\n{secteur} removes that hesitation. Every message it generates is something you'd be proud to put your name on.\n\nNo more second-guessing.\n\n[Your Name]",
-            "Urgent": "🛡️ [First Name] — protect your reputation while scaling.\n\n{probleme} shouldn't be a risk every time you prospect.\n\n{secteur} guarantees professional-quality messages for {cible} — every time.\n\nLet's talk.\n\n[Your Name]"
+            "Professional": "Subject: Prospect at scale without risking your reputation\n\nHi [First Name],\n\nFor {cible}, reputation is everything. And {probleme} puts that at risk every time you hit send.\n\n{secteur} removes that anxiety. Every message is polished, on-brand, and professional. Built-in quality controls mean you never send something you'd regret.\n\nProspect with confidence?\n\nBest,\n[Your Name]",
+            "Casual": "Hey [First Name],\n\nEver hesitated before hitting send because of {probleme}?\n\n{secteur} removes that hesitation. Every message it generates is something you'd be proud to put your name on.\n\nFeel good about your outreach again?\n\n[Your Name]",
+            "Urgent": "🛡️ [First Name] — protect your reputation while scaling.\n\n{probleme} shouldn't be a risk every time you prospect.\n\n{secteur} guarantees professional-quality messages, every single time.\n\nLet's talk reputation management?\n\n[Your Name]"
         },
         "fr": {
-            "Professionnel": "Objet : Prospectez à grande échelle sans risquer votre réputation\n\nBonjour [Prénom],\n\nPour les {cible}, la réputation est tout. Et {probleme} la met en danger à chaque envoi.\n\n{secteur} intègre des contrôles de qualité dans chaque message : bon ton, bon cadrage, bon niveau de professionnalisme — automatiquement.\n\nScalez votre prospection en toute confiance. Votre image reste protégée.\n\nVous voulez voir comment ça fonctionne ?\n\n[Votre nom]",
-            "Décontracté": "Salut [Prénom],\n\nVous avez déjà hésité avant d'envoyer un message à cause de {probleme} ?\n\n{secteur} supprime cette hésitation. Chaque message généré est quelque chose dont vous serez fier.\n\nFini le doute.\n\n[Votre nom]",
-            "Urgent": "🛡️ [Prénom] — protégez votre réputation en scalant.\n\n{probleme} ne devrait pas être un risque à chaque prospection.\n\n{secteur} garantit des messages de qualité professionnelle pour les {cible} — à chaque fois.\n\nParlons-en.\n\n[Votre nom]"
+            "Professionnel": "Objet : Prospectez à grande échelle sans risquer votre réputation\n\nBonjour [Prénom],\n\nPour les {cible}, la réputation est tout. Et {probleme} la met en danger à chaque fois que vous appuyez sur envoyer.\n\n{secteur} élimine cette anxiété. Chaque message est soigné, cohérent avec votre marque et professionnel. Les contrôles de qualité intégrés garantissent que vous n'enverrez jamais un message que vous regrettieriez.\n\nProspectez en confiance ?\n\nCordialement,\n[Votre Nom]",
+            "Décontracté": "Salut [Prénom],\n\nVous avez déjà hésité avant d'envoyer un message à cause de {probleme} ?\n\n{secteur} supprime cette hésitation. Chaque message généré est quelque chose dont vous seriez fier de mettre votre nom dessus.\n\nVous voulez vous sentir bien à nouveau ?\n\n[Votre Nom]",
+            "Urgent": "🛡️ [Prénom] — protégez votre réputation en scalant.\n\n{probleme} ne devrait pas être un risque à chaque prospection.\n\n{secteur} garantit des messages de qualité professionnelle, à chaque fois.\n\nOn parle gestion de réputation ?\n\n[Votre Nom]"
         }
     },
     "retention": {
         "en": {
-            "Professional": "Subject: Your existing clients are your biggest growth lever\n\nHi [First Name],\n\nMost {cible} focus entirely on new leads — while {probleme} quietly erodes their existing revenue base.\n\nThe truth: re-engaging an existing client costs 5x less than acquiring a new one.\n\n{secteur} generates personalized follow-up sequences, re-engagement emails and upsell messages that make existing clients feel valued — and buy again.\n\nLet's unlock the revenue already in your client base.\n\n[Your Name]",
-            "Casual": "Hey [First Name] 👋\n\nQuick insight: your best future clients might already be your current ones.\n\nIf {probleme} is a challenge, {secteur} helps {cible} re-engage their base with messages that feel personal and timely.\n\nWant to see some examples?\n\n[Your Name]",
-            "Urgent": "🔄 [First Name] — your existing clients are going cold.\n\nEvery week without a touchpoint is a week closer to churn.\n\n{secteur} helps {cible} stay top-of-mind with the right message at the right time.\n\nLet's talk today.\n\n[Your Name]"
+            "Professional": "Subject: Your existing clients are your biggest growth lever\n\nHi [First Name],\n\nMost {cible} focus entirely on new leads — while {probleme} quietly erodes their existing relationships.\n\nBig opportunity: your current clients are your best future clients.\n\n{secteur} generates re-engagement sequences, follow-ups, and upsells automatically.\n\nWould maximizing client lifetime value interest you?\n\nBest,\n[Your Name]",
+            "Casual": "Hey [First Name] 👋\n\nQuick insight: your best future clients might already be your current ones.\n\nIf {probleme} is a challenge, {secteur} helps {cible} re-engage their base and turn them into repeat buyers.\n\nWorth exploring?\n\n[Your Name]",
+            "Urgent": "🔄 [First Name] — your existing clients are going cold.\n\nEvery week without a touchpoint is a week closer to churn.\n\n{secteur} helps {{cible} stay top-of-mind with the right message, at the right time.\n\nLet's reconnect them?\n\n[Your Name]"
         },
         "fr": {
-            "Professionnel": "Objet : Vos clients existants sont votre plus grand levier de croissance\n\nBonjour [Prénom],\n\nLa plupart des {cible} se concentrent sur de nouveaux leads — pendant que {probleme} érode silencieusement leur base existante.\n\nLa vérité : réengager un client existant coûte 5x moins cher qu'en acquérir un nouveau.\n\n{secteur} génère des séquences de suivi personnalisées, des emails de réengagement et des messages d'upsell qui donnent envie à vos clients de revenir.\n\nDébloquons les revenus déjà présents dans votre base.\n\n[Votre nom]",
-            "Décontracté": "Salut [Prénom] 👋\n\nVos meilleurs futurs clients sont peut-être déjà vos clients actuels.\n\nSi {probleme} est un défi, {secteur} aide les {cible} à réengager leur base avec des messages personnalisés et bien timés.\n\nVous voulez voir des exemples ?\n\n[Votre nom]",
-            "Urgent": "🔄 [Prénom] — vos clients existants se refroidissent.\n\nChaque semaine sans contact les rapproche du désabonnement.\n\n{secteur} aide les {cible} à rester présents au bon moment avec le bon message.\n\nParlons-en aujourd'hui.\n\n[Votre nom]"
+            "Professionnel": "Objet : Vos clients existants sont votre plus grand levier de croissance\n\nBonjour [Prénom],\n\nLa plupart des {cible} se concentrent sur de nouveaux leads — pendant que {probleme} érode tranquillement leurs relations existantes.\n\nGrande opportunité : vos clients actuels sont vos meilleurs futurs clients.\n\n{secteur} génère automatiquement des séquences de réengagement, des suivis et des messages d'upsell.\n\nMaximiser la valeur client vous intéresserait-il ?\n\nCordialement,\n[Votre Nom]",
+            "Décontracté": "Salut [Prénom] 👋\n\nVos meilleurs futurs clients sont peut-être déjà vos clients actuels.\n\nSi {probleme} est un défi, {secteur} aide les {cible} à réengager leur base et à les transformer en acheteurs réguliers.\n\nOn explore ?\n\n[Votre Nom]",
+            "Urgent": "🔄 [Prénom] — vos clients existants se refroidissent.\n\nChaque semaine sans contact les rapproche du désabonnement.\n\n{secteur} aide les {cible} à rester présents au bon moment, avec le bon message.\n\nOn les reconnecte ?\n\n[Votre Nom]"
         }
     }
 }
@@ -311,7 +311,7 @@ T = {
     },
     "fr": {
         "tagline": "Transformez vos prospects en clients fidèles — instantanément.",
-        "description": "Arrêtez d'envoyer des messages génériques. ClientBoost AI cible la douleur exacte de votre prospect pour rédiger des messages de vente percutants qui génèrent de vraies ventes.",
+        "description": "Arrêtez d'envoyer des messages génériques. ClientBoost AI cible la douleur exacte de votre prospect pour rédiger des messages de vente percutants qui génèrent de vrais résultats.",
         "motivation": "Ne vendez pas un produit. Vendez la solution à la douleur la plus profonde de votre client.",
         "cta": "🚀 Générer mon premier message",
         "nav_home": "🏠 Accueil", "nav_gen": "🚀 Générateur", "nav_sub": "💳 Abonnement",
@@ -385,7 +385,7 @@ with st.sidebar:
 
 # ── HOME ──
 if st.session_state.page == "home":
-    st.markdown("""<div style="font-size:64px; font-weight:800; background:linear-gradient(135deg,#0ea5e9,#2563eb); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-align:center; line-height:1.1; margin-bottom:16px;">ClientBoost AI</div>""", unsafe_allow_html=True)
+    st.markdown("""<div style="font-size:64px; font-weight:800; background:linear-gradient(135deg,#0ea5e9,#2563eb); -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-align:center; margin-bottom:8px;">ClientBoost AI</div>""", unsafe_allow_html=True)
     st.markdown(f"""<div style="font-size:20px; color:#475569; text-align:center; max-width:680px; margin:0 auto 32px; line-height:1.6;">{tr['tagline']}</div>""", unsafe_allow_html=True)
 
     # Stats
@@ -396,9 +396,9 @@ if st.session_state.page == "home":
     st.write("")
     col_left, col_right = st.columns([3, 2])
     with col_left:
-        st.markdown(f"""<div class="card"><span class="badge">✦ What it does</span><h3 style="color:#0f172a; margin:8px 0 12px; font-size:22px;">Stop sending copy-paste messages</h3><p style="color:#475569; line-height:1.7; font-size:15px;">{tr['description']}</p></div>""", unsafe_allow_html=True)
+        st.markdown(f"""<div class="card"><span class="badge">✦ What it does</span><h3 style="color:#0f172a; margin:8px 0 12px; font-size:22px;">Stop sending copy-paste messages</h3><p style="color:#64748b; margin:0; line-height:1.6;">Target your prospect's exact pain point. Our AI embeds 10+ proven sales frameworks (AIDA, PAS, FAB) so every message converts — not just sends.</p></div>""", unsafe_allow_html=True)
     with col_right:
-        st.markdown(f"""<div class="card-blue"><p style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; opacity:0.8; margin-bottom:12px; color:white;">💡 Mindset</p><p style="font-size:18px; font-style:italic; line-height:1.6; margin:0; color:white;">"{tr['motivation']}"</p></div>""", unsafe_allow_html=True)
+        st.markdown(f"""<div class="card-blue"><p style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; opacity:0.8; margin-bottom:12px; color:white;">💡 Mindset</p><p style="color:white; margin:0; line-height:1.6;">Stop thinking "volume." Start thinking "relevance." One personalized message beats 100 generic ones.</p></div>""", unsafe_allow_html=True)
 
     # 7 problèmes
     st.write("")
