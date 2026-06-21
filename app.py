@@ -26,6 +26,48 @@ section[data-testid="stSidebar"] * { color:#e2e8f0 !important; }
 .stTextInput > div > div > input:focus, .stTextArea > div > div > textarea:focus { border-color:#6366f1 !important; box-shadow:0 0 0 3px rgba(99,102,241,0.1) !important; }
 .stSelectbox > div > div { border-radius:10px !important; border:1.5px solid #e2e8f0 !important; }
 footer { visibility:hidden; } #MainMenu { visibility:hidden; }
+/* ── ICÔNES RÉALISTES & ANIMATIONS ── */
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes glow { 0%,100%{filter:drop-shadow(0 0 4px #fbbf24)} 50%{filter:drop-shadow(0 0 12px #f59e0b)} }
+@keyframes bounce-in { 0%{transform:scale(0.7);opacity:0} 60%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+@keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
+
+.icon-animated { display:inline-flex; align-items:center; justify-content:center; }
+.icon-pulse { animation: pulse 2s ease-in-out infinite; }
+.icon-float { animation: float 3s ease-in-out infinite; }
+.icon-glow { animation: glow 2s ease-in-out infinite; }
+.icon-bounce { animation: bounce-in 0.5s ease forwards; }
+
+.star-gold { filter: drop-shadow(0 1px 3px rgba(251,191,36,0.6)); }
+.star-wrap { display:inline-flex; gap:3px; align-items:center; }
+
+/* Shimmer sur les cartes hero */
+.shimmer-text {
+  background: linear-gradient(90deg, #6366f1 0%, #a78bfa 30%, #ec4899 60%, #6366f1 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Level badge glow */
+.level-glow { box-shadow: 0 0 20px rgba(99,102,241,0.5), 0 0 40px rgba(139,92,246,0.3); }
+
+/* Card hover lift */
+.card-hover { transition: transform 0.2s, box-shadow 0.2s; }
+.card-hover:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.12); }
+
+/* Problem card neon border on hover */
+.prob-time:hover, .prob-money:hover, .prob-skill:hover,
+.prob-growth:hover, .prob-frustration:hover, .prob-risk:hover,
+.prob-retention:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  transform: translateY(-4px);
+}
+
 
 .card { background:white; border-radius:20px; padding:28px; border:1px solid #e8ecf0; box-shadow:0 2px 8px rgba(0,0,0,0.06); margin-bottom:20px; }
 .badge { display:inline-block; padding:4px 14px; border-radius:999px; font-size:12px; font-weight:700; background:#ede9fe; color:#6d28d9; margin-bottom:8px; }
@@ -72,25 +114,61 @@ footer { visibility:hidden; } #MainMenu { visibility:hidden; }
 # DONNÉES PROBLÈMES
 # ─────────────────────────────────────────────
 PROBLEMS = [
-    {"id":"time","icon":"⏳","title":"Temps qui s'évapore","hook":"Vous passez 3h à rédiger ce qui devrait prendre 3 minutes.","desc":"Chaque message de prospection vous prend une éternité. Résultat : vous prospectez peu, vous signez peu.","solution":"ClientBoost génère un message complet et percutant en 10 secondes. Récupérez vos heures, concentrez-vous sur les deals.","color_class":"prob-time","workspace_class":"workspace-time","color":"#2563eb","emoji_bg":"🕐","framework":"AIDA","tip":"💡 Un message court (< 150 mots) obtient 2x plus de réponses.","fields":["Votre secteur / produit","Votre persona cible","Ce qui vous prend le plus de temps"],"placeholders":["Ex : Coach business, Agence web, SaaS RH","Ex : Directeurs marketing, Freelances débordés","Ex : Rédiger mes emails de prospection chaque matin"]},
-    {"id":"money","icon":"💸","title":"Budget qui s'évapore","hook":"Vous investissez. Vous n'encaissez pas. Quelque chose cloche.","desc":"Vos pubs tournent, vos emails partent, mais les conversions ne suivent pas. Le problème n'est pas votre offre — c'est le message.","solution":"ClientBoost applique AIDA, PAS et le storytelling pour transformer chaque euro investi en vrai retour sur investissement.","color_class":"prob-money","workspace_class":"workspace-money","color":"#059669","emoji_bg":"💰","framework":"PAS","tip":"💡 Framework PAS : Problème → Agitation → Solution. Le plus efficace pour convertir à froid.","fields":["Votre offre / produit","Votre client idéal","Où vous perdez de l'argent actuellement"],"placeholders":["Ex : Formation en ligne, Logiciel B2B","Ex : TPE qui veulent croître, E-commerçants","Ex : Mes pubs Facebook ne convertissent pas"]},
-    {"id":"skill","icon":"🧠","title":"Page blanche paralysante","hook":"Vous savez ce que vous vendez. Vous ne savez pas comment le dire.","desc":"Syndrome de la page blanche, accroches fades, messages qui ne donnent pas envie de répondre.","solution":"ClientBoost intègre 10+ frameworks (AIDA, PAS, FAB, storytelling) pour que chaque message soit structuré pour convaincre.","color_class":"prob-skill","workspace_class":"workspace-skill","color":"#d97706","emoji_bg":"✍️","framework":"FAB","tip":"💡 Framework FAB : Feature → Advantage → Benefit. Traduisez les fonctionnalités en bénéfices concrets.","fields":["Votre produit / service","Votre persona","Votre blocage principal à l'écriture"],"placeholders":["Ex : Outil de gestion de projet, Coaching carrière","Ex : Entrepreneurs solo, Managers d'équipes","Ex : Je ne sais pas par quoi commencer mon message"]},
-    {"id":"growth","icon":"📈","title":"Pipeline à sec","hook":"Votre offre est bonne. Votre agenda est vide. C'est urgent.","desc":"Pas assez de leads, pas assez de conversations, pas assez de contrats signés. La croissance ne se produit pas par hasard.","solution":"Générez 10, 50 ou 100 messages hyper-ciblés en quelques minutes. Volume + personnalisation = pipeline plein.","color_class":"prob-growth","workspace_class":"workspace-growth","color":"#7c3aed","emoji_bg":"🚀","framework":"Storytelling","tip":"💡 Storytelling : commencez par une situation que votre prospect vit, pas par votre produit.","fields":["Votre secteur","Votre client idéal (persona)","Quel résultat vous promettez en X jours ?"],"placeholders":["Ex : Agence SEO, Consultant RH, Application mobile","Ex : Startups en croissance, PME de 10-50 salariés","Ex : +30% de leads qualifiés en 30 jours"]},
-    {"id":"frustration","icon":"😤","title":"Prospection que vous détestez","hook":"Vous envoyez. Silence radio. Encore et encore.","desc":"La prospection à froid vous épuise. Vous vous sentez intrusif, vous n'obtenez aucune réponse.","solution":"ClientBoost crée des messages empathiques qui parlent à vos prospects. Des conversations qu'ils ont envie d'avoir.","color_class":"prob-frustration","workspace_class":"workspace-frustration","color":"#dc2626","emoji_bg":"💬","framework":"Empathy Map","tip":"💡 Pensez à ce que votre prospect ressent, craint et désire avant d'écrire une seule ligne.","fields":["Votre produit / service","Votre persona cible","Pourquoi vos messages n'obtiennent pas de réponse ?"],"placeholders":["Ex : Logiciel de facturation, Formation marketing","Ex : Artisans indépendants, PME sans équipe marketing","Ex : Mes messages semblent trop commerciaux ou génériques"]},
-    {"id":"risk","icon":"🛡️","title":"Réputation en jeu","hook":"Un mauvais message peut griller 100 prospects d'un coup.","desc":"Vous avez peur d'envoyer un message qui paraît non professionnel ou qui brûle définitivement votre base de contacts.","solution":"ClientBoost garantit des messages calibrés : bon ton, bonne structure, bon niveau de professionnalisme à chaque fois.","color_class":"prob-risk","workspace_class":"workspace-risk","color":"#7c3aed","emoji_bg":"🔐","framework":"Trust Builder","tip":"💡 Trust Builder : démontrez que vous comprenez leur situation avant de parler de vous.","fields":["Votre secteur / produit","Votre persona","Ce que vous craignez le plus d'envoyer"],"placeholders":["Ex : Cabinet de conseil, Agence de communication","Ex : Grands comptes, Décideurs C-level","Ex : Un message trop agressif qui me fait passer pour un spammeur"]},
-    {"id":"retention","icon":"🔄","title":"Clients qui disparaissent","hook":"Acquérir un client coûte 5x plus cher que d'en garder un. Et vous les perdez.","desc":"Vos clients existants ne rachètent pas. Vos anciens clients vous ont oublié. Vous n'avez aucun système de suivi.","solution":"ClientBoost génère des séquences de relance, newsletters de réengagement et offres de suivi personnalisées.","color_class":"prob-retention","workspace_class":"workspace-retention","color":"#ea580c","emoji_bg":"💎","framework":"Lifecycle Marketing","tip":"💡 Un client existant a 60-70% de chance d'acheter à nouveau si vous restez présent au bon moment.","fields":["Votre produit / service","Vos clients existants (profil)","Depuis combien de temps sans contact ?"],"placeholders":["Ex : Service d'abonnement, Formation, Consulting","Ex : Clients achetés il y a 3-6 mois, Anciens abonnés","Ex : Plus de 2 mois, je n'ai aucun suivi automatique"]},
+    {"id":"time","icon":'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M5 22h14M5 2h14M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg>',"title":"Temps qui s'évapore","hook":"Vous passez 3h à rédiger ce qui devrait prendre 3 minutes.","desc":"Chaque message de prospection vous prend une éternité. Résultat : vous prospectez peu, vous signez peu.","solution":"ClientBoost génère un message complet et percutant en 10 secondes. Récupérez vos heures, concentrez-vous sur les deals.","color_class":"prob-time","workspace_class":"workspace-time","color":"#2563eb","emoji_bg":'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',"framework":"AIDA","tip":"<svg style='display:inline-block;vertical-align:middle;margin-right:4px;' width='14' height='14' viewBox='0 0 24 24' fill='#FBBF24' stroke='#F59E0B' stroke-width='1'><path d='M9 21h6m-6-3h6M12 3a6 6 0 0 1 4.47 10.06c-.62.62-1.47 1.3-1.47 2.94v.5H9v-.5c0-1.64-.85-2.32-1.47-2.94A6 6 0 0 1 12 3z'/></svg> Un message court (< 150 mots) obtient 2x plus de réponses.","fields":["Votre secteur / produit","Votre persona cible","Ce qui vous prend le plus de temps"],"placeholders":["Ex : Coach business, Agence web, SaaS RH","Ex : Directeurs marketing, Freelances débordés","Ex : Rédiger mes emails de prospection chaque matin"]},
+    {"id":"money","icon":'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>',"title":"Budget qui s'évapore","hook":"Vous investissez. Vous n'encaissez pas. Quelque chose cloche.","desc":"Vos pubs tournent, vos emails partent, mais les conversions ne suivent pas. Le problème n'est pas votre offre — c'est le message.","solution":"ClientBoost applique AIDA, PAS et le storytelling pour transformer chaque euro investi en vrai retour sur investissement.","color_class":"prob-money","workspace_class":"workspace-money","color":"#059669","emoji_bg":'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',"framework":"PAS","tip":"<svg style='display:inline-block;vertical-align:middle;margin-right:4px;' width='14' height='14' viewBox='0 0 24 24' fill='#FBBF24' stroke='#F59E0B' stroke-width='1'><path d='M9 21h6m-6-3h6M12 3a6 6 0 0 1 4.47 10.06c-.62.62-1.47 1.3-1.47 2.94v.5H9v-.5c0-1.64-.85-2.32-1.47-2.94A6 6 0 0 1 12 3z'/></svg> Framework PAS : Problème → Agitation → Solution. Le plus efficace pour convertir à froid.","fields":["Votre offre / produit","Votre client idéal","Où vous perdez de l'argent actuellement"],"placeholders":["Ex : Formation en ligne, Logiciel B2B","Ex : TPE qui veulent croître, E-commerçants","Ex : Mes pubs Facebook ne convertissent pas"]},
+    {"id":"skill","icon":'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.84A2.5 2.5 0 0 1 9.5 2"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.84A2.5 2.5 0 0 0 14.5 2"/></svg>',"title":"Page blanche paralysante","hook":"Vous savez ce que vous vendez. Vous ne savez pas comment le dire.","desc":"Syndrome de la page blanche, accroches fades, messages qui ne donnent pas envie de répondre.","solution":"ClientBoost intègre 10+ frameworks (AIDA, PAS, FAB, storytelling) pour que chaque message soit structuré pour convaincre.","color_class":"prob-skill","workspace_class":"workspace-skill","color":"#d97706","emoji_bg":'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',"framework":"FAB","tip":"<svg style='display:inline-block;vertical-align:middle;margin-right:4px;' width='14' height='14' viewBox='0 0 24 24' fill='#FBBF24' stroke='#F59E0B' stroke-width='1'><path d='M9 21h6m-6-3h6M12 3a6 6 0 0 1 4.47 10.06c-.62.62-1.47 1.3-1.47 2.94v.5H9v-.5c0-1.64-.85-2.32-1.47-2.94A6 6 0 0 1 12 3z'/></svg> Framework FAB : Feature → Advantage → Benefit. Traduisez les fonctionnalités en bénéfices concrets.","fields":["Votre produit / service","Votre persona","Votre blocage principal à l'écriture"],"placeholders":["Ex : Outil de gestion de projet, Coaching carrière","Ex : Entrepreneurs solo, Managers d'équipes","Ex : Je ne sais pas par quoi commencer mon message"]},
+    {"id":"growth","icon":'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>',"title":"Pipeline à sec","hook":"Votre offre est bonne. Votre agenda est vide. C'est urgent.","desc":"Pas assez de leads, pas assez de conversations, pas assez de contrats signés. La croissance ne se produit pas par hasard.","solution":"Générez 10, 50 ou 100 messages hyper-ciblés en quelques minutes. Volume + personnalisation = pipeline plein.","color_class":"prob-growth","workspace_class":"workspace-growth","color":"#7c3aed","emoji_bg":'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>',"framework":"Storytelling","tip":"<svg style='display:inline-block;vertical-align:middle;margin-right:4px;' width='14' height='14' viewBox='0 0 24 24' fill='#FBBF24' stroke='#F59E0B' stroke-width='1'><path d='M9 21h6m-6-3h6M12 3a6 6 0 0 1 4.47 10.06c-.62.62-1.47 1.3-1.47 2.94v.5H9v-.5c0-1.64-.85-2.32-1.47-2.94A6 6 0 0 1 12 3z'/></svg> Storytelling : commencez par une situation que votre prospect vit, pas par votre produit.","fields":["Votre secteur","Votre client idéal (persona)","Quel résultat vous promettez en X jours ?"],"placeholders":["Ex : Agence SEO, Consultant RH, Application mobile","Ex : Startups en croissance, PME de 10-50 salariés","Ex : +30% de leads qualifiés en 30 jours"]},
+    {"id":"frustration","icon":'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/><path d="M9 5c0 0 1.5 2 3 2s3-2 3-2"/></svg>',"title":"Prospection que vous détestez","hook":"Vous envoyez. Silence radio. Encore et encore.","desc":"La prospection à froid vous épuise. Vous vous sentez intrusif, vous n'obtenez aucune réponse.","solution":"ClientBoost crée des messages empathiques qui parlent à vos prospects. Des conversations qu'ils ont envie d'avoir.","color_class":"prob-frustration","workspace_class":"workspace-frustration","color":"#dc2626","emoji_bg":'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',"framework":"Empathy Map","tip":"<svg style='display:inline-block;vertical-align:middle;margin-right:4px;' width='14' height='14' viewBox='0 0 24 24' fill='#FBBF24' stroke='#F59E0B' stroke-width='1'><path d='M9 21h6m-6-3h6M12 3a6 6 0 0 1 4.47 10.06c-.62.62-1.47 1.3-1.47 2.94v.5H9v-.5c0-1.64-.85-2.32-1.47-2.94A6 6 0 0 1 12 3z'/></svg> Pensez à ce que votre prospect ressent, craint et désire avant d'écrire une seule ligne.","fields":["Votre produit / service","Votre persona cible","Pourquoi vos messages n'obtiennent pas de réponse ?"],"placeholders":["Ex : Logiciel de facturation, Formation marketing","Ex : Artisans indépendants, PME sans équipe marketing","Ex : Mes messages semblent trop commerciaux ou génériques"]},
+    {"id":"risk","icon":'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',"title":"Réputation en jeu","hook":"Un mauvais message peut griller 100 prospects d'un coup.","desc":"Vous avez peur d'envoyer un message qui paraît non professionnel ou qui brûle définitivement votre base de contacts.","solution":"ClientBoost garantit des messages calibrés : bon ton, bonne structure, bon niveau de professionnalisme à chaque fois.","color_class":"prob-risk","workspace_class":"workspace-risk","color":"#7c3aed","emoji_bg":'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',"framework":"Trust Builder","tip":"<svg style='display:inline-block;vertical-align:middle;margin-right:4px;' width='14' height='14' viewBox='0 0 24 24' fill='#FBBF24' stroke='#F59E0B' stroke-width='1'><path d='M9 21h6m-6-3h6M12 3a6 6 0 0 1 4.47 10.06c-.62.62-1.47 1.3-1.47 2.94v.5H9v-.5c0-1.64-.85-2.32-1.47-2.94A6 6 0 0 1 12 3z'/></svg> Trust Builder : démontrez que vous comprenez leur situation avant de parler de vous.","fields":["Votre secteur / produit","Votre persona","Ce que vous craignez le plus d'envoyer"],"placeholders":["Ex : Cabinet de conseil, Agence de communication","Ex : Grands comptes, Décideurs C-level","Ex : Un message trop agressif qui me fait passer pour un spammeur"]},
+    {"id":"retention","icon":'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>',"title":"Clients qui disparaissent","hook":"Acquérir un client coûte 5x plus cher que d'en garder un. Et vous les perdez.","desc":"Vos clients existants ne rachètent pas. Vos anciens clients vous ont oublié. Vous n'avez aucun système de suivi.","solution":"ClientBoost génère des séquences de relance, newsletters de réengagement et offres de suivi personnalisées.","color_class":"prob-retention","workspace_class":"workspace-retention","color":"#ea580c","emoji_bg":'<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>',"framework":"Lifecycle Marketing","tip":"<svg style='display:inline-block;vertical-align:middle;margin-right:4px;' width='14' height='14' viewBox='0 0 24 24' fill='#FBBF24' stroke='#F59E0B' stroke-width='1'><path d='M9 21h6m-6-3h6M12 3a6 6 0 0 1 4.47 10.06c-.62.62-1.47 1.3-1.47 2.94v.5H9v-.5c0-1.64-.85-2.32-1.47-2.94A6 6 0 0 1 12 3z'/></svg> Un client existant a 60-70% de chance d'acheter à nouveau si vous restez présent au bon moment.","fields":["Votre produit / service","Vos clients existants (profil)","Depuis combien de temps sans contact ?"],"placeholders":["Ex : Service d'abonnement, Formation, Consulting","Ex : Clients achetés il y a 3-6 mois, Anciens abonnés","Ex : Plus de 2 mois, je n'ai aucun suivi automatique"]},
 ]
 
 # ─────────────────────────────────────────────
 # FAUX TÉMOIGNAGES & MESSAGES GÉNÉRÉS
 # ─────────────────────────────────────────────
 TESTIMONIALS = [
-    {"name":"Sophie M.","role":"Consultante RH indépendante","initials":"SM","bg":"#6366f1","photo":"https://i.pravatar.cc/80?img=47","stars":"⭐⭐⭐⭐⭐","text":"En 2 semaines j'ai obtenu 11 rendez-vous qualifiés. Avant ClientBoost, j'en avais 2 par mois maximum. La différence ? Des messages qui parlent vraiment à mes prospects.","result":"11 RDV en 2 semaines"},
-    {"name":"Karim B.","role":"Fondateur d'agence SEO","initials":"KB","bg":"#059669","photo":"https://i.pravatar.cc/80?img=12","stars":"⭐⭐⭐⭐⭐","text":"J'avais honte d'envoyer mes anciens messages. Maintenant mes prospects me remercient pour 'l'approche différente'. Mon taux de réponse est passé de 3% à 21%.","result":"Taux réponse x7"},
-    {"name":"Marie-Claire T.","role":"Coach business & mindset","initials":"MT","bg":"#dc2626","photo":"https://i.pravatar.cc/80?img=5","stars":"⭐⭐⭐⭐⭐","text":"J'ai réactivé 43 anciens clients en un seul mailing. Sans pub, sans budget. Juste le bon message, au bon moment. ClientBoost a changé ma façon de voir la vente.","result":"43 clients réactivés"},
-    {"name":"Thomas D.","role":"Freelance développeur","initials":"TD","bg":"#2563eb","photo":"https://i.pravatar.cc/80?img=33","stars":"⭐⭐⭐⭐⭐","text":"Je détestais prospecter. Maintenant j'envoie 30 messages par semaine en 15 minutes. Mon pipeline est plein pour la première fois depuis que j'ai lancé mon activité.","result":"30 msg/semaine en 15min"},
-    {"name":"Amina K.","role":"Directrice commerciale PME","initials":"AK","bg":"#d97706","photo":"https://i.pravatar.cc/80?img=9","stars":"⭐⭐⭐⭐⭐","text":"ROI en 4 jours. J'ai payé 29€ pour le plan Pro, et le premier client signé grâce à ClientBoost m'a rapporté 1 800€. Je ne reviendrai jamais en arrière.","result":"ROI 6 200% en 4 jours"},
-    {"name":"Lucas F.","role":"E-commerçant","initials":"LF","bg":"#7c3aed","photo":"https://i.pravatar.cc/80?img=68","stars":"⭐⭐⭐⭐⭐","text":"Mes newsletters avaient 8% d'ouverture. Après avoir utilisé ClientBoost pour reformuler mes objets et accroches, je suis à 34%. C'est bluffant.","result":"Taux ouverture x4"},
+    {"name":"Sophie M.","role":"Consultante RH indépendante","initials":"SM","bg":"#6366f1","photo":"https://i.pravatar.cc/80?img=47","stars":"""<span class="star-wrap">
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+</span>""","text":"En 2 semaines j'ai obtenu 11 rendez-vous qualifiés. Avant ClientBoost, j'en avais 2 par mois maximum. La différence ? Des messages qui parlent vraiment à mes prospects.","result":"11 RDV en 2 semaines"},
+    {"name":"Karim B.","role":"Fondateur d'agence SEO","initials":"KB","bg":"#059669","photo":"https://i.pravatar.cc/80?img=12","stars":"""<span class="star-wrap">
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+</span>""","text":"J'avais honte d'envoyer mes anciens messages. Maintenant mes prospects me remercient pour 'l'approche différente'. Mon taux de réponse est passé de 3% à 21%.","result":"Taux réponse x7"},
+    {"name":"Marie-Claire T.","role":"Coach business & mindset","initials":"MT","bg":"#dc2626","photo":"https://i.pravatar.cc/80?img=5","stars":"""<span class="star-wrap">
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+</span>""","text":"J'ai réactivé 43 anciens clients en un seul mailing. Sans pub, sans budget. Juste le bon message, au bon moment. ClientBoost a changé ma façon de voir la vente.","result":"43 clients réactivés"},
+    {"name":"Thomas D.","role":"Freelance développeur","initials":"TD","bg":"#2563eb","photo":"https://i.pravatar.cc/80?img=33","stars":"""<span class="star-wrap">
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+</span>""","text":"Je détestais prospecter. Maintenant j'envoie 30 messages par semaine en 15 minutes. Mon pipeline est plein pour la première fois depuis que j'ai lancé mon activité.","result":"30 msg/semaine en 15min"},
+    {"name":"Amina K.","role":"Directrice commerciale PME","initials":"AK","bg":"#d97706","photo":"https://i.pravatar.cc/80?img=9","stars":"""<span class="star-wrap">
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+</span>""","text":"ROI en 4 jours. J'ai payé 29€ pour le plan Pro, et le premier client signé grâce à ClientBoost m'a rapporté 1 800€. Je ne reviendrai jamais en arrière.","result":"ROI 6 200% en 4 jours"},
+    {"name":"Lucas F.","role":"E-commerçant","initials":"LF","bg":"#7c3aed","photo":"https://i.pravatar.cc/80?img=68","stars":"""<span class="star-wrap">
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <svg class="star-gold" width="16" height="16" viewBox="0 0 24 24"><path fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+</span>""","text":"Mes newsletters avaient 8% d'ouverture. Après avoir utilisé ClientBoost pour reformuler mes objets et accroches, je suis à 34%. C'est bluffant.","result":"Taux ouverture x4"},
 ]
 
 SAMPLE_MESSAGES = [
@@ -164,19 +242,19 @@ PLANS = [
     {
         "name": "Standard", "icon": "🥉", "price": "9€", "period": "/ mois",
         "color": "#64748b", "popular": False,
-        "features": ["✅ 50 générations / mois", "✅ 7 frameworks inclus", "✅ 3 langues", "✅ Historique 30 jours", "✅ Dashboard basique", "❌ Support prioritaire", "❌ Générations illimitées"],
+        "features": ["✔ 50 générations / mois", "✔ 7 frameworks inclus", "✔ 3 langues", "✔ Historique 30 jours", "✔ Dashboard basique", "✖ Support prioritaire", "✖ Générations illimitées"],
         "cta": "Commencer avec Standard"
     },
     {
         "name": "Pro", "icon": "🥈", "price": "29€", "period": "/ mois",
         "color": "#6366f1", "popular": True,
-        "features": ["✅ Générations illimitées", "✅ 7 frameworks inclus", "✅ 6 langues", "✅ Historique 1 an", "✅ Dashboard complet + badges", "✅ Support prioritaire", "✅ Emails automatiques"],
+        "features": ["✔ Générations illimitées", "✔ 7 frameworks inclus", "✔ 6 langues", "✔ Historique 1 an", "✔ Dashboard complet + badges", "✔ Support prioritaire", "✔ Emails automatiques"],
         "cta": "⚡ Passer au Pro — le plus populaire"
     },
     {
         "name": "Agence", "icon": "🥇", "price": "79€", "period": "/ mois",
         "color": "#f59e0b", "popular": False,
-        "features": ["✅ Générations illimitées", "✅ 7 frameworks inclus", "✅ 6 langues", "✅ Historique illimité", "✅ Dashboard complet + badges", "✅ Support dédié + API", "✅ Multi-utilisateurs (5 sièges)"],
+        "features": ["✔ Générations illimitées", "✔ 7 frameworks inclus", "✔ 6 langues", "✔ Historique illimité", "✔ Dashboard complet + badges", "✔ Support dédié + API", "✔ Multi-utilisateurs (5 sièges)"],
         "cta": "Choisir Agence"
     },
 ]
@@ -229,11 +307,11 @@ def generate_message(prob_id, secteur, persona, context, tone):
 # NIVEAUX
 # ─────────────────────────────────────────────
 LEVELS = [
-    {"name":"Débutant","icon":"🌱","min":0,"max":5,"color":"#64748b"},
-    {"name":"Prospecteur","icon":"🔥","min":6,"max":15,"color":"#f59e0b"},
-    {"name":"Closer","icon":"⚡","min":16,"max":30,"color":"#3b82f6"},
-    {"name":"Expert","icon":"🚀","min":31,"max":60,"color":"#8b5cf6"},
-    {"name":"Maître","icon":"👑","min":61,"max":999,"color":"#f43f5e"},
+    {"name":"Débutant","icon":'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2"><path d="M2 22c0 0 8-4 8-10V2s-8 4-8 10v10zM22 22c0 0-8-4-8-10V2s8 4 8 10v10z"/><line x1="12" y1="22" x2="12" y2="12"/></svg>',"min":0,"max":5,"color":"#64748b"},
+    {"name":"Prospecteur","icon":'<svg width="20" height="20" viewBox="0 0 24 24" fill="#FED7AA" stroke="#f97316" stroke-width="1.5"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',"min":6,"max":15,"color":"#f59e0b"},
+    {"name":"Closer","icon":'<svg width="20" height="20" viewBox="0 0 24 24" fill="#FBBF24" stroke="#F59E0B" stroke-width="1"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',"min":16,"max":30,"color":"#3b82f6"},
+    {"name":"Expert","icon":'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>',"min":31,"max":60,"color":"#8b5cf6"},
+    {"name":"Maître","icon":'<svg width="20" height="20" viewBox="0 0 24 24" fill="#FBBF24" stroke="#F59E0B" stroke-width="1"><path d="M2 20h20M5 20L2 8l5 4 5-7 5 7 5-4-3 12"/></svg>',"min":61,"max":999,"color":"#f43f5e"},
 ]
 def get_level(c):
     for l in LEVELS:
@@ -360,7 +438,7 @@ if st.session_state.page == "landing":
         with col:
             st.markdown(f"""
             <div class="testimonial-card" style="margin-bottom:20px;">
-                <div style="font-size:16px; margin-bottom:12px;">{t['stars']}</div>
+                <div style="margin-bottom:12px;">{t['stars']}</div>
                 <div style="font-size:14px; color:#374151; line-height:1.6; margin-bottom:16px; font-style:italic;">"{t['text']}"</div>
                 <div style="background:#f0fdf4; border-radius:10px; padding:8px 12px; margin-bottom:16px;">
                     <span style="font-size:13px; font-weight:700; color:#15803d;">📈 {t['result']}</span>
@@ -593,12 +671,12 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
     st.divider()
-    for pid, label in [("dashboard","📊 Dashboard"),("generator","✨ Générateur"),("history","📜 Historique"),("emails","📧 Emails Auto"),("subscription","💳 Abonnement"),("settings","⚙️ Paramètres")]:
+    for pid, label in [("dashboard","Dashboard"),("generator","Générateur"),("history","Historique"),("emails","Emails Auto"),("subscription","Abonnement"),("settings","Paramètres")]:
         if st.button(label, key=f"nav_{pid}", use_container_width=True, type="primary" if st.session_state.page==pid else "secondary"):
             st.session_state.page = pid
             st.rerun()
     st.divider()
-    if st.button("🚪 Déconnexion", use_container_width=True):
+    if st.button("← Déconnexion", use_container_width=True):
         for k in list(st.session_state.keys()): del st.session_state[k]
         st.rerun()
 
@@ -651,7 +729,7 @@ if st.session_state.page == "dashboard":
     st.write("")
     col_left, col_right = st.columns([3,2])
     with col_left:
-        st.markdown("<h4 style='color:#0f172a; margin-bottom:16px;'>📊 Utilisation par problème</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color:#0f172a; margin-bottom:16px;'>Utilisation par problème</h4>", unsafe_allow_html=True)
         for p in PROBLEMS:
             count = st.session_state.problems_used.get(p["id"], 0)
             pct = min(int((count/max(st.session_state.gen_count,1))*100),100) if st.session_state.gen_count > 0 else 0
@@ -665,18 +743,18 @@ if st.session_state.page == "dashboard":
             </div>""", unsafe_allow_html=True)
 
     with col_right:
-        st.markdown("<h4 style='color:#0f172a; margin-bottom:16px;'>🏆 Badges débloqués</h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='color:#0f172a; margin-bottom:16px;'>Badges débloqués</h4>", unsafe_allow_html=True)
         badges = []
-        if st.session_state.gen_count >= 1: badges.append(("🎯","Premier message","#dbeafe","#1d4ed8"))
-        if st.session_state.gen_count >= 5: badges.append(("🔥","En feu !","#ffedd5","#c2410c"))
-        if st.session_state.gen_count >= 10: badges.append(("⚡","Prospecteur","#fef9c3","#a16207"))
-        if st.session_state.gen_count >= 25: badges.append(("🚀","Closer","#f0fdf4","#15803d"))
-        if st.session_state.gen_count >= 50: badges.append(("👑","Expert","#f5f3ff","#6d28d9"))
-        if len(st.session_state.problems_used) >= 3: badges.append(("🧩","Polyvalent","#fef2f2","#b91c1c"))
-        if len(st.session_state.problems_used) >= 7: badges.append(("💎","Maître des 7","#fff7ed","#c2410c"))
+        if st.session_state.gen_count >= 1: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',"Premier message","#dbeafe","#1d4ed8"))
+        if st.session_state.gen_count >= 5: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="#FED7AA" stroke="#f97316" stroke-width="1.5"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',"En feu !","#ffedd5","#c2410c"))
+        if st.session_state.gen_count >= 10: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="#FBBF24" stroke="#F59E0B" stroke-width="1"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',"Prospecteur","#fef9c3","#a16207"))
+        if st.session_state.gen_count >= 25: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="1.5"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>',"Closer","#f0fdf4","#15803d"))
+        if st.session_state.gen_count >= 50: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="#FBBF24" stroke="#F59E0B" stroke-width="1"><path d="M2 20h20M5 20L2 8l5 4 5-7 5 7 5-4-3 12"/></svg>',"Expert","#f5f3ff","#6d28d9"))
+        if len(st.session_state.problems_used) >= 3: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',"Polyvalent","#fef2f2","#b91c1c"))
+        if len(st.session_state.problems_used) >= 7: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c2410c" stroke-width="1.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>',"Maître des 7","#fff7ed","#c2410c"))
         if badges:
             for icon,name,bg,color in badges:
-                st.markdown(f"""<div style="background:{bg}; border-radius:10px; padding:10px 14px; margin-bottom:8px; display:flex; align-items:center; gap:10px;"><span style="font-size:20px;">{icon}</span><span style="font-size:13px; font-weight:700; color:{color};">{name}</span></div>""", unsafe_allow_html=True)
+                st.markdown(f'''<div style="background:{bg}; border-radius:10px; padding:10px 14px; margin-bottom:8px; display:flex; align-items:center; gap:10px;"><span style="display:flex;align-items:center;">''' + icon + f'''</span><span style="font-size:13px; font-weight:700; color:{color};">{name}</span></div>''', unsafe_allow_html=True)
         else:
             st.markdown("""<div style="background:#f8fafc; border-radius:12px; padding:20px; text-align:center; color:#94a3b8;"><div style="font-size:32px;">🔒</div><p style="font-size:13px; margin:8px 0 0;">Générez votre premier message pour débloquer des badges !</p></div>""", unsafe_allow_html=True)
         if next_level:
