@@ -85,12 +85,12 @@ PROBLEMS = [
 # FAUX TÉMOIGNAGES & MESSAGES GÉNÉRÉS
 # ─────────────────────────────────────────────
 TESTIMONIALS = [
-    {"name":"Sophie M.","role":"Consultante RH indépendante","avatar":"👩‍💼","stars":"⭐⭐⭐⭐⭐","text":"En 2 semaines j'ai obtenu 11 rendez-vous qualifiés. Avant ClientBoost, j'en avais 2 par mois maximum. La différence ? Des messages qui parlent vraiment à mes prospects.","result":"11 RDV en 2 semaines"},
-    {"name":"Karim B.","role":"Fondateur d'agence SEO","avatar":"👨‍💻","stars":"⭐⭐⭐⭐⭐","text":"J'avais honte d'envoyer mes anciens messages. Maintenant mes prospects me remercient pour 'l'approche différente'. Mon taux de réponse est passé de 3% à 21%.","result":"Taux réponse x7"},
-    {"name":"Marie-Claire T.","role":"Coach business & mindset","avatar":"👩‍🏫","stars":"⭐⭐⭐⭐⭐","text":"J'ai réactivé 43 anciens clients en un seul mailing. Sans pub, sans budget. Juste le bon message, au bon moment. ClientBoost a changé ma façon de voir la vente.","result":"43 clients réactivés"},
-    {"name":"Thomas D.","role":"Freelance développeur","avatar":"👨‍🔧","stars":"⭐⭐⭐⭐⭐","text":"Je détestais prospecter. Maintenant j'envoie 30 messages par semaine en 15 minutes. Mon pipeline est plein pour la première fois depuis que j'ai lancé mon activité.","result":"30 msg/semaine en 15min"},
-    {"name":"Amina K.","role":"Directrice commerciale PME","avatar":"👩‍💼","stars":"⭐⭐⭐⭐⭐","text":"ROI en 4 jours. J'ai payé 29€ pour le plan Pro, et le premier client signé grâce à ClientBoost m'a rapporté 1 800€. Je ne reviendrai jamais en arrière.","result":"ROI 6 200% en 4 jours"},
-    {"name":"Lucas F.","role":"E-commerçant","avatar":"👨‍🛒","stars":"⭐⭐⭐⭐⭐","text":"Mes newsletters avaient 8% d'ouverture. Après avoir utilisé ClientBoost pour reformuler mes objets et accroches, je suis à 34%. C'est bluffant.","result":"Taux ouverture x4"},
+    {"name":"Sophie M.","role":"Consultante RH indépendante","initials":"SM","bg":"#6366f1","photo":"https://i.pravatar.cc/80?img=47","stars":"⭐⭐⭐⭐⭐","text":"En 2 semaines j'ai obtenu 11 rendez-vous qualifiés. Avant ClientBoost, j'en avais 2 par mois maximum. La différence ? Des messages qui parlent vraiment à mes prospects.","result":"11 RDV en 2 semaines"},
+    {"name":"Karim B.","role":"Fondateur d'agence SEO","initials":"KB","bg":"#059669","photo":"https://i.pravatar.cc/80?img=12","stars":"⭐⭐⭐⭐⭐","text":"J'avais honte d'envoyer mes anciens messages. Maintenant mes prospects me remercient pour 'l'approche différente'. Mon taux de réponse est passé de 3% à 21%.","result":"Taux réponse x7"},
+    {"name":"Marie-Claire T.","role":"Coach business & mindset","initials":"MT","bg":"#dc2626","photo":"https://i.pravatar.cc/80?img=5","stars":"⭐⭐⭐⭐⭐","text":"J'ai réactivé 43 anciens clients en un seul mailing. Sans pub, sans budget. Juste le bon message, au bon moment. ClientBoost a changé ma façon de voir la vente.","result":"43 clients réactivés"},
+    {"name":"Thomas D.","role":"Freelance développeur","initials":"TD","bg":"#2563eb","photo":"https://i.pravatar.cc/80?img=33","stars":"⭐⭐⭐⭐⭐","text":"Je détestais prospecter. Maintenant j'envoie 30 messages par semaine en 15 minutes. Mon pipeline est plein pour la première fois depuis que j'ai lancé mon activité.","result":"30 msg/semaine en 15min"},
+    {"name":"Amina K.","role":"Directrice commerciale PME","initials":"AK","bg":"#d97706","photo":"https://i.pravatar.cc/80?img=9","stars":"⭐⭐⭐⭐⭐","text":"ROI en 4 jours. J'ai payé 29€ pour le plan Pro, et le premier client signé grâce à ClientBoost m'a rapporté 1 800€. Je ne reviendrai jamais en arrière.","result":"ROI 6 200% en 4 jours"},
+    {"name":"Lucas F.","role":"E-commerçant","initials":"LF","bg":"#7c3aed","photo":"https://i.pravatar.cc/80?img=68","stars":"⭐⭐⭐⭐⭐","text":"Mes newsletters avaient 8% d'ouverture. Après avoir utilisé ClientBoost pour reformuler mes objets et accroches, je suis à 34%. C'est bluffant.","result":"Taux ouverture x4"},
 ]
 
 SAMPLE_MESSAGES = [
@@ -365,8 +365,9 @@ if st.session_state.page == "landing":
                 <div style="background:#f0fdf4; border-radius:10px; padding:8px 12px; margin-bottom:16px;">
                     <span style="font-size:13px; font-weight:700; color:#15803d;">📈 {t['result']}</span>
                 </div>
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <div style="font-size:28px;">{t['avatar']}</div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <img src="{t['photo']}" alt="{t['name']}" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid #e8ecf0; flex-shrink:0;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div style="display:none; width:48px; height:48px; border-radius:50%; background:{t['bg']}; color:white; font-size:15px; font-weight:800; align-items:center; justify-content:center; flex-shrink:0;">{t['initials']}</div>
                     <div>
                         <div style="font-size:14px; font-weight:700; color:#0f172a;">{t['name']}</div>
                         <div style="font-size:12px; color:#64748b;">{t['role']}</div>
