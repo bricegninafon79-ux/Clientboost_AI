@@ -1137,3 +1137,4 @@ elif st.session_state.page == "settings":
     if st.button("✅ Enregistrer", type="primary"):
         st.session_state.user_name = new_name
         st.success("Paramètres enregistrés !")
+        
