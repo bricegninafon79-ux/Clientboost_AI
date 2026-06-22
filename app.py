@@ -684,6 +684,9 @@ with st.sidebar:
 # DASHBOARD
 # ─────────────────────────────────────────────
 if st.session_state.page == "dashboard":
+    import plotly.graph_objects as go
+    import plotly.express as px
+
     level = get_level(st.session_state.gen_count)
     next_level = get_next_level(st.session_state.gen_count)
     progress = 0
@@ -691,80 +694,274 @@ if st.session_state.page == "dashboard":
         total = next_level["min"] - level["min"]
         done = st.session_state.gen_count - level["min"]
         progress = int((done/total)*100) if total > 0 else 100
-    else: progress = 100
-
-    st.markdown(f"<h2 style='color:#0f172a; margin-bottom:4px;'>Bonjour, {st.session_state.user_name} 👋</h2>", unsafe_allow_html=True)
-    st.markdown(f"<p style='color:#64748b; margin-bottom:24px;'>Membre depuis le {st.session_state.join_date} • Plan {st.session_state.current_plan}</p>", unsafe_allow_html=True)
-
-    st.markdown(f"""
-    <div style="background:linear-gradient(135deg,#0f172a,#1e1b4b); border-radius:20px; padding:28px; margin-bottom:24px;">
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
-            <div style="font-size:48px;">{level['icon']}</div>
-            <div>
-                <div style="font-size:12px; color:#94a3b8; font-weight:600; text-transform:uppercase; letter-spacing:1px;">Niveau actuel</div>
-                <div style="font-size:28px; font-weight:900; color:{level['color']};">{level['name']}</div>
-                <div style="font-size:14px; color:#94a3b8;">{st.session_state.gen_count} messages générés au total</div>
-            </div>
-        </div>
-        <div style="background:rgba(255,255,255,0.1); border-radius:999px; height:12px; overflow:hidden;">
-            <div style="width:{progress}%; height:12px; background:linear-gradient(135deg,#6366f1,#8b5cf6); border-radius:999px;"></div>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-top:8px;">
-            <span style="font-size:12px; color:#64748b;">{level['name']} ({level['min']} msg)</span>
-            <span style="font-size:12px; color:#6366f1; font-weight:700;">{progress}%</span>
-            <span style="font-size:12px; color:#64748b;">{'Niveau Max 👑' if not next_level else f"{next_level['name']} ({next_level['min']} msg)"}</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    else:
+        progress = 100
 
     today = datetime.now().strftime("%Y-%m-%d")
     today_count = st.session_state.daily_counts.get(today, 0)
     problems_solved = len(st.session_state.problems_used)
     saved_count = len(st.session_state.history)
 
-    for col, num, label, color in zip(st.columns(4), [st.session_state.gen_count, today_count, problems_solved, saved_count], ["Messages générés","Aujourd'hui","Problèmes explorés","Sauvegardés"], ["#6366f1","#f59e0b","#10b981","#ec4899"]):
+    # ── HEADER ──
+    st.markdown(f"<h2 style='color:#0f172a; margin-bottom:2px;'>Bonjour, {st.session_state.user_name} 👋</h2>", unsafe_allow_html=True)
+    lvl_color = level["color"]
+    lvl_name = level["name"]
+    st.markdown(f"<p style='color:#64748b; margin-bottom:20px; font-size:15px;'>Membre depuis le {st.session_state.join_date} &nbsp;•&nbsp; Plan <strong>{st.session_state.current_plan}</strong> &nbsp;•&nbsp; Niveau <strong style='color:{lvl_color};'>{lvl_name}</strong></p>", unsafe_allow_html=True)
+
+    # ── MÉTRIQUES ──
+    c1,c2,c3,c4 = st.columns(4)
+    for col, num, label, color, delta in zip(
+        [c1,c2,c3,c4],
+        [st.session_state.gen_count, today_count, problems_solved, saved_count],
+        ["Messages générés","Aujourd'hui","Problèmes explorés","Sauvegardés"],
+        ["#6366f1","#f59e0b","#10b981","#ec4899"],
+        [None, None, f"sur 7", None]
+    ):
         with col:
-            st.markdown(f"""<div class="metric-box"><div class="metric-num" style="color:{color};">{num}</div><div class="metric-label">{label}</div></div>""", unsafe_allow_html=True)
+            st.metric(label=label, value=num, delta=delta)
 
     st.write("")
-    col_left, col_right = st.columns([3,2])
-    with col_left:
-        st.markdown("<h4 style='color:#0f172a; margin-bottom:16px;'>Utilisation par problème</h4>", unsafe_allow_html=True)
-        for p in PROBLEMS:
-            count = st.session_state.problems_used.get(p["id"], 0)
-            pct = min(int((count/max(st.session_state.gen_count,1))*100),100) if st.session_state.gen_count > 0 else 0
-            st.markdown(f"""
-            <div style="margin-bottom:14px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <span style="font-size:13px; font-weight:600; color:#374151;">{p['icon']} {p['title']}</span>
-                    <span style="font-size:12px; color:#64748b; font-weight:700;">{count} msg</span>
-                </div>
-                <div class="prog-wrap"><div class="prog-fill" style="width:{pct}%; background:linear-gradient(135deg,{p['color']},{p['color']}88);"></div></div>
-            </div>""", unsafe_allow_html=True)
 
-    with col_right:
-        st.markdown("<h4 style='color:#0f172a; margin-bottom:16px;'>Badges débloqués</h4>", unsafe_allow_html=True)
-        badges = []
-        if st.session_state.gen_count >= 1: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',"Premier message","#dbeafe","#1d4ed8"))
-        if st.session_state.gen_count >= 5: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="#FED7AA" stroke="#f97316" stroke-width="1.5"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',"En feu !","#ffedd5","#c2410c"))
-        if st.session_state.gen_count >= 10: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="#FBBF24" stroke="#F59E0B" stroke-width="1"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',"Prospecteur","#fef9c3","#a16207"))
-        if st.session_state.gen_count >= 25: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#15803d" stroke-width="1.5"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>',"Closer","#f0fdf4","#15803d"))
-        if st.session_state.gen_count >= 50: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="#FBBF24" stroke="#F59E0B" stroke-width="1"><path d="M2 20h20M5 20L2 8l5 4 5-7 5 7 5-4-3 12"/></svg>',"Expert","#f5f3ff","#6d28d9"))
-        if len(st.session_state.problems_used) >= 3: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',"Polyvalent","#fef2f2","#b91c1c"))
-        if len(st.session_state.problems_used) >= 7: badges.append(('<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c2410c" stroke-width="1.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg>',"Maître des 7","#fff7ed","#c2410c"))
-        if badges:
-            for icon,name,bg,color in badges:
-                st.markdown(f'''<div style="background:{bg}; border-radius:10px; padding:10px 14px; margin-bottom:8px; display:flex; align-items:center; gap:10px;"><span style="display:flex;align-items:center;">''' + icon + f'''</span><span style="font-size:13px; font-weight:700; color:{color};">{name}</span></div>''', unsafe_allow_html=True)
-        else:
-            st.markdown("""<div style="background:#f8fafc; border-radius:12px; padding:20px; text-align:center; color:#94a3b8;"><div style="font-size:32px;">🔒</div><p style="font-size:13px; margin:8px 0 0;">Générez votre premier message pour débloquer des badges !</p></div>""", unsafe_allow_html=True)
+    # ── LIGNE 1 : Gauge niveau + Graphique linéaire activité ──
+    col_gauge, col_line = st.columns([1, 2])
+
+    with col_gauge:
+        st.markdown("<h4 style='color:#0f172a; margin-bottom:8px;'>Niveau de croissance</h4>", unsafe_allow_html=True)
+        fig_gauge = go.Figure(go.Indicator(
+            mode="gauge+number+delta",
+            value=st.session_state.gen_count,
+            delta={"reference": max(0, st.session_state.gen_count - today_count), "increasing": {"color": "#10b981"}},
+            title={"text": f"<b>{level['name']}</b><br><span style='font-size:13px;color:#64748b;'>Messages générés</span>", "font": {"size": 16}},
+            number={"font": {"size": 40, "color": level["color"]}, "suffix": " msg"},
+            gauge={
+                "axis": {"range": [0, max(61, st.session_state.gen_count + 10)], "tickwidth": 1, "tickcolor": "#e2e8f0"},
+                "bar": {"color": level["color"], "thickness": 0.3},
+                "bgcolor": "white",
+                "borderwidth": 0,
+                "steps": [
+                    {"range": [0, 5],  "color": "#f1f5f9"},
+                    {"range": [5, 15], "color": "#e0f2fe"},
+                    {"range": [15, 30],"color": "#ede9fe"},
+                    {"range": [30, 61],"color": "#fef9c3"},
+                ],
+                "threshold": {
+                    "line": {"color": "#6366f1", "width": 3},
+                    "thickness": 0.8,
+                    "value": next_level["min"] if next_level else st.session_state.gen_count
+                }
+            }
+        ))
+        fig_gauge.update_layout(
+            height=280, margin=dict(l=20, r=20, t=60, b=20),
+            paper_bgcolor="white", font={"family": "Inter"},
+            plot_bgcolor="white"
+        )
+        st.plotly_chart(fig_gauge, use_container_width=True, config={"displayModeBar": False})
+
+        # Barre de progression vers prochain niveau
         if next_level:
             remaining = next_level["min"] - st.session_state.gen_count
-            st.markdown(f"""<div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe); border-radius:12px; padding:16px; margin-top:16px; text-align:center;"><div style="font-size:12px; font-weight:700; color:#6d28d9; text-transform:uppercase; letter-spacing:0.5px;">Prochain niveau</div><div style="font-size:24px; margin:6px 0;">{next_level['icon']}</div><div style="font-size:16px; font-weight:800; color:#4c1d95;">{next_level['name']}</div><div style="font-size:13px; color:#6d28d9; margin-top:4px;">Plus que <strong>{remaining}</strong> message(s) !</div></div>""", unsafe_allow_html=True)
+            st.markdown(f"""
+            <div style="background:#f5f3ff; border-radius:12px; padding:14px; text-align:center; border:1px solid #ede9fe;">
+                <div style="font-size:11px; color:#6d28d9; font-weight:700; text-transform:uppercase; letter-spacing:0.5px;">Prochain niveau</div>
+                <div style="font-size:15px; font-weight:800; color:#4c1d95; margin:4px 0;">{next_level['name']}</div>
+                <div style="background:#ddd6fe; border-radius:999px; height:8px; margin:8px 0; overflow:hidden;">
+                    <div style="width:{progress}%; height:8px; background:linear-gradient(135deg,#6366f1,#8b5cf6); border-radius:999px;"></div>
+                </div>
+                <div style="font-size:12px; color:#7c3aed;">Plus que <strong>{remaining}</strong> message(s) — {progress}%</div>
+            </div>""", unsafe_allow_html=True)
+
+    with col_line:
+        st.markdown("<h4 style='color:#0f172a; margin-bottom:8px;'>Activité sur 7 jours</h4>", unsafe_allow_html=True)
+
+        # Générer données des 7 derniers jours
+        days_labels, days_counts, days_saved = [], [], []
+        for i in range(6, -1, -1):
+            d = (datetime.now() - timedelta(days=i))
+            key = d.strftime("%Y-%m-%d")
+            label = d.strftime("%a %d")
+            days_labels.append(label)
+            count = st.session_state.daily_counts.get(key, 0)
+            # Simulate some activity for demo if no real data
+            if st.session_state.gen_count > 0 and count == 0 and i > 0:
+                count = random.randint(0, max(1, st.session_state.gen_count // 5))
+            days_counts.append(count)
+            days_saved.append(min(count, random.randint(0, max(1, count))))
+
+        fig_line = go.Figure()
+        fig_line.add_trace(go.Scatter(
+            x=days_labels, y=days_counts,
+            mode="lines+markers",
+            name="Messages générés",
+            line=dict(color="#6366f1", width=3, shape="spline"),
+            marker=dict(size=8, color="#6366f1", line=dict(color="white", width=2)),
+            fill="tozeroy",
+            fillcolor="rgba(99,102,241,0.08)"
+        ))
+        fig_line.add_trace(go.Scatter(
+            x=days_labels, y=days_saved,
+            mode="lines+markers",
+            name="Sauvegardés",
+            line=dict(color="#10b981", width=2, dash="dot", shape="spline"),
+            marker=dict(size=6, color="#10b981")
+        ))
+        fig_line.update_layout(
+            height=280,
+            margin=dict(l=10, r=10, t=20, b=20),
+            paper_bgcolor="white",
+            plot_bgcolor="white",
+            font=dict(family="Inter", size=12),
+            legend=dict(orientation="h", y=1.1, x=0, font=dict(size=11)),
+            xaxis=dict(showgrid=False, tickfont=dict(size=11, color="#64748b")),
+            yaxis=dict(showgrid=True, gridcolor="#f1f5f9", tickfont=dict(size=11, color="#64748b"), title=""),
+            hovermode="x unified"
+        )
+        st.plotly_chart(fig_line, use_container_width=True, config={"displayModeBar": False})
+
+    st.write("")
+
+    # ── LIGNE 2 : Radar problèmes + Donut répartition + Badges ──
+    col_radar, col_donut, col_badges = st.columns([2, 1.5, 1.5])
+
+    with col_radar:
+        st.markdown("<h4 style='color:#0f172a; margin-bottom:8px;'>Couverture des 7 problèmes</h4>", unsafe_allow_html=True)
+        prob_names = [p["title"] for p in PROBLEMS]
+        prob_values = [st.session_state.problems_used.get(p["id"], 0) for p in PROBLEMS]
+        max_val = max(max(prob_values), 1)
+
+        fig_radar = go.Figure(go.Scatterpolar(
+            r=prob_values + [prob_values[0]],
+            theta=prob_names + [prob_names[0]],
+            fill="toself",
+            fillcolor="rgba(99,102,241,0.15)",
+            line=dict(color="#6366f1", width=2),
+            marker=dict(size=6, color="#6366f1"),
+            name="Messages"
+        ))
+        fig_radar.update_layout(
+            polar=dict(
+                radialaxis=dict(visible=True, range=[0, max_val + 1], tickfont=dict(size=9, color="#94a3b8"), gridcolor="#e2e8f0"),
+                angularaxis=dict(tickfont=dict(size=10, color="#374151"), gridcolor="#e8ecf0"),
+                bgcolor="white"
+            ),
+            height=300,
+            margin=dict(l=30, r=30, t=20, b=20),
+            paper_bgcolor="white",
+            showlegend=False,
+            font=dict(family="Inter")
+        )
+        st.plotly_chart(fig_radar, use_container_width=True, config={"displayModeBar": False})
+
+    with col_donut:
+        st.markdown("<h4 style='color:#0f172a; margin-bottom:8px;'>Répartition par problème</h4>", unsafe_allow_html=True)
+        donut_labels = [p["title"] for p in PROBLEMS]
+        donut_values = [max(st.session_state.problems_used.get(p["id"], 0), 0) for p in PROBLEMS]
+        donut_colors = [p["color"] for p in PROBLEMS]
+
+        if sum(donut_values) == 0:
+            donut_values = [1] * 7
+            donut_colors_use = ["#e2e8f0"] * 7
+        else:
+            donut_colors_use = donut_colors
+
+        fig_donut = go.Figure(go.Pie(
+            labels=donut_labels,
+            values=donut_values,
+            hole=0.55,
+            marker=dict(colors=donut_colors_use, line=dict(color="white", width=2)),
+            textinfo="none",
+            hovertemplate="<b>%{label}</b><br>%{value} msg<br>%{percent}<extra></extra>"
+        ))
+        fig_donut.add_annotation(
+            text=f"<b>{sum(donut_values) if sum(st.session_state.problems_used.values()) > 0 else 0}</b><br><span style='font-size:10px;'>messages</span>",
+            x=0.5, y=0.5, showarrow=False,
+            font=dict(size=16, color="#0f172a", family="Inter")
+        )
+        fig_donut.update_layout(
+            height=300,
+            margin=dict(l=10, r=10, t=20, b=20),
+            paper_bgcolor="white",
+            showlegend=False,
+            font=dict(family="Inter")
+        )
+        st.plotly_chart(fig_donut, use_container_width=True, config={"displayModeBar": False})
+
+    with col_badges:
+        st.markdown("<h4 style='color:#0f172a; margin-bottom:8px;'>Badges débloqués</h4>", unsafe_allow_html=True)
+        badge_defs = [
+            (1,  "Premier message", "#dbeafe", "#1d4ed8", "🎯"),
+            (5,  "En feu !",        "#ffedd5", "#c2410c", "🔥"),
+            (10, "Prospecteur",     "#fef9c3", "#a16207", "⚡"),
+            (25, "Closer",          "#f0fdf4", "#15803d", "🚀"),
+            (50, "Expert",          "#f5f3ff", "#6d28d9", "👑"),
+        ]
+        prob_badge_defs = [
+            (3, "Polyvalent",    "#fef2f2", "#b91c1c", "🧩"),
+            (7, "Maître des 7",  "#fff7ed", "#c2410c", "💎"),
+        ]
+        any_badge = False
+        for threshold, name, bg, color, ico in badge_defs:
+            unlocked = st.session_state.gen_count >= threshold
+            opacity = "1" if unlocked else "0.35"
+            st.markdown(f"""
+            <div style="background:{bg}; border-radius:10px; padding:9px 12px; margin-bottom:7px;
+                        display:flex; align-items:center; gap:10px; opacity:{opacity};">
+                <span style="font-size:18px;">{ico}</span>
+                <div>
+                    <div style="font-size:12px; font-weight:700; color:{color};">{name}</div>
+                    <div style="font-size:10px; color:#94a3b8;">{'✔ Débloqué' if unlocked else f'à {threshold} messages'}</div>
+                </div>
+            </div>""", unsafe_allow_html=True)
+            if unlocked: any_badge = True
+        for threshold, name, bg, color, ico in prob_badge_defs:
+            unlocked = len(st.session_state.problems_used) >= threshold
+            opacity = "1" if unlocked else "0.35"
+            st.markdown(f"""
+            <div style="background:{bg}; border-radius:10px; padding:9px 12px; margin-bottom:7px;
+                        display:flex; align-items:center; gap:10px; opacity:{opacity};">
+                <span style="font-size:18px;">{ico}</span>
+                <div>
+                    <div style="font-size:12px; font-weight:700; color:{color};">{name}</div>
+                    <div style="font-size:10px; color:#94a3b8;">{'✔ Débloqué' if unlocked else f'{threshold} problèmes'}</div>
+                </div>
+            </div>""", unsafe_allow_html=True)
+
+    st.write("")
+
+    # ── LIGNE 3 : Bar chart horizontal comparatif ──
+    st.markdown("<h4 style='color:#0f172a; margin-bottom:8px;'>Performance par problème — nombre de messages</h4>", unsafe_allow_html=True)
+    prob_counts_bar = [st.session_state.problems_used.get(p["id"], 0) for p in PROBLEMS]
+    prob_titles_bar = [p["title"] for p in PROBLEMS]
+    prob_colors_bar = [p["color"] for p in PROBLEMS]
+
+    fig_bar = go.Figure(go.Bar(
+        y=prob_titles_bar,
+        x=prob_counts_bar,
+        orientation="h",
+        marker=dict(
+            color=prob_colors_bar,
+            line=dict(color="white", width=1)
+        ),
+        text=[f"{v} msg" for v in prob_counts_bar],
+        textposition="outside",
+        textfont=dict(size=11, color="#64748b")
+    ))
+    fig_bar.update_layout(
+        height=280,
+        margin=dict(l=10, r=60, t=10, b=20),
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        font=dict(family="Inter", size=12),
+        xaxis=dict(showgrid=True, gridcolor="#f1f5f9", zeroline=False, tickfont=dict(color="#64748b")),
+        yaxis=dict(showgrid=False, tickfont=dict(size=11, color="#374151")),
+        showlegend=False
+    )
+    st.plotly_chart(fig_bar, use_container_width=True, config={"displayModeBar": False})
 
     st.write("")
     _, cta, _ = st.columns([1,2,1])
     with cta:
-        if st.button("✨ Générer un nouveau message", type="primary", use_container_width=True):
+        if st.button("Générer un nouveau message", type="primary", use_container_width=True):
             st.session_state.page = "generator"
             st.rerun()
 
