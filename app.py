@@ -544,8 +544,6 @@ if st.session_state.page == "problem_detail":
             if not st.session_state.authenticated:
                 st.session_state.show_register = True
                 go("auth")
-            elif not st.session_state.subscribed:
-                go("pricing")
             else:
                 go("generator")
 
@@ -579,10 +577,8 @@ if not st.session_state.authenticated:
                     st.session_state.authenticated = True
                     st.session_state.user_name = email_in.split("@")[0].capitalize()
                     st.session_state.user_email = email_in
-                    if not st.session_state.subscribed:
-                        go("pricing")
-                    else:
-                        go("dashboard")
+                    st.session_state.subscribed = True
+                    go("dashboard")
                 else:
                     st.error("Veuillez remplir tous les champs.")
             st.markdown("<hr style='margin:20px 0;border-color:#f1f5f9;'>", unsafe_allow_html=True)
@@ -603,7 +599,8 @@ if not st.session_state.authenticated:
                     st.session_state.user_name = name_in.capitalize()
                     st.session_state.user_email = email_in2
                     st.session_state.join_date = datetime.now().strftime("%d/%m/%Y")
-                    go("pricing")
+                    st.session_state.subscribed = True
+                    go("welcome")
                 else:
                     st.error("Veuillez remplir tous les champs.")
             st.markdown("<hr style='margin:20px 0;border-color:#f1f5f9;'>", unsafe_allow_html=True)
@@ -616,7 +613,7 @@ if not st.session_state.authenticated:
 # ═══════════════════════════════════════════════════════
 # PAGE : PRICING / PAIEMENT (OBLIGATOIRE)
 # ═══════════════════════════════════════════════════════
-if st.session_state.page == "pricing" or (st.session_state.authenticated and not st.session_state.subscribed):
+if st.session_state.page == "pricing":
     nav_header()
 
     st.markdown(f"""
