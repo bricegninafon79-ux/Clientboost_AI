@@ -288,7 +288,7 @@ for k, v in DEFAULTS.items():
     if k not in st.session_state:
         st.session_state[k] = v
 
-def go(page):
+def nav(page):
     st.session_state.page = page
     st.rerun()
 
@@ -385,7 +385,7 @@ if st.session_state.page == "landing":
             """, unsafe_allow_html=True)
             if st.button("Découvrir la solution →", key=f"land_{p['id']}", use_container_width=True):
                 st.session_state.selected_problem = p
-                go("problem_detail")
+                nav("problem_detail")
 
     st.write("")
 
@@ -438,13 +438,13 @@ if st.session_state.page == "landing":
     _, cta_col, _ = st.columns([1, 2, 1])
     with cta_col:
         if st.button("Commence à multiplier tes revenus maintenant", type="primary", use_container_width=True):
-            go("auth")
+            nav("auth")
     st.write("")
     _, lc, _ = st.columns([1, 2, 1])
     with lc:
         if st.button("J'ai déjà un compte — Me connecter", use_container_width=True):
             st.session_state.show_register = False
-            go("auth")
+            nav("auth")
     st.stop()
 
 # ═══════════════════════════════════════════════════════
@@ -453,7 +453,7 @@ if st.session_state.page == "landing":
 if st.session_state.page == "problem_detail":
     p = st.session_state.selected_problem
     if not p:
-        go("landing")
+        nav("landing")
 
     nav_header(show_back="landing", back_label="← Retour aux problèmes")
 
@@ -543,9 +543,9 @@ if st.session_state.page == "problem_detail":
             # Si pas connecté → auth → paiement → générateur
             if not st.session_state.authenticated:
                 st.session_state.show_register = True
-                go("auth")
+                nav("auth")
             else:
-                go("generator")
+                nav("generator")
 
     st.stop()
 
@@ -578,7 +578,7 @@ if not st.session_state.authenticated:
                     st.session_state.user_name = email_in.split("@")[0].capitalize()
                     st.session_state.user_email = email_in
                     st.session_state.subscribed = True
-                    go("dashboard")
+                    nav("dashboard")
                 else:
                     st.error("Veuillez remplir tous les champs.")
             st.markdown("<hr style='margin:20px 0;border-color:#f1f5f9;'>", unsafe_allow_html=True)
@@ -600,7 +600,7 @@ if not st.session_state.authenticated:
                     st.session_state.user_email = email_in2
                     st.session_state.join_date = datetime.now().strftime("%d/%m/%Y")
                     st.session_state.subscribed = True
-                    go("welcome")
+                    nav("welcome")
                 else:
                     st.error("Veuillez remplir tous les champs.")
             st.markdown("<hr style='margin:20px 0;border-color:#f1f5f9;'>", unsafe_allow_html=True)
@@ -645,7 +645,7 @@ if st.session_state.page == "pricing":
             """, unsafe_allow_html=True)
             if st.button(plan["cta"], key=f"select_plan_{plan['name']}", use_container_width=True, type="primary" if plan["popular"] else "secondary"):
                 st.session_state.current_plan = plan["name"]
-                go("payment")
+                nav("payment")
 
     st.stop()
 
@@ -699,7 +699,7 @@ if st.session_state.page == "payment":
                 time.sleep(1.5)
             st.session_state.subscribed = True
             st.session_state.join_date = datetime.now().strftime("%d/%m/%Y")
-            go("welcome")
+            nav("welcome")
 
     st.stop()
 
@@ -767,7 +767,7 @@ if st.session_state.page == "welcome":
         """, unsafe_allow_html=True)
         st.write("")
         if st.button("Accéder au Dashboard", type="primary", use_container_width=True):
-            go("dashboard")
+            nav("dashboard")
     st.stop()
 
 # ═══════════════════════════════════════════════════════
@@ -971,7 +971,7 @@ if st.session_state.page == "dashboard":
     _, cta_c, _ = st.columns([1,2,1])
     with cta_c:
         if st.button("Générer un message", type="primary", use_container_width=True):
-            go("generator")
+            nav("generator")
 
 # ═══════════════════════════════════════════════════════
 # PAGE : GÉNÉRATEUR
@@ -996,7 +996,7 @@ elif st.session_state.page == "generator":
             if st.button("Voir + Générer" if not is_sel else "Sélectionné", key=f"gen_prob_{p['id']}", use_container_width=True, type="primary" if is_sel else "secondary"):
                 st.session_state.selected_problem = p
                 st.session_state.last_generated = ""
-                go("problem_generator")
+                nav("problem_generator")
 
 # ═══════════════════════════════════════════════════════
 # PAGE : PROBLÈME + FORMULAIRE (page dédiée)
@@ -1004,10 +1004,10 @@ elif st.session_state.page == "generator":
 elif st.session_state.page == "problem_generator":
     p = st.session_state.selected_problem
     if not p:
-        go("generator")
+        nav("generator")
 
     if st.button("← Changer de problème", key="back_gen"):
-        go("generator")
+        nav("generator")
 
     # Header du workspace
     st.markdown(f"""
@@ -1051,7 +1051,7 @@ elif st.session_state.page == "problem_generator":
             st.session_state.daily_counts[today] = st.session_state.daily_counts.get(today,0)+1
             st.session_state.problems_used[p["id"]] = st.session_state.problems_used.get(p["id"],0)+1
             st.session_state.gen_inputs = {"secteur":v1,"persona":v2,"context":v3,"tone":tone}
-            go("result")
+            nav("result")
         else:
             st.warning("Veuillez remplir tous les champs.")
 
@@ -1061,12 +1061,12 @@ elif st.session_state.page == "problem_generator":
 elif st.session_state.page == "result":
     p = st.session_state.selected_problem
     if not st.session_state.last_generated:
-        go("generator")
+        nav("generator")
 
     level = get_level(st.session_state.gen_count)
 
     if st.button("← Modifier le message", key="back_result"):
-        go("problem_generator")
+        nav("problem_generator")
 
     # Header résultat
     st.markdown(f"""
@@ -1121,7 +1121,7 @@ elif st.session_state.page == "result":
         if st.button("Nouveau problème", use_container_width=True):
             st.session_state.selected_problem = None
             st.session_state.last_generated = ""
-            go("generator")
+            nav("generator")
 
     # Conseil sur le résultat
     if p:
